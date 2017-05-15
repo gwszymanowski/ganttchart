@@ -1,0 +1,16 @@
+target/classes/Main.class
+target/classes/gui/CreateProjectView.class
+target/classes/gui/GanttMenu.class
+target/classes/gui/gui/general/PrimaryView.class
+target/classes/gui/MainTable.class
+target/classes/gui/gui/general/SignupView.class
+target/classes/gui/gui/general/LoginView.class
+target/classes/gui/gui/general/MainFrame.class
+.idea/compiler.xml
+.idea/kotlinc.xml
+.idea/misc.xml
+.idea/vcs.xml
+.idea/modules.xml
+.idea/workspace.xml
+.idea/validation.xml
+ganttchart.iml

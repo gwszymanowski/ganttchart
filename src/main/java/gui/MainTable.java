@@ -21,9 +21,9 @@ public class MainTable extends TableView {
         TableColumn finishCol = new TableColumn("Finish");
         TableColumn durationCol = new TableColumn("Duration");
         TableColumn completedCol = new TableColumn("Completed");
-        TableColumn managerCol = new TableColumn("Manager");
 
-        getColumns().addAll(idCol, markCol, taskNameCol, startCol, finishCol, durationCol, completedCol, managerCol);
+
+        getColumns().addAll(idCol, markCol, taskNameCol, startCol, finishCol, durationCol, completedCol);
     }
 
 }
