@@ -1,13 +1,12 @@
 package model;
 
-import java.beans.Transient;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
 /**
- * Created by gwszymanowski on 2017-05-13.
+ * Created by gwszymanowski on 2017-05-17.
  */
-public class Task implements Comparable<Task> {
+public class Assignment implements Comparable<Assignment>{
 
     private String id;
     private int number;
@@ -22,7 +21,7 @@ public class Task implements Comparable<Task> {
 
     private String durationString;
 
-    public Task() {
+    public Assignment() {
     }
 
     public void init() {
@@ -111,7 +110,7 @@ public class Task implements Comparable<Task> {
     }
 
     @Override
-    public int compareTo(Task o) {
+    public int compareTo(Assignment o) {
         return startDate.compareTo(o.getStartDate());
     }
 }

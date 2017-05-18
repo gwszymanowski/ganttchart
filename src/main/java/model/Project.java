@@ -1,5 +1,6 @@
 package model;
 
+
 import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -12,15 +13,15 @@ public class Project implements Comparable<Project>{
     private int id;
     private String name;
     private User leader;
-    private Group group;
+    private ProjectGroup group;
     private LocalDateTime startDate;
-    private Set<Task> tasks = new LinkedHashSet<>();
+    private Set<Assignment> tasks = new LinkedHashSet<>();
 
     public Project() {
 
     }
 
-    public Project(User leader, Group group) {
+    public Project(User leader, ProjectGroup group) {
         this.leader = leader;
         this.group = group;
     }
@@ -49,11 +50,11 @@ public class Project implements Comparable<Project>{
         this.leader = leader;
     }
 
-    public Group getGroup() {
+    public ProjectGroup getGroup() {
         return group;
     }
 
-    public void setGroup(Group group) {
+    public void setGroup(ProjectGroup group) {
         this.group = group;
     }
 
@@ -65,11 +66,11 @@ public class Project implements Comparable<Project>{
         this.startDate = startDate;
     }
 
-    public Set<Task> getTasks() {
+    public Set<Assignment> getTasks() {
         return tasks;
     }
 
-    public void setTasks(Set<Task> tasks) {
+    public void setTasks(Set<Assignment> tasks) {
         this.tasks = tasks;
     }
 

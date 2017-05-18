@@ -13,7 +13,7 @@ public class User implements Comparable<User>{
     private String lastname;
     private String username;
     private String password;
-    private Set<Group> groups = new HashSet<>();
+    private Set<ProjectGroup> groups = new HashSet<ProjectGroup>();
 
     public User() {
     }
@@ -65,11 +65,11 @@ public class User implements Comparable<User>{
         this.password = password;
     }
 
-    public Set<Group> getGroups() {
+    public Set<ProjectGroup> getGroups() {
         return groups;
     }
 
-    public void setGroups(Set<Group> groups) {
+    public void setGroups(Set<ProjectGroup> groups) {
         this.groups = groups;
     }
 

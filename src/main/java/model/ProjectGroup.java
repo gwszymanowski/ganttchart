@@ -6,16 +6,16 @@ import java.util.Set;
 /**
  * Created by gwszymanowski on 2017-05-13.
  */
-public class Group {
+public class ProjectGroup {
 
     private int id;
     private String name;
     private Set<User> members = new HashSet<>();
 
-    public Group() {
+    public ProjectGroup() {
     }
 
-    public Group(String name) {
+    public ProjectGroup(String name) {
         this.name = name;
     }
 
@@ -48,7 +48,7 @@ public class Group {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Group group = (Group) o;
+        ProjectGroup group = (ProjectGroup) o;
 
         return name.equals(group.name);
     }
