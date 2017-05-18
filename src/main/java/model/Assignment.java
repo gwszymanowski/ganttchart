@@ -1,5 +1,7 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 
@@ -8,7 +10,8 @@ import java.time.LocalDateTime;
  */
 public class Assignment implements Comparable<Assignment>{
 
-    private String id;
+    private int id;
+    private String title;
     private int number;
     private Type mark;
     private String name;
@@ -29,18 +32,29 @@ public class Assignment implements Comparable<Assignment>{
     };
 
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    @JsonAnySetter
+    public void setId(int id) {
         this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    @JsonAnySetter
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public int getNumber() {
         return number;
     }
 
+    @JsonAnySetter
     public void setNumber(int number) {
         this.number = number;
     }
@@ -49,6 +63,7 @@ public class Assignment implements Comparable<Assignment>{
         return mark;
     }
 
+    @JsonAnySetter
     public void setMark(Type mark) {
         this.mark = mark;
     }
@@ -57,6 +72,7 @@ public class Assignment implements Comparable<Assignment>{
         return name;
     }
 
+    @JsonAnySetter
     public void setName(String name) {
         this.name = name;
     }
@@ -65,6 +81,7 @@ public class Assignment implements Comparable<Assignment>{
         return startDate;
     }
 
+    @JsonAnySetter
     public void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
     }
@@ -73,6 +90,7 @@ public class Assignment implements Comparable<Assignment>{
         return finishDate;
     }
 
+    @JsonAnySetter
     public void setFinishDate(LocalDateTime finishDate) {
         this.finishDate = finishDate;
     }
@@ -89,6 +107,7 @@ public class Assignment implements Comparable<Assignment>{
         return workingDays;
     }
 
+    @JsonAnySetter
     public void setWorkingDays(int workingDays) {
         this.workingDays = workingDays;
     }
@@ -97,6 +116,7 @@ public class Assignment implements Comparable<Assignment>{
         return completed;
     }
 
+    @JsonAnySetter
     public void setCompleted(int completed) {
         this.completed = completed;
     }
@@ -105,6 +125,7 @@ public class Assignment implements Comparable<Assignment>{
         return durationString;
     }
 
+    @JsonAnySetter
     public void setDurationString(Duration duration) {
         this.durationString = duration == null ? null : duration.toString();
     }

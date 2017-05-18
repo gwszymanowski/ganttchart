@@ -1,5 +1,7 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -29,6 +31,7 @@ public class User implements Comparable<User>{
         return id;
     }
 
+    @JsonAnySetter
     public void setId(int id) {
         this.id = id;
     }
@@ -37,6 +40,7 @@ public class User implements Comparable<User>{
         return firstname;
     }
 
+    @JsonAnySetter
     public void setFirstname(String firstname) {
         this.firstname = firstname;
     }
@@ -45,6 +49,7 @@ public class User implements Comparable<User>{
         return lastname;
     }
 
+    @JsonAnySetter
     public void setLastname(String lastname) {
         this.lastname = lastname;
     }
@@ -53,6 +58,7 @@ public class User implements Comparable<User>{
         return username;
     }
 
+    @JsonAnySetter
     public void setUsername(String username) {
         this.username = username;
     }
@@ -61,6 +67,7 @@ public class User implements Comparable<User>{
         return password;
     }
 
+    @JsonAnySetter
     public void setPassword(String password) {
         this.password = password;
     }
