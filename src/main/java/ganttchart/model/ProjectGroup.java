@@ -1,6 +1,10 @@
 package ganttchart.model;
 
+import org.bson.Document;
+
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -10,7 +14,7 @@ public class ProjectGroup {
 
     private int id;
     private String name;
-    private Set<User> members = new HashSet<>();
+    private List<User> members = new LinkedList<>();
 
     public ProjectGroup() {
     }
@@ -35,13 +39,28 @@ public class ProjectGroup {
         this.name = name;
     }
 
-    public Set<User> getMembers() {
+    public List<User> getMembers() {
         return members;
     }
 
-    public void setMembers(Set<User> members) {
+    public void setMembers(List<User> members) {
         this.members = members;
     }
+
+    public Document toDocument() {
+        Document document = new Document();
+        document.append("id", this.id);
+
+        int[] array = new int[members.size()];
+
+        for(int i = 0; i < array.length; i++)
+            array[i] = members.get(i).getId();
+
+        document.append("members", array);
+
+        return document;
+    }
+
 
     @Override
     public boolean equals(Object o) {

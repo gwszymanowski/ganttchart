@@ -1,14 +1,21 @@
 package ganttchart.repository;
 
 
+import com.google.gson.Gson;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import ganttchart.model.Project;
+import ganttchart.model.ProjectGroup;
 import ganttchart.model.User;
 import org.bson.Document;
 
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
+
+import static com.mongodb.client.model.Filters.eq;
 
 /**
  * Created by gwszymanowski on 2017-05-17.
@@ -28,21 +35,25 @@ public class UserRepository implements CrudI<User>{
 
     @Override
     public void save(User entity) {
-
+        collection.insertOne(entity.toDocument());
     }
 
     @Override
     public void delete(int id) {
-
+        Document doc = new Document();
+        doc.append("id", id);
+        collection.deleteOne(doc);
     }
 
     @Override
     public User findById(int id) {
-        return null;
+        Document doc = collection.find(eq("id", id)).first();
+        Gson gson = new Gson();
+        return gson.fromJson(String.valueOf(doc), User.class);
     }
 
     @Override
     public List<User> getAll() {
-        return null;
+        return Collections.EMPTY_LIST;
     }
 }

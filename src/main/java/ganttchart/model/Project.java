@@ -4,6 +4,7 @@ package ganttchart.model;
 import org.bson.Document;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -16,7 +17,7 @@ public class Project implements Comparable<Project> {
     private String name;
     private User leader;
     private ProjectGroup group;
-    private LocalDateTime startDate;
+    private LocalDateTime startDate = LocalDateTime.now();
     private Set<Assignment> tasks = new LinkedHashSet<>();
 
     public Project() {
@@ -71,6 +72,16 @@ public class Project implements Comparable<Project> {
         this.startDate = startDate;
     }
 
+    public String getStartDateString() {
+
+        if(startDate == null)
+            return "null";
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+        return startDate.format(formatter);
+    }
+
     public Set<Assignment> getTasks() {
         return tasks;
     }
@@ -78,6 +89,17 @@ public class Project implements Comparable<Project> {
     public void setTasks(Set<Assignment> tasks) {
         this.tasks = tasks;
     }
+
+    public Document toDocument() {
+        Document document = new Document();
+        document.append("id", id);
+        document.append("leader_id", leader == null ? "null" : leader.getId() );
+        document.append("group_id", group == null ? "null" : group.getId());
+        document.append("startDate", getStartDateString());
+
+        return document;
+    }
+
 
     @Override
     public boolean equals(Object o) {
