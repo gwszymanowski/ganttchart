@@ -1,4 +1,4 @@
-package gui.gui.general;
+package ganttchart.gui;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -15,9 +15,9 @@ import javafx.scene.text.Text;
 /**
  * Created by gwszymanowski on 2017-05-13.
  */
-public class SignupView extends GridPane{
+public class CreateProjectView extends GridPane {
 
-    public SignupView() {
+    public CreateProjectView() {
         initializeGrid();
         initializeBody();
     }
@@ -31,51 +31,28 @@ public class SignupView extends GridPane{
 
     private void initializeBody() {
 
-        int row = 0;
-
-        Text scenetitle = new Text("Create account");
+        Text scenetitle = new Text("Create Project");
         scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-        add(scenetitle, 0, row, 2, 1);
+        add(scenetitle, 0, 0, 2, 1);
 
-        row++;
-
-        Label firstname = new Label("Firstname:");
-        add(firstname, 0, row);
-
-        TextField firstnameField = new TextField();
-        add(firstnameField, 1, row);
-
-        row++;
-
-        Label lastname = new Label("Lastname:");
-        add(lastname, 0, row);
-
-        TextField lastnameField = new TextField();
-        add(lastnameField, 1, row);
-
-        row++;
-
-        Label username = new Label("Username:");
-        add(username, 0, row);
+        Label userName = new Label("User Name:");
+        add(userName, 0, 1);
 
         TextField userTextField = new TextField();
-        add(userTextField, 1, row);
-
-        row++;
+        add(userTextField, 1, 1);
 
         Label pw = new Label("Password:");
-        add(pw, 0, row);
+        add(pw, 0, 2);
 
         PasswordField pwBox = new PasswordField();
-        add(pwBox, 1, row);
+        add(pwBox, 1, 2);
 
-        row++;
-
-        Button create = new Button("Create");
+        Button signup = new Button("Sign up");
+        Button login = new Button("Sign in");
         HBox hbBtn = new HBox(10);
         hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
-        hbBtn.getChildren().addAll(create);
-        add(hbBtn, 1, row);
+        hbBtn.getChildren().addAll(signup, login);
+        add(hbBtn, 1, 4);
 
     }
 }

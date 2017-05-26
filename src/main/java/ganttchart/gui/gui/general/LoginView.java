@@ -1,4 +1,4 @@
-package gui.gui.general;
+package ganttchart.gui.gui.general;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

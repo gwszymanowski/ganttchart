@@ -1,6 +1,4 @@
-package model;
-
-import com.fasterxml.jackson.annotation.JsonAnySetter;
+package ganttchart.model;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -25,7 +23,6 @@ public class ProjectGroup {
         return id;
     }
 
-    @JsonAnySetter
     public void setId(int id) {
         this.id = id;
     }
@@ -34,7 +31,6 @@ public class ProjectGroup {
         return name;
     }
 
-    @JsonAnySetter
     public void setName(String name) {
         this.name = name;
     }

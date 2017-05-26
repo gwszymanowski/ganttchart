@@ -1,4 +1,4 @@
-package gui;
+package ganttchart.gui;
 
 import javafx.application.Platform;
 import javafx.scene.control.Menu;

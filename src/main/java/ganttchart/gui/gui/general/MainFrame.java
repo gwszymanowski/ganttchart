@@ -1,7 +1,7 @@
-package gui.gui.general;
+package ganttchart.gui.gui.general;
 
-import gui.GanttMenu;
-import gui.MainTable;
+import ganttchart.gui.GanttMenu;
+import ganttchart.gui.MainTable;
 import javafx.scene.layout.BorderPane;
 
 /**

@@ -1,7 +1,7 @@
-package model;
+package ganttchart.model;
 
 
-import com.fasterxml.jackson.annotation.JsonAnySetter;
+import org.bson.Document;
 
 import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
@@ -10,7 +10,7 @@ import java.util.Set;
 /**
  * Created by gwszymanowski on 2017-05-13.
  */
-public class Project implements Comparable<Project>{
+public class Project implements Comparable<Project> {
 
     private int id;
     private String name;
@@ -20,7 +20,10 @@ public class Project implements Comparable<Project>{
     private Set<Assignment> tasks = new LinkedHashSet<>();
 
     public Project() {
+    }
 
+    public Project(String name) {
+        this.name = name;
     }
 
     public Project(User leader, ProjectGroup group) {
@@ -32,7 +35,6 @@ public class Project implements Comparable<Project>{
         return id;
     }
 
-    @JsonAnySetter
     public void setId(int id) {
         this.id = id;
     }
@@ -41,7 +43,6 @@ public class Project implements Comparable<Project>{
         return name;
     }
 
-    @JsonAnySetter
     public void setName(String name) {
         this.name = name;
     }
@@ -50,7 +51,6 @@ public class Project implements Comparable<Project>{
         return leader;
     }
 
-    @JsonAnySetter
     public void setLeader(User leader) {
         this.leader = leader;
     }
@@ -59,7 +59,6 @@ public class Project implements Comparable<Project>{
         return group;
     }
 
-    @JsonAnySetter
     public void setGroup(ProjectGroup group) {
         this.group = group;
     }
@@ -68,7 +67,6 @@ public class Project implements Comparable<Project>{
         return startDate;
     }
 
-    @JsonAnySetter
     public void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
     }

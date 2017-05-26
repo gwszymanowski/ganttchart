@@ -1,4 +1,4 @@
-package gui;
+package ganttchart.gui;
 
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;

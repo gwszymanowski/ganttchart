@@ -1,6 +1,6 @@
-package gui.gui.general;
+package ganttchart.gui.gui.general;
 
-import gui.CreateProjectView;
+import ganttchart.gui.CreateProjectView;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.BorderPane;
