@@ -17,7 +17,7 @@ import static com.mongodb.client.model.Filters.eq;
 /**
  * Created by gwszymanowski on 2017-05-26.
  */
-public class AssignmentRepository implements CrudI<Assignment> {
+public class AssignmentRepository {
 
     private MongoCollection<Document> collection = null;
 
@@ -30,7 +30,6 @@ public class AssignmentRepository implements CrudI<Assignment> {
         collection = database.getCollection("assignment");
     }
 
-    @Override
     public void save(Assignment entity) {
         Document document = new Document();
         document.append("title", entity.getTitle());
@@ -44,31 +43,23 @@ public class AssignmentRepository implements CrudI<Assignment> {
         collection.insertOne(document);
     }
 
-    @Override
-    public void delete(int id) {
-        Document doc = new Document();
-        doc.append("id", id);
+    public void delete(String title) {
+        Document doc = collection.find(eq("title", title)).first();
         collection.deleteOne(doc);
     }
 
-//    @Override
-//    public Assignment findById(int id) {
-//        Document doc = collection.find(eq("id", id)).first();
-//        Gson gson = new Gson();
-//        return gson.fromJson(String.valueOf(doc), Assignment.class);
-//    }
+    public Assignment findByTitle(String title) {
+        Document doc = collection.find(eq("title", title)).first();
+        return Assignment.fromDocument(doc);
+    }
 
-    @Override
     public List<Assignment> getAll() {
         List<Assignment> assignments = new LinkedList<>();
 
         Iterator<Document> documents = collection.find().iterator();
-
-        Gson gson = new Gson();
-
         while(documents.hasNext()) {
-            Assignment assignment = gson.fromJson(String.valueOf(documents.next()), Assignment.class);
-            assignments.add(assignment);
+            Document next = documents.next();
+            assignments.add(Assignment.fromDocument(next));
         }
 
         return assignments;

@@ -20,7 +20,7 @@ import static com.mongodb.client.model.Filters.eq;
 /**
  * Created by gwszymanowski on 2017-05-17.
  */
-public class UserRepository implements CrudI<User>{
+public class UserRepository {
 
     private MongoCollection<Document> collection = null;
 
@@ -33,19 +33,13 @@ public class UserRepository implements CrudI<User>{
         collection = database.getCollection("user");
     }
 
-    @Override
     public void save(User entity) {
         collection.insertOne(entity.toDocument());
     }
 
-    @Override
-    public void delete(User entity) {
-        Document doc = new Document();
+    public void delete(String username) {
+        Document doc = collection.find(eq("username", username)).first();
         collection.deleteOne(doc);
     }
 
-    @Override
-    public List<User> getAll() {
-        return Collections.EMPTY_LIST;
-    }
 }

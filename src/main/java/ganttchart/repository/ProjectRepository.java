@@ -23,7 +23,7 @@ import static com.mongodb.client.model.Filters.eq;
 /**
  * Created by gwszymanowski on 2017-05-17.
  */
-public class ProjectRepository implements CrudI<Project>{
+public class ProjectRepository {
 
     private MongoCollection<Document> collection = null;
 
@@ -36,56 +36,34 @@ public class ProjectRepository implements CrudI<Project>{
         collection = database.getCollection("project");
     }
 
-    @Override
     public void save(Project entity) {
         collection.insertOne(entity.toDocument());
     }
 
-    @Override
-    public void delete(Project entity) {
-        Document doc = new Document();
+    public void delete(String name) {
+        Document doc = collection.find(eq("name", name)).first();
         collection.deleteOne(doc);
     }
 
-//    @Override
-//    public Project findById(int id) {
-//        Document doc = collection.find(eq("id", id)).first();
-//
-//        Project p = new Project();
-//        Integer project_id = (Integer) doc.get("id");
-//        p.setId(project_id);
-//
-//        Integer leader_id = (Integer) doc.get("leader_id");
-//        User leader = new User();
-//        leader.setId(leader_id);
-//        p.setLeader(leader);
-//
-//        Integer group_id = (Integer) doc.get("group_id");
-//        ProjectGroup group = new ProjectGroup();
-//        group.setId(group_id);
-//        p.setGroup(group);
-//
-//        String startDateString = (String) doc.get("startDate");
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-//        LocalDateTime dateTime = LocalDateTime.parse(startDateString, formatter);
-//        p.setStartDate(dateTime);
-//
-//        return p;
-//    }
-
-    @Override
     public List<Project> getAll() {
         List<Project> projects = new LinkedList<>();
 
         Iterator<Document> documents = collection.find().iterator();
 
-        Gson gson = new Gson();
-
         while(documents.hasNext()) {
-            Project project = gson.fromJson(String.valueOf(documents.next()), Project.class);
-            projects.add(project);
+            Document next = documents.next();
+            projects.add(Project.fromDocument(next));
         }
 
         return projects;
+    }
+
+    public Project findByName(String name) {
+        Document doc = collection.find(eq("name", name)).first();
+        return Project.fromDocument(doc);
+    }
+
+    public long count() {
+        return collection.count();
     }
 }

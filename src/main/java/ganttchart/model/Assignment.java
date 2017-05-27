@@ -1,39 +1,34 @@
 package ganttchart.model;
 
+import ganttchart.util.FileUtil;
+import org.bson.Document;
+import org.bson.types.ObjectId;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
 
 /**
  * Created by gwszymanowski on 2017-05-17.
 */
-
 public class Assignment implements Comparable<Assignment>{
 
-    private String _id;
-    private String title;
-    private int number;
-    private Type mark;
-    private String name;
-    private LocalDateTime startDate;
-    private LocalDateTime finishDate;
-    private Duration duration;
+    private ObjectId _id;
+    private String title = "null";
+    private int number = 0;
+    private Type mark = Type.NORMAL;
+    private LocalDateTime startDate = LocalDateTime.now();
+    private LocalDateTime finishDate = LocalDateTime.now();
     private int workingDays;
     private int completed; // in %
-    private String durationString;
 
     public Assignment() {
     }
 
-    public void init() {
-        this.duration = this.durationString == null ? null : Duration.parse(this.durationString);
-    };
-
-
-    public String get_id() {
+    public ObjectId get_id() {
         return _id;
     }
 
-    public void set_id(String _id) {
+    public void set_id(ObjectId _id) {
         this._id = _id;
     }
 
@@ -61,14 +56,6 @@ public class Assignment implements Comparable<Assignment>{
         this.mark = mark;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public LocalDateTime getStartDate() {
         return startDate;
     }
@@ -85,12 +72,8 @@ public class Assignment implements Comparable<Assignment>{
         this.finishDate = finishDate;
     }
 
-    public Duration getDuration() {
-        return duration;
-    }
-
-    public void setDuration(Duration duration) {
-        this.duration = duration;
+    public String getDuration() {
+        return "NONE";
     }
 
     public int getWorkingDays() {
@@ -109,12 +92,47 @@ public class Assignment implements Comparable<Assignment>{
         this.completed = completed;
     }
 
-    public String getDurationString() {
-        return durationString;
+    public String startDateString() {
+        return FileUtil.convertDateToString(startDate);
     }
 
-    public void setDurationString(Duration duration) {
-        this.durationString = duration == null ? null : duration.toString();
+    private String finishDateString() {
+        return FileUtil.convertDateToString(finishDate);
+    }
+
+    public Document toDocument() {
+        Document document = new Document();
+        document.append("title", title);
+        document.append("number", number);
+        document.append("mark", mark);
+        document.append("startDate", startDateString());
+        document.append("finishDate", finishDateString());
+        document.append("workingDays", workingDays);
+        document.append("completed", completed);
+        return document;
+    }
+
+    public static Assignment fromDocument(Document document) {
+        Assignment a = new Assignment();
+        ObjectId _id = (ObjectId) document.get("_id");
+        String title = (String) document.get("title");
+        Integer number = (Integer) document.get("number");
+        String mark = (String) document.get("mark");
+        String startdateString = (String) document.get("startDate");
+        String finishdateString = (String) document.get("finishDate");
+        Integer workingDays = (Integer) document.get("workingDays");
+        Integer completed = (Integer) document.get("completed");
+
+        a.set_id(_id);
+        a.setTitle(title);
+        a.setNumber(number);
+        a.setMark(Type.valueOf(mark));
+        a.setStartDate(FileUtil.convertStringToLocalDateTime(startdateString));
+        a.setFinishDate(FileUtil.convertStringToLocalDateTime(finishdateString));
+        a.setWorkingDays(workingDays);
+        a.setCompleted(completed);
+
+        return a;
     }
 
     @Override

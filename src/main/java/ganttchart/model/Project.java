@@ -1,7 +1,9 @@
 package ganttchart.model;
 
 
+import ganttchart.util.FileUtil;
 import org.bson.Document;
+import org.bson.types.ObjectId;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -13,10 +15,10 @@ import java.util.Set;
  */
 public class Project implements Comparable<Project> {
 
-    private String _id;
-    private String name;
-    private User leader;
-    private ProjectGroup group;
+    private ObjectId _id;
+    private String name = "null";
+    private User leader = new User();
+    private ProjectGroup group = new ProjectGroup();
     private LocalDateTime startDate = LocalDateTime.now();
     private Set<Assignment> tasks = new LinkedHashSet<>();
 
@@ -32,11 +34,11 @@ public class Project implements Comparable<Project> {
         this.group = group;
     }
 
-    public String get_id() {
+    public ObjectId get_id() {
         return _id;
     }
 
-    public void set_id(String _id) {
+    public void set_id(ObjectId _id) {
         this._id = _id;
     }
 
@@ -73,13 +75,7 @@ public class Project implements Comparable<Project> {
     }
 
     public String getStartDateString() {
-
-        if(startDate == null)
-            return "null";
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-
-        return startDate.format(formatter);
+        return FileUtil.convertDateToString(startDate);
     }
 
     public Set<Assignment> getTasks() {
@@ -92,14 +88,34 @@ public class Project implements Comparable<Project> {
 
     public Document toDocument() {
         Document document = new Document();
-        document.append("id", _id);
-        document.append("leader_id", leader == null ? "null" : leader.get_id() );
-        document.append("group_id", group == null ? "null" : group.get_id());
+        document.append("name", name);
+        document.append("leader_id", leader.get_id() );
+        document.append("group_id", group.get_id());
         document.append("startDate", getStartDateString());
-
+        document.append("tasks", tasks);
         return document;
     }
 
+    public static Project fromDocument(Document document) {
+        Project project = new Project();
+        ObjectId _id = (ObjectId) document.get("_id");
+        String name = (String) document.get("name");
+        ObjectId leader_id = (ObjectId) document.get("leader_id");
+        ObjectId group_id = (ObjectId) document.get("group_id");
+        String startdateString = (String) document.get("startDate");
+
+        project.set_id(_id);
+        project.setName(name);
+        User l = project.getLeader();
+        l.set_id(leader_id);
+
+        ProjectGroup pg = project.getGroup();
+        pg.set_id(group_id);
+
+        project.setStartDate(FileUtil.convertStringToLocalDateTime(startdateString));
+
+        return project;
+    }
 
     @Override
     public boolean equals(Object o) {

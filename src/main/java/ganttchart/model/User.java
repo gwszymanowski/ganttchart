@@ -2,6 +2,7 @@ package ganttchart.model;
 
 
 import org.bson.Document;
+import org.bson.types.ObjectId;
 
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -13,11 +14,11 @@ import java.util.Set;
  */
 public class User implements Comparable<User>{
 
-    private String _id;
-    private String firstname;
-    private String lastname;
-    private String username;
-    private String password;
+    private ObjectId _id;
+    private String firstname = "null";
+    private String lastname = "null";
+    private String username = "null";
+    private String password = "null";
     private List<ProjectGroup> groups = new LinkedList<ProjectGroup>();
 
     public User() {
@@ -30,11 +31,11 @@ public class User implements Comparable<User>{
         this.password = password;
     }
 
-    public String get_id() {
+    public ObjectId get_id() {
         return _id;
     }
 
-    public void set_id(String _id) {
+    public void set_id(ObjectId _id) {
         this._id = _id;
     }
 
@@ -80,18 +81,11 @@ public class User implements Comparable<User>{
 
     public Document toDocument() {
         Document document = new Document();
-        document.append("id", _id);
         document.append("firstname", firstname);
         document.append("lastname", lastname);
         document.append("username", username);
         document.append("password", password);
-
-        String[] array = new String[groups.size()];
-
-        for(int i = 0; i < array.length; i++)
-            array[i] = groups.get(i).get_id();
-
-        document.append("groups", array);
+        document.append("groups", groups);
 
         return document;
     }

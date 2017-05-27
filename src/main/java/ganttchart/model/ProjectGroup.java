@@ -1,6 +1,7 @@
 package ganttchart.model;
 
 import org.bson.Document;
+import org.bson.types.ObjectId;
 
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -12,8 +13,8 @@ import java.util.Set;
  */
 public class ProjectGroup {
 
-    private String _id;
-    private String name;
+    private ObjectId _id;
+    private String name = "null";
     private List<User> members = new LinkedList<>();
 
     public ProjectGroup() {
@@ -23,11 +24,11 @@ public class ProjectGroup {
         this.name = name;
     }
 
-    public String get_id() {
+    public ObjectId get_id() {
         return _id;
     }
 
-    public void set_id(String _id) {
+    public void set_id(ObjectId _id) {
         this._id = _id;
     }
 
@@ -49,16 +50,21 @@ public class ProjectGroup {
 
     public Document toDocument() {
         Document document = new Document();
-        document.append("id", this._id);
-
-        String[] array = new String[members.size()];
-
-        for(int i = 0; i < array.length; i++)
-            array[i] = members.get(i).get_id();
-
-        document.append("members", array);
+        document.append("name", name);
+        document.append("members", members);
 
         return document;
+    }
+
+    public static ProjectGroup fromDocument(Document document) {
+        ObjectId _id = (ObjectId) document.get("_id");
+        String group_name = (String) document.get("name");
+
+        ProjectGroup group = new ProjectGroup();
+        group.set_id(_id);
+        group.setName(group_name);
+
+        return group;
     }
 
 
@@ -75,5 +81,10 @@ public class ProjectGroup {
     @Override
     public int hashCode() {
         return name.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }
