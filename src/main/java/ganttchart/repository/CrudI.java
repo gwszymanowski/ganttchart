@@ -8,8 +8,7 @@ import java.util.List;
 public interface CrudI<T> {
 
     void save(T entity);
-    void delete(int id);
-    T findById(int id);
+    void delete(T entity);
     List<T> getAll();
 
 }

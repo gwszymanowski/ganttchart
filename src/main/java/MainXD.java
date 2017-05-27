@@ -27,7 +27,7 @@ public class MainXD {
 //        database.createCollection("user");
 
         ProjectRepository repo = new ProjectRepository();
-        System.out.println(repo.findById(0));
+
 
     }
 

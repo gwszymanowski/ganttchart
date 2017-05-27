@@ -33,7 +33,6 @@ public class AssignmentRepository implements CrudI<Assignment> {
     @Override
     public void save(Assignment entity) {
         Document document = new Document();
-        document.append("id", entity.getId());
         document.append("title", entity.getTitle());
         document.append("number", entity.getNumber());
         document.append("mark", entity.getMark());
@@ -52,12 +51,12 @@ public class AssignmentRepository implements CrudI<Assignment> {
         collection.deleteOne(doc);
     }
 
-    @Override
-    public Assignment findById(int id) {
-        Document doc = collection.find(eq("id", id)).first();
-        Gson gson = new Gson();
-        return gson.fromJson(String.valueOf(doc), Assignment.class);
-    }
+//    @Override
+//    public Assignment findById(int id) {
+//        Document doc = collection.find(eq("id", id)).first();
+//        Gson gson = new Gson();
+//        return gson.fromJson(String.valueOf(doc), Assignment.class);
+//    }
 
     @Override
     public List<Assignment> getAll() {

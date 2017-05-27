@@ -39,17 +39,9 @@ public class UserRepository implements CrudI<User>{
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(User entity) {
         Document doc = new Document();
-        doc.append("id", id);
         collection.deleteOne(doc);
-    }
-
-    @Override
-    public User findById(int id) {
-        Document doc = collection.find(eq("id", id)).first();
-        Gson gson = new Gson();
-        return gson.fromJson(String.valueOf(doc), User.class);
     }
 
     @Override

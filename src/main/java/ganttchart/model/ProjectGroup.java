@@ -12,7 +12,7 @@ import java.util.Set;
  */
 public class ProjectGroup {
 
-    private int id;
+    private String _id;
     private String name;
     private List<User> members = new LinkedList<>();
 
@@ -23,12 +23,12 @@ public class ProjectGroup {
         this.name = name;
     }
 
-    public int getId() {
-        return id;
+    public String get_id() {
+        return _id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
     public String getName() {
@@ -49,12 +49,12 @@ public class ProjectGroup {
 
     public Document toDocument() {
         Document document = new Document();
-        document.append("id", this.id);
+        document.append("id", this._id);
 
-        int[] array = new int[members.size()];
+        String[] array = new String[members.size()];
 
         for(int i = 0; i < array.length; i++)
-            array[i] = members.get(i).getId();
+            array[i] = members.get(i).get_id();
 
         document.append("members", array);
 

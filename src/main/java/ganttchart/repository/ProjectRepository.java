@@ -42,38 +42,36 @@ public class ProjectRepository implements CrudI<Project>{
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(Project entity) {
         Document doc = new Document();
-        doc.append("id", id);
         collection.deleteOne(doc);
     }
 
-    @Override
-    public Project findById(int id) {
-        Document doc = collection.find(eq("id", id)).first();
-        Gson gson = new Gson();
-
-        Project p = new Project();
-        Integer project_id = (Integer) doc.get("id");
-        p.setId(project_id);
-
-        Integer leader_id = (Integer) doc.get("leader_id");
-        User leader = new User();
-        leader.setId(leader_id);
-        p.setLeader(leader);
-
-        Integer group_id = (Integer) doc.get("group_id");
-        ProjectGroup group = new ProjectGroup();
-        group.setId(group_id);
-        p.setGroup(group);
-
-        String startDateString = (String) doc.get("startDate");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        LocalDateTime dateTime = LocalDateTime.parse(startDateString, formatter);
-        p.setStartDate(dateTime);
-
-        return p;
-    }
+//    @Override
+//    public Project findById(int id) {
+//        Document doc = collection.find(eq("id", id)).first();
+//
+//        Project p = new Project();
+//        Integer project_id = (Integer) doc.get("id");
+//        p.setId(project_id);
+//
+//        Integer leader_id = (Integer) doc.get("leader_id");
+//        User leader = new User();
+//        leader.setId(leader_id);
+//        p.setLeader(leader);
+//
+//        Integer group_id = (Integer) doc.get("group_id");
+//        ProjectGroup group = new ProjectGroup();
+//        group.setId(group_id);
+//        p.setGroup(group);
+//
+//        String startDateString = (String) doc.get("startDate");
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+//        LocalDateTime dateTime = LocalDateTime.parse(startDateString, formatter);
+//        p.setStartDate(dateTime);
+//
+//        return p;
+//    }
 
     @Override
     public List<Project> getAll() {

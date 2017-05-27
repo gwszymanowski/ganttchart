@@ -42,18 +42,17 @@ public class ProjectGroupRepository implements CrudI<ProjectGroup>{
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(ProjectGroup entity) {
         Document doc = new Document();
-        doc.append("id", id);
         collection.deleteOne(doc);
     }
 
-    @Override
-    public ProjectGroup findById(int id) {
-        Document doc = collection.find(eq("id", id)).first();
-        Gson gson = new Gson();
-        return gson.fromJson(String.valueOf(doc), ProjectGroup.class);
-    }
+//    @Override
+//    public ProjectGroup findById(int id) {
+//        Document doc = collection.find(eq("id", id)).first();
+//        Gson gson = new Gson();
+//        return gson.fromJson(String.valueOf(doc), ProjectGroup.class);
+//    }
 
     @Override
     public List<ProjectGroup> getAll() {

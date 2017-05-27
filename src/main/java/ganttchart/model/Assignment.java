@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 public class Assignment implements Comparable<Assignment>{
 
-    private int id;
+    private String _id;
     private String title;
     private int number;
     private Type mark;
@@ -29,12 +29,12 @@ public class Assignment implements Comparable<Assignment>{
     };
 
 
-    public int getId() {
-        return id;
+    public String get_id() {
+        return _id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
     public String getTitle() {

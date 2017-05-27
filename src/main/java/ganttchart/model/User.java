@@ -13,7 +13,7 @@ import java.util.Set;
  */
 public class User implements Comparable<User>{
 
-    private int id;
+    private String _id;
     private String firstname;
     private String lastname;
     private String username;
@@ -30,12 +30,12 @@ public class User implements Comparable<User>{
         this.password = password;
     }
 
-    public int getId() {
-        return id;
+    public String get_id() {
+        return _id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void set_id(String _id) {
+        this._id = _id;
     }
 
     public String getFirstname() {
@@ -80,16 +80,16 @@ public class User implements Comparable<User>{
 
     public Document toDocument() {
         Document document = new Document();
-        document.append("id", id);
+        document.append("id", _id);
         document.append("firstname", firstname);
         document.append("lastname", lastname);
         document.append("username", username);
         document.append("password", password);
 
-        int[] array = new int[groups.size()];
+        String[] array = new String[groups.size()];
 
         for(int i = 0; i < array.length; i++)
-            array[i] = groups.get(i).getId();
+            array[i] = groups.get(i).get_id();
 
         document.append("groups", array);
 
