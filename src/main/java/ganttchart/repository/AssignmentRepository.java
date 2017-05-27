@@ -39,7 +39,6 @@ public class AssignmentRepository {
         document.append("finishDate", entity.getFinishDate());
         document.append("workingDays", entity.getWorkingDays());
         document.append("completed", entity.getCompleted());
-        document.append("duration", entity.getDurationString());
         collection.insertOne(document);
     }
 

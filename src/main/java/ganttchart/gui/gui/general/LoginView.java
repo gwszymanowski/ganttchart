@@ -17,6 +17,9 @@ import javafx.scene.text.Text;
  */
 public class LoginView extends GridPane {
 
+    TextField userTextField;
+    PasswordField pwBox;
+
     public LoginView() {
         initializeGrid();
         initializeBody();
@@ -33,16 +36,10 @@ public class LoginView extends GridPane {
 
         int row = 0;
 
-        Text scenetitle = new Text("Welcome");
-        scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-        add(scenetitle, 0, row, 2, 1);
-
-        row++;
-
         Label userName = new Label("User Name:");
         add(userName, 0, row);
 
-        TextField userTextField = new TextField();
+        userTextField = new TextField();
         add(userTextField, 1, row);
 
         row++;
@@ -50,7 +47,7 @@ public class LoginView extends GridPane {
         Label pw = new Label("Password:");
         add(pw, 0, row);
 
-        PasswordField pwBox = new PasswordField();
+        pwBox = new PasswordField();
         add(pwBox, 1, row);
 
         row++;
