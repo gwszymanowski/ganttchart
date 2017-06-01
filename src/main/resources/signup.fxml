@@ -15,15 +15,16 @@
     <padding>
         <Insets top="25" right="25" left="25" bottom="25"/>
     </padding>
-    <Label text="Create account" font="Tahoma" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-    <Label fx:id="username" text="Username:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-    <TextField fx:id="usernameField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-    <Label fx:id="password" text="Password:"  GridPane.columnIndex="0" GridPane.rowIndex="2" />
-    <PasswordField fx:id="passwordField"  GridPane.columnIndex="1" GridPane.rowIndex="2"  />
-    <HBox spacing="10" alignment="BOTTOM_RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="3">
-        <Button fx:id="signup" text="Sign up"   />
-        <Button fx:id="login" text="Login" />
-    </HBox>
+    <Label text="Create account" GridPane.columnIndex="1" GridPane.rowIndex="0"  />
+    <Label fx:id="firstname" text="FirstName:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+    <TextField fx:id="firstnameField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+    <Label fx:id="lastname" text="Lastname:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+    <TextField fx:id="lastnameField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+    <Label fx:id="username" text="Username:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+    <TextField fx:id="usernameField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+    <Label fx:id="password" text="Password:"  GridPane.columnIndex="0" GridPane.rowIndex="4" />
+    <PasswordField fx:id="passwordField"  GridPane.columnIndex="1" GridPane.rowIndex="4"  />
+    <Button fx:id="signup" text="Sign up" GridPane.columnIndex="1" GridPane.rowIndex="5"   />
 
 
 </GridPane>

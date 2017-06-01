@@ -12,6 +12,14 @@ import javafx.scene.control.TextField;
 public class SignupController {
 
     @FXML
+    private Label firstname;
+    @FXML
+    private  TextField firstnameField;
+    @FXML
+    private Label lastname;
+    @FXML
+    private  TextField lastnameField;
+    @FXML
     private Label username;
     @FXML
     private TextField usernameField;
@@ -21,7 +29,5 @@ public class SignupController {
     private PasswordField passwordField;
     @FXML
     private Button signup;
-    @FXML
-    private Button login;
 
 }
