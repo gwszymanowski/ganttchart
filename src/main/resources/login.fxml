@@ -20,8 +20,8 @@
     <Label fx:id="password" text="Password:"  GridPane.columnIndex="0" GridPane.rowIndex="2" />
     <PasswordField fx:id="passwordField"  GridPane.columnIndex="1" GridPane.rowIndex="2"  />
     <HBox spacing="10" alignment="BOTTOM_RIGHT" GridPane.columnIndex="1" GridPane.rowIndex="3">
-        <Button fx:id="signup" text="Sign up"   />
-        <Button fx:id="login" text="Login" />
+        <Button fx:id="signup" text="Sign up" onAction="#signupView"  />
+        <Button fx:id="login" text="Login" onAction="#loginAction"  />
     </HBox>
 
 

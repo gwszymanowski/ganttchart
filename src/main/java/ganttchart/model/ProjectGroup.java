@@ -16,6 +16,7 @@ public class ProjectGroup {
     private ObjectId _id;
     private String name = "null";
     private List<User> members = new LinkedList<>();
+    private User leader = new User();
 
     public ProjectGroup() {
     }
@@ -48,19 +49,32 @@ public class ProjectGroup {
         this.members = members;
     }
 
+    public User getLeader() {
+        return leader;
+    }
+
+    public void setLeader(User leader) {
+        this.leader = leader;
+    }
+
     public Document toDocument() {
         Document document = new Document();
         document.append("name", name);
         document.append("members", members);
-
+        document.append("leader_id", leader.get_id() );
         return document;
     }
 
     public static ProjectGroup fromDocument(Document document) {
+        ProjectGroup group = new ProjectGroup();
+
         ObjectId _id = (ObjectId) document.get("_id");
         String group_name = (String) document.get("name");
+        ObjectId leader_id = (ObjectId) document.get("leader_id");
 
-        ProjectGroup group = new ProjectGroup();
+        User l = group.getLeader();
+        l.set_id(leader_id);
+
         group.set_id(_id);
         group.setName(group_name);
 

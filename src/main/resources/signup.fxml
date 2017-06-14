@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -24,7 +21,7 @@
     <TextField fx:id="usernameField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
     <Label fx:id="password" text="Password:"  GridPane.columnIndex="0" GridPane.rowIndex="4" />
     <PasswordField fx:id="passwordField"  GridPane.columnIndex="1" GridPane.rowIndex="4"  />
-    <Button fx:id="signup" text="Sign up" GridPane.columnIndex="1" GridPane.rowIndex="5"   />
-
+    <Button fx:id="signup" text="Sign up" GridPane.columnIndex="0" GridPane.rowIndex="5" onAction="#signupAction"   />
+    <Button fx:id="returnButton" text="Return" GridPane.columnIndex="1" GridPane.rowIndex="5" onAction="#returnAction"  />
 
 </GridPane>

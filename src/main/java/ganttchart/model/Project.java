@@ -17,7 +17,6 @@ public class Project implements Comparable<Project> {
 
     private ObjectId _id;
     private String name = "null";
-    private User leader = new User();
     private ProjectGroup group = new ProjectGroup();
     private LocalDateTime startDate = LocalDateTime.now();
     private Set<Assignment> tasks = new LinkedHashSet<>();
@@ -29,8 +28,7 @@ public class Project implements Comparable<Project> {
         this.name = name;
     }
 
-    public Project(User leader, ProjectGroup group) {
-        this.leader = leader;
+    public Project(ProjectGroup group) {
         this.group = group;
     }
 
@@ -48,14 +46,6 @@ public class Project implements Comparable<Project> {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public User getLeader() {
-        return leader;
-    }
-
-    public void setLeader(User leader) {
-        this.leader = leader;
     }
 
     public ProjectGroup getGroup() {
@@ -89,7 +79,6 @@ public class Project implements Comparable<Project> {
     public Document toDocument() {
         Document document = new Document();
         document.append("name", name);
-        document.append("leader_id", leader.get_id() );
         document.append("group_id", group.get_id());
         document.append("startDate", getStartDateString());
         document.append("tasks", tasks);
@@ -100,14 +89,12 @@ public class Project implements Comparable<Project> {
         Project project = new Project();
         ObjectId _id = (ObjectId) document.get("_id");
         String name = (String) document.get("name");
-        ObjectId leader_id = (ObjectId) document.get("leader_id");
+
         ObjectId group_id = (ObjectId) document.get("group_id");
         String startdateString = (String) document.get("startDate");
 
         project.set_id(_id);
         project.setName(name);
-        User l = project.getLeader();
-        l.set_id(leader_id);
 
         ProjectGroup pg = project.getGroup();
         pg.set_id(group_id);

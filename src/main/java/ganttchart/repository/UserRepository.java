@@ -4,16 +4,11 @@ package ganttchart.repository;
 import com.google.gson.Gson;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import ganttchart.model.Project;
-import ganttchart.model.ProjectGroup;
 import ganttchart.model.User;
 import org.bson.Document;
-
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
 
 import static com.mongodb.client.model.Filters.eq;
 
@@ -40,6 +35,11 @@ public class UserRepository {
     public void delete(String username) {
         Document doc = collection.find(eq("username", username)).first();
         collection.deleteOne(doc);
+    }
+
+    public boolean checkIfExists(String username) {
+        FindIterable<Document> it = collection.find(eq("username", username)).limit(1);
+        return it.first() != null ? true : false;
     }
 
 }
