@@ -19,6 +19,7 @@ public class User implements Comparable<User>{
     private String lastname = "null";
     private String username = "null";
     private String password = "null";
+    private Role role = Role.USER;
     private List<ProjectGroup> groups = new LinkedList<ProjectGroup>();
 
     public User() {
@@ -71,6 +72,14 @@ public class User implements Comparable<User>{
         this.password = password;
     }
 
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
     public List<ProjectGroup> getGroups() {
         return groups;
     }
@@ -85,9 +94,26 @@ public class User implements Comparable<User>{
         document.append("lastname", lastname);
         document.append("username", username);
         document.append("password", password);
+        document.append("role", role);
         document.append("groups", groups);
 
         return document;
+    }
+
+    public static User fromDocument(Document document) {
+        User user = new User();
+
+        ObjectId _id = (ObjectId) document.get("_id");
+        String firstname = (String) document.get("firstname");
+        String lastname = (String)document.get("lastname");
+        Role role = (Role) document.get("role");
+
+        user.set_id(_id);
+        user.setFirstname(firstname);
+        user.setLastname(lastname);
+        user.setRole(role);
+
+        return user;
     }
 
     @Override

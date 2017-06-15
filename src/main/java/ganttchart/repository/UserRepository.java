@@ -2,6 +2,7 @@ package ganttchart.repository;
 
 
 import com.google.gson.Gson;
+import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.FindIterable;
@@ -39,6 +40,16 @@ public class UserRepository {
 
     public boolean checkIfExists(String username) {
         FindIterable<Document> it = collection.find(eq("username", username)).limit(1);
+        return it.first() != null ? true : false;
+    }
+
+    public boolean validate(String username, String password) {
+        BasicDBObject query = new BasicDBObject();
+        query.put("username", username);
+        query.put("password", password);
+
+        FindIterable<Document> it = collection.find(query).limit(1);
+
         return it.first() != null ? true : false;
     }
 

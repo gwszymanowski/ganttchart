@@ -57,6 +57,7 @@ public class SignupController {
         Parent root = null;
         if(actionEvent.getSource()== returnButton){
             stage=(Stage) returnButton.getScene().getWindow();
+            stage.setTitle("Login");
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/login.fxml"));
             root = loader.load();

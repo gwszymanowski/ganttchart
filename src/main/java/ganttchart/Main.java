@@ -14,12 +14,11 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/createproject.fxml"));
+        loader.setLocation(getClass().getResource("/login.fxml"));
         Parent content = loader.load();
 
-        Scene scene = new Scene(content, 300, 275);
-
-        primaryStage.setTitle("FXML Welcome");
+        Scene scene = new Scene(content);
+        primaryStage.setTitle("Log in");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
