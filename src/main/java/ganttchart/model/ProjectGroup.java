@@ -1,12 +1,10 @@
 package ganttchart.model;
 
+import javafx.scene.control.TreeItem;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by gwszymanowski on 2017-05-13.
@@ -80,6 +78,16 @@ public class ProjectGroup {
 
         return group;
     }
+
+    public ArrayList<TreeItem<String>> getTreeItem() {
+        ArrayList<TreeItem<String>> items= new ArrayList<TreeItem<String>>();
+
+        for(User u : members)
+            items.add(new TreeItem(u));
+
+        return items;
+    }
+
 
 
     @Override

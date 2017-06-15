@@ -1,8 +1,10 @@
 package ganttchart.repository;
 
 import com.google.gson.Gson;
+import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import ganttchart.model.ProjectGroup;
@@ -60,5 +62,13 @@ public class ProjectGroupRepository {
 
     public long count() {
         return collection.count();
+    }
+
+    public boolean isEmpty(String name) {
+        BasicDBObject query = new BasicDBObject();
+        query.put("name", name);
+        FindIterable<Document> it = collection.find(query).limit(1);
+
+        return it.first() == null ? true : false;
     }
 }

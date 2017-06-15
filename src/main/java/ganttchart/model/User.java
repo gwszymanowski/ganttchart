@@ -140,4 +140,9 @@ public class User implements Comparable<User>{
     public int compareTo(User o) {
         return lastname.compareTo(o.getLastname());
     }
+
+    @Override
+    public String toString() {
+        return firstname + " " + lastname;
+    }
 }
