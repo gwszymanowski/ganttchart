@@ -56,6 +56,15 @@ public class ProjectGroup {
         return array;
     }
 
+    public String[] getMembersToString() {
+        String[] array = new String[members.size()];
+
+        for(int i = 0; i < array.length; i++)
+            array[i] = members.get(i).toString();
+
+        return array;
+    }
+
     public User getLeader() {
         return leader;
     }
@@ -88,17 +97,6 @@ public class ProjectGroup {
 
         return group;
     }
-
-    public ArrayList<TreeItem<String>> getTreeItem() {
-        ArrayList<TreeItem<String>> items= new ArrayList<TreeItem<String>>();
-
-        for(User u : members)
-            items.add(new TreeItem(u));
-
-        return items;
-    }
-
-
 
     @Override
     public boolean equals(Object o) {

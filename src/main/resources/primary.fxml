@@ -24,7 +24,7 @@
             </padding>
             <Label fx:id="name" text="Project name:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
             <TextField fx:id="nameField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label fx:id="leader" text="Leader lastname:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+            <Label fx:id="leader" text="Leader:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
             <TextField fx:id="leaderField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
         </GridPane>
     </center>

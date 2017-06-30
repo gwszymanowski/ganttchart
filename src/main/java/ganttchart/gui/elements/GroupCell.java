@@ -1,5 +1,8 @@
 package ganttchart.gui.elements;
 
+import ganttchart.model.ProjectGroup;
+import ganttchart.model.User;
+import ganttchart.repository.ProjectGroupRepository;
 import ganttchart.repository.UserRepository;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -9,13 +12,17 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.util.Pair;
 import org.controlsfx.control.ListSelectionView;
+import org.controlsfx.control.action.Action;
+
+import java.util.List;
 
 /**
  * Created by gwszymanowski on 2017-06-28.
  */
 public class GroupCell extends TreeCell<String> {
 
-    private UserRepository userRepository = new UserRepository();
+    final private ProjectGroupRepository groupRepository = new ProjectGroupRepository();
+    final private UserRepository userRepository = new UserRepository();
 
     public GroupCell() {
         super();
@@ -51,28 +58,32 @@ public class GroupCell extends TreeCell<String> {
             dialog.setHeaderText(null);
             dialog.setGraphic(null);
 
-            ButtonType loginButtonType = new ButtonType("Change", ButtonBar.ButtonData.OK_DONE);
-            dialog.getDialogPane().getButtonTypes().addAll(loginButtonType);
+            ButtonType confirmButton = new ButtonType("Change", ButtonBar.ButtonData.OK_DONE);
+            dialog.getDialogPane().getButtonTypes().addAll(confirmButton);
 
             GridPane grid = new GridPane();
             grid.setHgap(10);
             grid.setVgap(10);
             grid.setPadding(new Insets(20, 150, 10, 10));
 
-            TextField groupname = new TextField();
-            groupname.setText(getTreeItem().getValue());
+            TextField groupnameField = new TextField();
+
+            String groupname = getTreeItem().getValue();
+
+            groupnameField.setText(groupname);
             grid.add(new Label("Group name:"), 0, 0);
-            grid.add(groupname, 1, 0);
+            grid.add(groupnameField, 1, 0);
 
             ListSelectionView<String> view = new ListSelectionView<>();
-            view.getSourceItems().addAll("One", "Two", "Three");
-            view.getTargetItems().addAll("Four", "Five");
+
+            ProjectGroup group = groupRepository.findByName(groupname);
+            String[] notAdded = groupRepository.getNotAddedToGroupToString(group.getMembers(), userRepository.getAll());
+            view.getSourceItems().addAll(group.getMembersToString());
+            view.getTargetItems().addAll(notAdded);
             grid.add(view, 1, 1);
 
             dialog.getDialogPane().setContent(grid);
-
             dialog.showAndWait();
-
 
         }
     }

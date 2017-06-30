@@ -8,8 +8,14 @@ import com.mongodb.MongoClientURI;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import ganttchart.model.ProjectGroup;
 import ganttchart.model.User;
 import org.bson.Document;
+
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 import static com.mongodb.client.model.Filters.eq;
 
@@ -51,6 +57,18 @@ public class UserRepository {
         FindIterable<Document> it = collection.find(query).limit(1);
 
         return it.first() != null ? true : false;
+    }
+
+    public List<User> getAll() {
+        List<User> users = new LinkedList<>();
+        Iterator<Document> documents = collection.find().iterator();
+
+        while(documents.hasNext()) {
+            Document next = documents.next();
+            users.add(User.fromDocument(next));
+        }
+
+        return users;
     }
 
 }

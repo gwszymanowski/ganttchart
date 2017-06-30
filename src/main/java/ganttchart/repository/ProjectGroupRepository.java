@@ -8,6 +8,7 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import ganttchart.model.ProjectGroup;
+import ganttchart.model.User;
 import org.bson.Document;
 
 import java.util.Iterator;
@@ -45,8 +46,6 @@ public class ProjectGroupRepository {
         List<ProjectGroup> groups = new LinkedList<>();
         Iterator<Document> documents = collection.find().iterator();
 
-        Gson gson = new Gson();
-
         while(documents.hasNext()) {
             Document next = documents.next();
             groups.add(ProjectGroup.fromDocument(next));
@@ -60,15 +59,23 @@ public class ProjectGroupRepository {
         return ProjectGroup.fromDocument(doc);
     }
 
-    public long count() {
-        return collection.count();
-    }
-
     public boolean isEmpty(String name) {
         BasicDBObject query = new BasicDBObject();
         query.put("name", name);
         FindIterable<Document> it = collection.find(query).limit(1);
 
         return it.first() == null ? true : false;
+    }
+
+    public String[] getNotAddedToGroupToString(List<User> members, List<User> all) {
+        String[] usersArray = new String[(all.size() - members.size())];
+        int i = 0;
+        for(User user : all)
+            if(!members.contains(user)) {
+                usersArray[i] = user.toString();
+                i++;
+            }
+
+        return usersArray;
     }
 }
