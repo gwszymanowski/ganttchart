@@ -47,6 +47,15 @@ public class ProjectGroup {
         this.members = members;
     }
 
+    public ObjectId[] getMembersId() {
+        ObjectId[] array = new ObjectId[members.size()];
+
+        for(int i = 0; i < array.length; i++)
+            array[i] = members.get(i).get_id();
+
+        return array;
+    }
+
     public User getLeader() {
         return leader;
     }
@@ -60,6 +69,7 @@ public class ProjectGroup {
         document.append("name", name);
         document.append("members", members);
         document.append("leader_id", leader.get_id() );
+        document.append("members", getMembersId());
         return document;
     }
 
