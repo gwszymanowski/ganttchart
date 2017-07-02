@@ -1,19 +1,13 @@
 package ganttchart.repository;
 
 
-import com.google.gson.Gson;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import ganttchart.model.Assignment;
 import ganttchart.model.Project;
-import ganttchart.model.ProjectGroup;
-import ganttchart.model.User;
 import org.bson.Document;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -40,11 +34,6 @@ public class ProjectRepository {
         collection.insertOne(entity.toDocument());
     }
 
-    public void delete(String name) {
-        Document doc = collection.find(eq("name", name)).first();
-        collection.deleteOne(doc);
-    }
-
     public List<Project> getAll() {
         List<Project> projects = new LinkedList<>();
 
@@ -61,6 +50,11 @@ public class ProjectRepository {
     public Project findByName(String name) {
         Document doc = collection.find(eq("name", name)).first();
         return Project.fromDocument(doc);
+    }
+
+    public boolean validateByName(String name) {
+        Document doc = collection.find(eq("name", name)).first();
+        return doc != null ? true : false;
     }
 
     public long count() {

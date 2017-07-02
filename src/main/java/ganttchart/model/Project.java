@@ -7,8 +7,7 @@ import org.bson.types.ObjectId;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by gwszymanowski on 2017-05-13.
@@ -17,19 +16,15 @@ public class Project implements Comparable<Project> {
 
     private ObjectId _id;
     private String name = "null";
-    private ProjectGroup group = new ProjectGroup();
     private LocalDateTime startDate = LocalDateTime.now();
     private Set<Assignment> tasks = new LinkedHashSet<>();
+    private List<User> members = new LinkedList<>();
 
     public Project() {
     }
 
     public Project(String name) {
         this.name = name;
-    }
-
-    public Project(ProjectGroup group) {
-        this.group = group;
     }
 
     public ObjectId get_id() {
@@ -48,13 +43,9 @@ public class Project implements Comparable<Project> {
         this.name = name;
     }
 
-    public ProjectGroup getGroup() {
-        return group;
-    }
+    public List<User> getMembers() { return members; }
 
-    public void setGroup(ProjectGroup group) {
-        this.group = group;
-    }
+    public void setMembers(List<User> members) { this.members = members; }
 
     public LocalDateTime getStartDate() {
         return startDate;
@@ -75,12 +66,30 @@ public class Project implements Comparable<Project> {
     public void setTasks(Set<Assignment> tasks) {
         this.tasks = tasks;
     }
+    public ObjectId[] getMembersId() {
+        ObjectId[] array = new ObjectId[members.size()];
+
+        for(int i = 0; i < array.length; i++)
+            array[i] = members.get(i).get_id();
+
+        return array;
+    }
+
+    public String[] getMembersToString() {
+        String[] array = new String[members.size()];
+
+        for(int i = 0; i < array.length; i++)
+            array[i] = members.get(i).toString();
+
+        return array;
+    }
+
 
     public Document toDocument() {
         Document document = new Document();
         document.append("name", name);
-        document.append("group_id", group.get_id());
         document.append("startDate", getStartDateString());
+        document.append("members", getMembersId());
         document.append("tasks", tasks);
         return document;
     }
@@ -90,16 +99,15 @@ public class Project implements Comparable<Project> {
         ObjectId _id = (ObjectId) document.get("_id");
         String name = (String) document.get("name");
 
-        ObjectId group_id = (ObjectId) document.get("group_id");
         String startdateString = (String) document.get("startDate");
 
         project.set_id(_id);
         project.setName(name);
 
-        ProjectGroup pg = project.getGroup();
-        pg.set_id(group_id);
-
-        project.setStartDate(FileUtil.convertStringToLocalDateTime(startdateString));
+        List<User> members = project.getMembers();
+        project.setMembers(members);
+        System.out.println(startdateString);
+    //    project.setStartDate(FileUtil.convertStringToLocalDateTime(startdateString));
 
         return project;
     }

@@ -72,7 +72,7 @@ public class SignupController {
     private boolean validateUser() {
         if(firstnameField.getText().length() == 0 || lastnameField.getText().length() == 0 || usernameField.getText().length() == 0 || passwordField.getText().length() == 0)
             return false;
-        return repository.checkIfExists(usernameField.getText());
+        return repository.validateByUsername(usernameField.getText());
     }
 
     private void createUser() {

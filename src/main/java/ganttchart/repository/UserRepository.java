@@ -39,14 +39,19 @@ public class UserRepository {
         collection.insertOne(entity.toDocument());
     }
 
-    public void delete(String username) {
-        Document doc = collection.find(eq("username", username)).first();
-        collection.deleteOne(doc);
-    }
-
-    public boolean checkIfExists(String username) {
+    public boolean validateByUsername(String username) {
         FindIterable<Document> it = collection.find(eq("username", username)).limit(1);
         return it.first() != null ? true : false;
+    }
+
+    public boolean validateByLastname(String lastname) {
+        FindIterable<Document> it = collection.find(eq("lastname", lastname)).limit(1);
+        return it.first() != null ? true : false;
+    }
+
+    public User findByLastname(String lastname) {
+        FindIterable<Document> it = collection.find(eq("lastname", lastname)).limit(1);
+        return it.first() != null ? User.fromDocument(it.first()) : new User();
     }
 
     public boolean validate(String username, String password) {
