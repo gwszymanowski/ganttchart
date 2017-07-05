@@ -17,7 +17,8 @@ import static com.mongodb.client.model.Filters.eq;
 /**
  * Created by gwszymanowski on 2017-05-17.
  */
-public class ProjectRepository {
+public class
+ProjectRepository {
 
     private MongoCollection<Document> collection = null;
 

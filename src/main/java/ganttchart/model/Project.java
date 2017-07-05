@@ -1,6 +1,7 @@
 package ganttchart.model;
 
 
+import com.mongodb.BasicDBList;
 import ganttchart.util.FileUtil;
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -56,7 +57,7 @@ public class Project implements Comparable<Project> {
     }
 
     public String getStartDateString() {
-        return FileUtil.convertDateToString(startDate);
+        return startDate != null ? FileUtil.convertDateToString(startDate) : "null";
     }
 
     public Set<Assignment> getTasks() {
@@ -66,30 +67,21 @@ public class Project implements Comparable<Project> {
     public void setTasks(Set<Assignment> tasks) {
         this.tasks = tasks;
     }
-    public ObjectId[] getMembersId() {
-        ObjectId[] array = new ObjectId[members.size()];
 
-        for(int i = 0; i < array.length; i++)
-            array[i] = members.get(i).get_id();
+    public BasicDBList getMembersList() {
+        BasicDBList members = new BasicDBList();
 
-        return array;
+        for(int i = 0; i < members.size(); i++)
+            members.add(members.get(i));
+
+        return members;
     }
-
-    public String[] getMembersToString() {
-        String[] array = new String[members.size()];
-
-        for(int i = 0; i < array.length; i++)
-            array[i] = members.get(i).toString();
-
-        return array;
-    }
-
 
     public Document toDocument() {
         Document document = new Document();
         document.append("name", name);
         document.append("startDate", getStartDateString());
-        document.append("members", getMembersId());
+        document.append("members", getMembersList());
         document.append("tasks", tasks);
         return document;
     }
@@ -106,7 +98,6 @@ public class Project implements Comparable<Project> {
 
         List<User> members = project.getMembers();
         project.setMembers(members);
-        System.out.println(startdateString);
     //    project.setStartDate(FileUtil.convertStringToLocalDateTime(startdateString));
 
         return project;

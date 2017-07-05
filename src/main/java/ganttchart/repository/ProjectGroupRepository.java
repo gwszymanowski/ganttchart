@@ -1,6 +1,5 @@
 package ganttchart.repository;
 
-import com.google.gson.Gson;
 import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
@@ -35,11 +34,6 @@ public class ProjectGroupRepository {
 
     public void save(ProjectGroup entity) {
         collection.insertOne(entity.toDocument());
-    }
-
-    public void delete(String name) {
-        Document doc = collection.find(eq("name", name)).first();
-        collection.deleteOne(doc);
     }
 
     public List<ProjectGroup> getAll() {

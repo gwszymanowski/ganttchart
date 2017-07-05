@@ -20,11 +20,7 @@ import java.io.IOException;
 public class LoginController {
 
     @FXML
-    private Label username;
-    @FXML
     private TextField usernameField;
-    @FXML
-    private Label password;
     @FXML
     private PasswordField passwordField;
     @FXML

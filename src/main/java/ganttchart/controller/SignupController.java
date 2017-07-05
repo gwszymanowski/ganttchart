@@ -21,19 +21,11 @@ import java.io.IOException;
 public class SignupController {
 
     @FXML
-    private Label firstname;
-    @FXML
     private  TextField firstnameField;
-    @FXML
-    private Label lastname;
     @FXML
     private  TextField lastnameField;
     @FXML
-    private Label username;
-    @FXML
     private TextField usernameField;
-    @FXML
-    private Label password;
     @FXML
     private PasswordField passwordField;
     @FXML
