@@ -3,8 +3,42 @@
 
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
             prefHeight="400.0" prefWidth="600.0">
 
-</AnchorPane>
+    <top>
+        <GridPane>
+            <padding>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            </padding>
+            <Label fx:id="titleLabel" style="-fx-font: NORMAL 20 Tahoma;"  GridPane.columnIndex="0" GridPane.rowIndex="0" />
+            <Label fx:id="startDateLabel"  GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <Label fx:id="todayIsLabel"  GridPane.columnIndex="0" GridPane.rowIndex="2" />
+            <Button fx:id="newAssignmentButton" text="New assignment" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+        </GridPane>
+
+    </top>
+    <center>
+        <TableView id="tableView">
+            <columns>
+                <TableColumn text="Title" />
+                <TableColumn text="type" />
+                <TableColumn text="executor" />
+                <TableColumn text="startDate" />
+                <TableColumn text="finishDate" />
+                <TableColumn fx:id="duration" />
+                <TableColumn fx:id="completed" />
+                <TableColumn fx:id="workingDays" />
+                <TableColumn fx:id="daysCompleted" />
+                <TableColumn fx:id="daysRemaining" />
+            </columns>
+        </TableView>
+    </center>
+
+
+</BorderPane>

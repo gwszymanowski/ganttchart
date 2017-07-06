@@ -1,10 +1,10 @@
 package ganttchart.model;
 
-import javafx.scene.control.TreeItem;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by gwszymanowski on 2017-05-13.

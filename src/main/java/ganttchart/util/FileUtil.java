@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter;
 /**
  * Created by gwszymanowski on 2017-05-27.
  */
-public class FileUtil {
+public final class FileUtil {
 
     private FileUtil(){
 

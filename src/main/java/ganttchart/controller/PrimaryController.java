@@ -1,17 +1,13 @@
 package ganttchart.controller;
 
-import ganttchart.gui.elements.GroupCell;
 import ganttchart.gui.elements.ProjectCell;
 import ganttchart.model.Project;
-import ganttchart.model.ProjectGroup;
 import ganttchart.model.User;
-import ganttchart.repository.ProjectGroupRepository;
 import ganttchart.repository.ProjectRepository;
 import ganttchart.repository.UserRepository;
 import impl.org.controlsfx.autocompletion.AutoCompletionTextFieldBinding;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
