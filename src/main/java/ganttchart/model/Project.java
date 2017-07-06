@@ -7,9 +7,10 @@ import org.bson.Document;
 import org.bson.types.ObjectId;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by gwszymanowski on 2017-05-13.
@@ -78,6 +79,13 @@ public class Project implements Comparable<Project> {
         return members;
     }
 
+    public LocalDate getLastDay() {
+        if(tasks.size() == 0)
+            return LocalDate.now();
+
+        return tasks.stream().map(u -> u.getFinishDate()).max(LocalDate::compareTo).get();
+    }
+
     public Document toDocument() {
         Document document = new Document();
         document.append("name", name);
@@ -93,13 +101,12 @@ public class Project implements Comparable<Project> {
         String name = (String) document.get("name");
 
         String startdateString = (String) document.get("startDate");
-
         project.set_id(_id);
         project.setName(name);
 
         List<User> members = project.getMembers();
         project.setMembers(members);
-    //    project.setStartDate(FileUtil.convertStringToLocalDateTime(startdateString));
+        project.setStartDate(FileUtil.convertStringToLocalDate(startdateString));
 
         return project;
     }

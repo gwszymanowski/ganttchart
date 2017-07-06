@@ -8,6 +8,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
 <BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
 
     <top>
@@ -18,7 +19,13 @@
             <Label fx:id="titleLabel" style="-fx-font: NORMAL 20 Tahoma;"  GridPane.columnIndex="0" GridPane.rowIndex="0" />
             <Label fx:id="startDateLabel"  GridPane.columnIndex="0" GridPane.rowIndex="1" />
             <Label fx:id="todayIsLabel"  GridPane.columnIndex="0" GridPane.rowIndex="2" />
-            <Button fx:id="newAssignmentButton" text="New assignment" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+            <ButtonBar fx:id="buttonBar" GridPane.columnIndex="0" GridPane.rowIndex="3">
+                <buttons>
+                    <Button fx:id="newAssignment" text="New task" />
+                    <Button fx:id="memberList" text="Members" />
+                </buttons>
+            </ButtonBar>
+
         </GridPane>
 
     </top>
@@ -27,10 +34,10 @@
 
             <columns>
                 <TableColumn text="Title" />
-                <TableColumn text="type" />
-                <TableColumn text="executor" />
-                <TableColumn text="startDate" />
-                <TableColumn text="finishDate" />
+                <TableColumn text="Type" />
+                <TableColumn text="Executor" />
+                <TableColumn text="Start" />
+                <TableColumn text="End" />
                 <TableColumn fx:id="duration" />
                 <TableColumn fx:id="completed" />
                 <TableColumn fx:id="workingDays" />
@@ -41,16 +48,6 @@
     </left>
     <right>
         <TableView id="datesTableView">
-            <columns>
-                <TableColumn  />
-                <TableColumn />
-                <TableColumn  />
-                <TableColumn />
-                <TableColumn  />
-                <TableColumn />
-                <TableColumn  />
-                <TableColumn />
-            </columns>
         </TableView>
     </right>
 

@@ -2,14 +2,21 @@ package ganttchart.controller;
 
 import ganttchart.model.Project;
 import ganttchart.entity.ProjectRepository;
+import ganttchart.util.FileUtil;
 import ganttchart.util.TableColumnFactory;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 
 import java.net.URL;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -41,6 +48,9 @@ public class ProjectController implements Initializable {
     @FXML
     private Label todayIsLabel;
 
+    @FXML
+    private TableView datesTableView;
+
     private String title;
     private ProjectRepository projectRepository = new ProjectRepository();
 
@@ -51,8 +61,11 @@ public class ProjectController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         titleLabel.setText(title);
-        startDateLabel.setText("Startdate is: ");
-        todayIsLabel.setText("Today is: " + Instant.now().toString());
+
+        Project p = projectRepository.findByName(title);
+
+        startDateLabel.setText("Startdate is: " + FileUtil.convertDateToString(p.getStartDate()));
+        todayIsLabel.setText("Today is: " + FileUtil.convertDateToString(LocalDate.now()));
 
         TableColumnFactory factory = new TableColumnFactory();
         duration.setGraphic(factory.getRotated("Duration(days)"));
@@ -61,6 +74,20 @@ public class ProjectController implements Initializable {
         daysCompleted.setGraphic(factory.getRotated("Days completed"));
         daysRemaining.setGraphic(factory.getRotated("Days remaining"));
 
-        Project p = projectRepository.findByName(title);
+        LocalDate first = p.getStartDate();
+        LocalDate last = p.getLastDay();
+
+//        ObservableList<TableColumn> columnList = datesTableView.getColumns();
+//        List<TableColumn> list = new LinkedList<>();
+//        while(!first.equals(last)) {
+//            System.out.println(first);
+//            TableColumn tb = new TableColumn();
+//            tb.setGraphic(factory.getRotated(FileUtil.convertDateToString(first)));
+//            list.add(tb);
+//            first = first.plusDays(1);
+//        }
+//        columnList.addAll(list);
+
+
     }
 }

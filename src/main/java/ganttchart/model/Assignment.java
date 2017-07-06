@@ -7,6 +7,8 @@ import org.bson.types.ObjectId;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by gwszymanowski on 2017-05-17.
@@ -20,6 +22,7 @@ public class Assignment implements Comparable<Assignment>{
     private LocalDate finishDate = LocalDate.now();
     private int workingDays;
     private int completed; // in %
+    private List<Assignment> subTasks = new LinkedList<>();
 
     public Assignment() {
     }
@@ -90,6 +93,10 @@ public class Assignment implements Comparable<Assignment>{
 
     private String finishDateString() {
         return FileUtil.convertDateToString(finishDate);
+    }
+
+    public void addSubTask(Assignment assignment) {
+        subTasks.add(assignment);
     }
 
     public Document toDocument() {

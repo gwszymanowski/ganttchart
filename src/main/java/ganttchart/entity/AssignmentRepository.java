@@ -29,7 +29,6 @@ public class AssignmentRepository {
         Document document = new Document();
         document.append("title", entity.getTitle());
         document.append("number", entity.getNumber());
-        document.append("mark", entity.getMark());
         document.append("startDate", entity.getStartDate());
         document.append("finishDate", entity.getFinishDate());
         document.append("workingDays", entity.getWorkingDays());
