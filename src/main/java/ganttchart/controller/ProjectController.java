@@ -1,7 +1,7 @@
 package ganttchart.controller;
 
 import ganttchart.model.Project;
-import ganttchart.repository.ProjectRepository;
+import ganttchart.entity.ProjectRepository;
 import ganttchart.util.TableColumnFactory;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -56,7 +56,7 @@ public class ProjectController implements Initializable {
 
         TableColumnFactory factory = new TableColumnFactory();
         duration.setGraphic(factory.getRotated("Duration(days)"));
-        completed.setGraphic(factory.getRotated("Completed"));
+        completed.setGraphic(factory.getRotated("(%) Completed"));
         workingDays.setGraphic(factory.getRotated("Working days"));
         daysCompleted.setGraphic(factory.getRotated("Days completed"));
         daysRemaining.setGraphic(factory.getRotated("Days remaining"));

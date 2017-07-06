@@ -16,7 +16,6 @@ public class Assignment implements Comparable<Assignment>{
     private ObjectId _id;
     private String title = "null";
     private int number = 0;
-    private Type mark = Type.NORMAL;
     private LocalDate startDate = LocalDate.now();
     private LocalDate finishDate = LocalDate.now();
     private int workingDays;
@@ -47,14 +46,6 @@ public class Assignment implements Comparable<Assignment>{
 
     public void setNumber(int number) {
         this.number = number;
-    }
-
-    public Type getMark() {
-        return mark;
-    }
-
-    public void setMark(Type mark) {
-        this.mark = mark;
     }
 
     public LocalDate getStartDate() {
@@ -105,7 +96,6 @@ public class Assignment implements Comparable<Assignment>{
         Document document = new Document();
         document.append("title", title);
         document.append("number", number);
-        document.append("mark", mark);
         document.append("startDate", startDateString());
         document.append("finishDate", finishDateString());
         document.append("workingDays", workingDays);
@@ -127,7 +117,6 @@ public class Assignment implements Comparable<Assignment>{
         a.set_id(_id);
         a.setTitle(title);
         a.setNumber(number);
-        a.setMark(Type.valueOf(mark));
         a.setStartDate(FileUtil.convertStringToLocalDate(startdateString));
         a.setFinishDate(FileUtil.convertStringToLocalDate(finishdateString));
         a.setWorkingDays(workingDays);
