@@ -1,8 +1,5 @@
 package ganttchart.gui.elements;
 
-import ganttchart.model.ProjectGroup;
-import ganttchart.model.User;
-import ganttchart.repository.ProjectGroupRepository;
 import ganttchart.repository.UserRepository;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -12,9 +9,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.util.Pair;
 import org.controlsfx.control.ListSelectionView;
-import org.controlsfx.control.action.Action;
-
-import java.util.List;
 
 /**
  * Created by gwszymanowski on 2017-06-28.

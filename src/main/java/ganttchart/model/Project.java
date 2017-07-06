@@ -6,6 +6,7 @@ import ganttchart.util.FileUtil;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -17,7 +18,7 @@ public class Project implements Comparable<Project> {
 
     private ObjectId _id;
     private String name = "null";
-    private LocalDateTime startDate = LocalDateTime.now();
+    private LocalDate startDate = LocalDate.now();
     private Set<Assignment> tasks = new LinkedHashSet<>();
     private List<User> members = new LinkedList<>();
 
@@ -48,11 +49,11 @@ public class Project implements Comparable<Project> {
 
     public void setMembers(List<User> members) { this.members = members; }
 
-    public LocalDateTime getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDateTime startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 

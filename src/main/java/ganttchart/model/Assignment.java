@@ -5,6 +5,7 @@ import org.bson.Document;
 import org.bson.types.ObjectId;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -16,8 +17,8 @@ public class Assignment implements Comparable<Assignment>{
     private String title = "null";
     private int number = 0;
     private Type mark = Type.NORMAL;
-    private LocalDateTime startDate = LocalDateTime.now();
-    private LocalDateTime finishDate = LocalDateTime.now();
+    private LocalDate startDate = LocalDate.now();
+    private LocalDate finishDate = LocalDate.now();
     private int workingDays;
     private int completed; // in %
 
@@ -56,19 +57,19 @@ public class Assignment implements Comparable<Assignment>{
         this.mark = mark;
     }
 
-    public LocalDateTime getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDateTime startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDateTime getFinishDate() {
+    public LocalDate getFinishDate() {
         return finishDate;
     }
 
-    public void setFinishDate(LocalDateTime finishDate) {
+    public void setFinishDate(LocalDate finishDate) {
         this.finishDate = finishDate;
     }
 
@@ -127,8 +128,8 @@ public class Assignment implements Comparable<Assignment>{
         a.setTitle(title);
         a.setNumber(number);
         a.setMark(Type.valueOf(mark));
-        a.setStartDate(FileUtil.convertStringToLocalDateTime(startdateString));
-        a.setFinishDate(FileUtil.convertStringToLocalDateTime(finishdateString));
+        a.setStartDate(FileUtil.convertStringToLocalDate(startdateString));
+        a.setFinishDate(FileUtil.convertStringToLocalDate(finishdateString));
         a.setWorkingDays(workingDays);
         a.setCompleted(completed);
 

@@ -8,8 +8,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Button?>
-<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-            prefHeight="400.0" prefWidth="600.0">
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
 
     <top>
         <GridPane>
@@ -23,8 +22,9 @@
         </GridPane>
 
     </top>
-    <center>
-        <TableView id="tableView">
+    <left>
+        <TableView id="tableView" >
+
             <columns>
                 <TableColumn text="Title" />
                 <TableColumn text="type" />
@@ -38,7 +38,20 @@
                 <TableColumn fx:id="daysRemaining" />
             </columns>
         </TableView>
-    </center>
-
+    </left>
+    <right>
+        <TableView id="datesTableView">
+            <columns>
+                <TableColumn  />
+                <TableColumn />
+                <TableColumn  />
+                <TableColumn />
+                <TableColumn  />
+                <TableColumn />
+                <TableColumn  />
+                <TableColumn />
+            </columns>
+        </TableView>
+    </right>
 
 </BorderPane>

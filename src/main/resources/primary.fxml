@@ -6,9 +6,7 @@
 <?import javafx.geometry.Insets?>
 <BorderPane xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
-          fx:controller="ganttchart.controller.PrimaryController"
-          prefHeight="400.0" prefWidth="600.0"
->
+          fx:controller="ganttchart.controller.PrimaryController">
 
     <left>
         <TreeView fx:id="projectTreeView">

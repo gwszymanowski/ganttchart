@@ -1,23 +1,12 @@
 package ganttchart.controller;
 
 import ganttchart.gui.elements.GroupCell;
-import ganttchart.model.Project;
-import ganttchart.model.ProjectGroup;
 import ganttchart.model.User;
-import ganttchart.repository.ProjectGroupRepository;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
-import javafx.util.Callback;
-import org.controlsfx.control.PopOver;
 
 import java.net.URL;
-import java.util.Collection;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
 

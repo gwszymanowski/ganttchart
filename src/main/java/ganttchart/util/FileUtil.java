@@ -1,5 +1,6 @@
 package ganttchart.util;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -12,7 +13,7 @@ public final class FileUtil {
 
     }
 
-    public static String convertDateToString(LocalDateTime date) {
+    public static String convertDateToString(LocalDate date) {
         if(date == null)
             return "null";
 
@@ -21,9 +22,9 @@ public final class FileUtil {
         return date.format(formatter);
     }
 
-    public static LocalDateTime convertStringToLocalDateTime(String date) {
+    public static LocalDate convertStringToLocalDate(String date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        return LocalDateTime.parse(date, formatter);
+        return LocalDate.parse(date, formatter);
     }
 
 }
