@@ -1,24 +1,25 @@
 package ganttchart.controller;
 
+import ganttchart.gui.elements.Dialogable;
+import ganttchart.gui.elements.MembersDialog;
+import ganttchart.gui.elements.NewAssignmentDialog;
 import ganttchart.model.Project;
 import ganttchart.entity.ProjectRepository;
 import ganttchart.util.FileUtil;
 import ganttchart.util.TableColumnFactory;
-import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.MapValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.util.Callback;
+import javafx.util.StringConverter;
 
 import java.net.URL;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 /**
  * Created by gwszymanowski on 2017-06-30.
@@ -52,6 +53,12 @@ public class ProjectController implements Initializable {
     @FXML
     private TableView datesTableView;
 
+    @FXML
+    private Button newAssignment;
+
+    @FXML
+    private Button memberList;
+
     private String title;
     private ProjectRepository projectRepository = new ProjectRepository();
 
@@ -62,6 +69,8 @@ public class ProjectController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         titleLabel.setText(title);
+        memberList.setOnAction(new DialogButtonAction(new MembersDialog()));
+        newAssignment.setOnAction(new DialogButtonAction(new NewAssignmentDialog()));
 
         Project p = projectRepository.findByName(title);
 
@@ -77,16 +86,21 @@ public class ProjectController implements Initializable {
 
         LocalDate first = p.getStartDate();
         LocalDate last = p.getLastDay();
-
-//        ObservableList<TableColumn> list = datesTableView.getColumns();
-//        while(!first.equals(last)) {
-//            TableColumn tb = new TableColumn();
-//            tb.setGraphic(factory.getRotated(FileUtil.convertDateToString(first))); //rotates the String
-//            list.add(tb);
-//            first = first.plusDays(1);
-//        }
-//        datesTableView.setItems(list);
-
-
+        
     }
+
+    private class DialogButtonAction implements EventHandler<ActionEvent> {
+
+        private final Dialogable dialog;
+
+        public DialogButtonAction(Dialogable dialog) {
+            this.dialog = dialog;
+        }
+
+        @Override
+        public void handle(ActionEvent event) {
+            dialog.showAndWait();
+        }
+    }
+
 }

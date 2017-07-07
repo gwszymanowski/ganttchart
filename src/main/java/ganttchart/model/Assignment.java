@@ -115,7 +115,6 @@ public class Assignment implements Comparable<Assignment>{
         ObjectId _id = (ObjectId) document.get("_id");
         String title = (String) document.get("title");
         Integer number = (Integer) document.get("number");
-        String mark = (String) document.get("mark");
         String startdateString = (String) document.get("startDate");
         String finishdateString = (String) document.get("finishDate");
         Integer workingDays = (Integer) document.get("workingDays");
