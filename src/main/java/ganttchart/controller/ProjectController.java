@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
 import java.time.Instant;
@@ -77,16 +78,14 @@ public class ProjectController implements Initializable {
         LocalDate first = p.getStartDate();
         LocalDate last = p.getLastDay();
 
-//        ObservableList<TableColumn> columnList = datesTableView.getColumns();
-//        List<TableColumn> list = new LinkedList<>();
+//        ObservableList<TableColumn> list = datesTableView.getColumns();
 //        while(!first.equals(last)) {
-//            System.out.println(first);
 //            TableColumn tb = new TableColumn();
-//            tb.setGraphic(factory.getRotated(FileUtil.convertDateToString(first)));
+//            tb.setGraphic(factory.getRotated(FileUtil.convertDateToString(first))); //rotates the String
 //            list.add(tb);
 //            first = first.plusDays(1);
 //        }
-//        columnList.addAll(list);
+//        datesTableView.setItems(list);
 
 
     }
