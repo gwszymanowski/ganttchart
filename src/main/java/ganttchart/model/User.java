@@ -45,29 +45,6 @@ public class User implements Comparable<User>{
         this.lastname = lastname;
     }
 
-
-    public Document toDocument() {
-        Document document = new Document();
-        document.append("firstname", firstname);
-        document.append("lastname", lastname);
-
-        return document;
-    }
-
-    public static User fromDocument(Document document) {
-        User user = new User();
-
-        ObjectId _id = (ObjectId) document.get("_id");
-        String firstname = (String) document.get("firstname");
-        String lastname = (String)document.get("lastname");
-
-        user.set_id(_id);
-        user.setFirstname(firstname);
-        user.setLastname(lastname);
-
-        return user;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

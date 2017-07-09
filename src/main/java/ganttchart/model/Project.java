@@ -3,6 +3,8 @@ package ganttchart.model;
 
 import com.mongodb.BasicDBList;
 import ganttchart.util.FileUtil;
+import javafx.scene.control.TableColumn;
+import org.apache.tomcat.jni.Local;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
@@ -84,31 +86,6 @@ public class Project implements Comparable<Project> {
             return LocalDate.now();
 
         return tasks.stream().map(u -> u.getFinishDate()).max(LocalDate::compareTo).get();
-    }
-
-    public Document toDocument() {
-        Document document = new Document();
-        document.append("name", name);
-        document.append("startDate", getStartDateString());
-        document.append("members", getMembersList());
-        document.append("tasks", tasks);
-        return document;
-    }
-
-    public static Project fromDocument(Document document) {
-        Project project = new Project();
-        ObjectId _id = (ObjectId) document.get("_id");
-        String name = (String) document.get("name");
-
-        String startdateString = (String) document.get("startDate");
-        project.set_id(_id);
-        project.setName(name);
-
-        List<User> members = project.getMembers();
-        project.setMembers(members);
-        project.setStartDate(FileUtil.convertStringToLocalDate(startdateString));
-
-        return project;
     }
 
     @Override

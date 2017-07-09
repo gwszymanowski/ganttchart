@@ -4,18 +4,16 @@ import ganttchart.gui.elements.Dialogable;
 import ganttchart.gui.elements.MembersDialog;
 import ganttchart.gui.elements.NewAssignmentDialog;
 import ganttchart.model.Project;
-import ganttchart.entity.ProjectRepository;
+import ganttchart.repository.ProjectRepository;
+import ganttchart.service.ProjectService;
 import ganttchart.util.FileUtil;
 import ganttchart.util.TableColumnFactory;
+import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.MapValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.util.Callback;
-import javafx.util.StringConverter;
 
 import java.net.URL;
 import java.time.LocalDate;
@@ -84,9 +82,26 @@ public class ProjectController implements Initializable {
         daysCompleted.setGraphic(factory.getRotated("Days completed"));
         daysRemaining.setGraphic(factory.getRotated("Days remaining"));
 
-        LocalDate first = p.getStartDate();
-        LocalDate last = p.getLastDay();
-        
+        datesTableView.setEditable(false);
+
+        List<TableColumn> tb = datesTableView.getColumns();
+
+        tb.addAll(ProjectService.getPeriod(p));
+
+        datesTableView.getColumns().addListener(new ListChangeListener() {
+            public boolean suspended;
+
+            @Override
+            public void onChanged(Change change) {
+                change.next();
+                if (change.wasReplaced() && !suspended) {
+                    this.suspended = true;
+                    datesTableView.getColumns().setAll(ProjectService.getPeriod(p));
+                    this.suspended = false;
+                }
+            }
+        });
+
     }
 
     private class DialogButtonAction implements EventHandler<ActionEvent> {

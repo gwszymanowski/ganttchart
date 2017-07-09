@@ -1,10 +1,8 @@
-package ganttchart.entity;
+package ganttchart.repository;
 
-import com.mongodb.MongoClient;
-import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 import ganttchart.model.Assignment;
+import ganttchart.service.AssignmentService;
 import ganttchart.util.ConnectionManager;
 import org.bson.Document;
 
@@ -26,14 +24,7 @@ public class AssignmentRepository {
     }
 
     public void save(Assignment entity) {
-        Document document = new Document();
-        document.append("title", entity.getTitle());
-        document.append("number", entity.getNumber());
-        document.append("startDate", entity.getStartDate());
-        document.append("finishDate", entity.getFinishDate());
-        document.append("workingDays", entity.getWorkingDays());
-        document.append("completed", entity.getCompleted());
-        collection.insertOne(document);
+        collection.insertOne(AssignmentService.toDocument(entity));
     }
 
     public void delete(String title) {
@@ -43,7 +34,7 @@ public class AssignmentRepository {
 
     public Assignment findByTitle(String title) {
         Document doc = collection.find(eq("title", title)).first();
-        return Assignment.fromDocument(doc);
+        return AssignmentService.fromDocument(doc);
     }
 
     public List<Assignment> getAll() {
@@ -52,9 +43,8 @@ public class AssignmentRepository {
         Iterator<Document> documents = collection.find().iterator();
         while(documents.hasNext()) {
             Document next = documents.next();
-            assignments.add(Assignment.fromDocument(next));
+            assignments.add(AssignmentService.fromDocument(next));
         }
-
         return assignments;
     }
 }

@@ -91,44 +91,12 @@ public class Assignment implements Comparable<Assignment>{
         return FileUtil.convertDateToString(startDate);
     }
 
-    private String finishDateString() {
+    public String finishDateString() {
         return FileUtil.convertDateToString(finishDate);
     }
 
     public void addSubTask(Assignment assignment) {
         subTasks.add(assignment);
-    }
-
-    public Document toDocument() {
-        Document document = new Document();
-        document.append("title", title);
-        document.append("number", number);
-        document.append("startDate", startDateString());
-        document.append("finishDate", finishDateString());
-        document.append("workingDays", workingDays);
-        document.append("completed", completed);
-        return document;
-    }
-
-    public static Assignment fromDocument(Document document) {
-        Assignment a = new Assignment();
-        ObjectId _id = (ObjectId) document.get("_id");
-        String title = (String) document.get("title");
-        Integer number = (Integer) document.get("number");
-        String startdateString = (String) document.get("startDate");
-        String finishdateString = (String) document.get("finishDate");
-        Integer workingDays = (Integer) document.get("workingDays");
-        Integer completed = (Integer) document.get("completed");
-
-        a.set_id(_id);
-        a.setTitle(title);
-        a.setNumber(number);
-        a.setStartDate(FileUtil.convertStringToLocalDate(startdateString));
-        a.setFinishDate(FileUtil.convertStringToLocalDate(finishdateString));
-        a.setWorkingDays(workingDays);
-        a.setCompleted(completed);
-
-        return a;
     }
 
     @Override

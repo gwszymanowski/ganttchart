@@ -1,7 +1,7 @@
 package ganttchart.controller;
 
 import ganttchart.model.User;
-import ganttchart.entity.UserRepository;
+import ganttchart.repository.UserRepository;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

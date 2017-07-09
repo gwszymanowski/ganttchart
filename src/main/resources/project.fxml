@@ -40,7 +40,10 @@
         </TableView>
     </left>
     <center>
-        <TableView id="datesTableView">
+        <TableView fx:id="datesTableView" >
+            <columns>
+
+            </columns>
         </TableView>
     </center>
 

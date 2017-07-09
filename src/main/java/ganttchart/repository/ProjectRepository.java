@@ -1,11 +1,9 @@
-package ganttchart.entity;
+package ganttchart.repository;
 
 
-import com.mongodb.MongoClient;
-import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 import ganttchart.model.Project;
+import ganttchart.service.ProjectService;
 import ganttchart.util.ConnectionManager;
 import org.bson.Document;
 
@@ -18,8 +16,7 @@ import static com.mongodb.client.model.Filters.eq;
 /**
  * Created by gwszymanowski on 2017-05-17.
  */
-public class
-ProjectRepository {
+public class ProjectRepository {
 
     private MongoCollection<Document> collection = null;
 
@@ -28,7 +25,7 @@ ProjectRepository {
     }
 
     public void save(Project entity) {
-        collection.insertOne(entity.toDocument());
+        collection.insertOne(ProjectService.toDocument(entity));
     }
 
     public List<Project> getAll() {
@@ -38,7 +35,7 @@ ProjectRepository {
 
         while(documents.hasNext()) {
             Document next = documents.next();
-            projects.add(Project.fromDocument(next));
+            projects.add(ProjectService.fromDocument(next));
         }
 
         return projects;
@@ -46,15 +43,11 @@ ProjectRepository {
 
     public Project findByName(String name) {
         Document doc = collection.find(eq("name", name)).first();
-        return Project.fromDocument(doc);
+        return ProjectService.fromDocument(doc);
     }
 
     public boolean validateByName(String name) {
         Document doc = collection.find(eq("name", name)).first();
         return doc != null ? true : false;
-    }
-
-    public long count() {
-        return collection.count();
     }
 }

@@ -1,13 +1,11 @@
-package ganttchart.entity;
+package ganttchart.repository;
 
 
 import com.mongodb.BasicDBObject;
-import com.mongodb.MongoClient;
-import com.mongodb.MongoClientURI;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 import ganttchart.model.User;
+import ganttchart.service.UserService;
 import ganttchart.util.ConnectionManager;
 import org.bson.Document;
 
@@ -29,7 +27,7 @@ public class UserRepository {
     }
 
     public void save(User entity) {
-        collection.insertOne(entity.toDocument());
+        collection.insertOne(UserService.toDocument(entity));
     }
 
     public boolean validateByUsername(String username) {
@@ -44,7 +42,7 @@ public class UserRepository {
 
     public User findByLastname(String lastname) {
         FindIterable<Document> it = collection.find(eq("lastname", lastname)).limit(1);
-        return it.first() != null ? User.fromDocument(it.first()) : new User();
+        return it.first() != null ? UserService.fromDocument(it.first()) : new User();
     }
 
     public boolean validate(String username, String password) {
@@ -63,7 +61,7 @@ public class UserRepository {
 
         while(documents.hasNext()) {
             Document next = documents.next();
-            users.add(User.fromDocument(next));
+            users.add(UserService.fromDocument(next));
         }
 
         return users;
