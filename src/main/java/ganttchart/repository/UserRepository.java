@@ -4,7 +4,7 @@ package ganttchart.repository;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
-import ganttchart.model.User;
+import ganttchart.model.Person;
 import ganttchart.service.UserService;
 import ganttchart.util.ConnectionManager;
 import org.bson.Document;
@@ -26,7 +26,7 @@ public class UserRepository {
         collection = ConnectionManager.getDatabase().getCollection("user");
     }
 
-    public void save(User entity) {
+    public void save(Person entity) {
         collection.insertOne(UserService.toDocument(entity));
     }
 
@@ -40,9 +40,9 @@ public class UserRepository {
         return it.first() != null ? true : false;
     }
 
-    public User findByLastname(String lastname) {
+    public Person findByLastname(String lastname) {
         FindIterable<Document> it = collection.find(eq("lastname", lastname)).limit(1);
-        return it.first() != null ? UserService.fromDocument(it.first()) : new User();
+        return it.first() != null ? UserService.fromDocument(it.first()) : new Person();
     }
 
     public boolean validate(String username, String password) {
@@ -55,16 +55,16 @@ public class UserRepository {
         return it.first() != null ? true : false;
     }
 
-    public List<User> getAll() {
-        List<User> users = new LinkedList<>();
+    public List<Person> getAll() {
+        List<Person> people = new LinkedList<>();
         Iterator<Document> documents = collection.find().iterator();
 
         while(documents.hasNext()) {
             Document next = documents.next();
-            users.add(UserService.fromDocument(next));
+            people.add(UserService.fromDocument(next));
         }
 
-        return users;
+        return people;
     }
 
 }

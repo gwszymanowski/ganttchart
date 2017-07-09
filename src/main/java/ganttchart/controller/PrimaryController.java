@@ -1,19 +1,12 @@
 package ganttchart.controller;
 
-import ganttchart.gui.elements.ProjectCell;
-import ganttchart.model.Project;
-import ganttchart.model.User;
 import ganttchart.repository.ProjectRepository;
 import ganttchart.repository.UserRepository;
-import impl.org.controlsfx.autocompletion.AutoCompletionTextFieldBinding;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
+import javafx.scene.control.*;
 
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -21,10 +14,13 @@ import java.util.ResourceBundle;
  */
 public class PrimaryController implements Initializable{
 
+//    @FXML
+//    private TreeView projectTreeView;
+//    @FXML
+//    private TextField nameField;
+
     @FXML
-    private TreeView projectTreeView;
-    @FXML
-    private TextField nameField;
+    private TableView projectTable;
 
     private UserRepository userRepository = new UserRepository();
 
@@ -32,35 +28,7 @@ public class PrimaryController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        initializeTreeView();
+        projectTable.setColumnResizePolicy(p -> true);
     }
 
-    private void initializeTreeView() {
-        List<Project> projects = projectRepository.getAll();
-        TreeItem<String> rootItem = new TreeItem<> ("Projects");
-        projectTreeView.setCellFactory(param -> new ProjectCell());
-
-        for(Project p : projects) {
-            TreeItem<String> rootItem1 = new TreeItem<> (p.getName());
-            rootItem1.setExpanded(true);
-
-            for(User u : p.getMembers()) {
-                TreeItem<String> item = new TreeItem<> (u.toString());
-                rootItem1.getChildren().add(item);
-            }
-
-            rootItem.getChildren().add(rootItem1);
-        }
-        projectTreeView.setRoot(rootItem);
-    }
-
-
-    public void createProjectAction() {
-        String name = nameField.getText();
-
-        if(!projectRepository.validateByName(name) && name.length() > 0) {
-            Project p = new Project(name);
-            projectRepository.save(p);
-        }
-    }
 }

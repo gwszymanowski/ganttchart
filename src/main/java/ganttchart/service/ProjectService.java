@@ -1,7 +1,7 @@
 package ganttchart.service;
 
 import ganttchart.model.Project;
-import ganttchart.model.User;
+import ganttchart.model.Person;
 import ganttchart.util.FileUtil;
 import ganttchart.util.TableColumnFactory;
 import javafx.scene.control.TableColumn;
@@ -52,7 +52,7 @@ public class ProjectService {
         project.set_id(_id);
         project.setName(name);
 
-        List<User> members = project.getMembers();
+        List<Person> members = project.getMembers();
         project.setMembers(members);
         project.setStartDate(FileUtil.convertStringToLocalDate(startdateString));
 

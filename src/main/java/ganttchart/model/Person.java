@@ -1,22 +1,21 @@
 package ganttchart.model;
 
 
-import org.bson.Document;
 import org.bson.types.ObjectId;
 
 /**
  * Created by gwszymanowski on 2017-05-13.
  */
-public class User implements Comparable<User>{
+public class Person implements Comparable<Person>{
 
     private ObjectId _id;
     private String firstname = "null";
     private String lastname = "null";
 
-    public User() {
+    public Person() {
     }
 
-    public User(String firstname, String lastname) {
+    public Person(String firstname, String lastname) {
         this.firstname = firstname;
         this.lastname = lastname;
     }
@@ -50,10 +49,10 @@ public class User implements Comparable<User>{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        User user = (User) o;
+        Person person = (Person) o;
 
-        if (!firstname.equals(user.firstname)) return false;
-        return lastname.equals(user.lastname);
+        if (!firstname.equals(person.firstname)) return false;
+        return lastname.equals(person.lastname);
     }
 
     @Override
@@ -64,7 +63,7 @@ public class User implements Comparable<User>{
     }
 
     @Override
-    public int compareTo(User o) {
+    public int compareTo(Person o) {
         return lastname.compareTo(o.getLastname());
     }
 

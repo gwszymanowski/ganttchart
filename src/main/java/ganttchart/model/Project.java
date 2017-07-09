@@ -3,9 +3,6 @@ package ganttchart.model;
 
 import com.mongodb.BasicDBList;
 import ganttchart.util.FileUtil;
-import javafx.scene.control.TableColumn;
-import org.apache.tomcat.jni.Local;
-import org.bson.Document;
 import org.bson.types.ObjectId;
 
 import java.time.LocalDate;
@@ -23,7 +20,7 @@ public class Project implements Comparable<Project> {
     private String name = "null";
     private LocalDate startDate = LocalDate.now();
     private Set<Assignment> tasks = new LinkedHashSet<>();
-    private List<User> members = new LinkedList<>();
+    private List<Person> members = new LinkedList<>();
 
     public Project() {
     }
@@ -48,9 +45,9 @@ public class Project implements Comparable<Project> {
         this.name = name;
     }
 
-    public List<User> getMembers() { return members; }
+    public List<Person> getMembers() { return members; }
 
-    public void setMembers(List<User> members) { this.members = members; }
+    public void setMembers(List<Person> members) { this.members = members; }
 
     public LocalDate getStartDate() {
         return startDate;

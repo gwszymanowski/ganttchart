@@ -1,6 +1,6 @@
 package ganttchart.controller;
 
-import ganttchart.model.User;
+import ganttchart.model.Person;
 import ganttchart.repository.UserRepository;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -65,8 +65,8 @@ public class SignupController {
     }
 
     private void createUser() {
-        User user = new User(firstnameField.getText(), lastnameField.getText());
-        repository.save(user);
+        Person person = new Person(firstnameField.getText(), lastnameField.getText());
+        repository.save(person);
     }
 
 }

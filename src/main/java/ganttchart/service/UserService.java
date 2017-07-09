@@ -1,6 +1,6 @@
 package ganttchart.service;
 
-import ganttchart.model.User;
+import ganttchart.model.Person;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
@@ -12,24 +12,24 @@ public class UserService {
     private UserService() {
     }
 
-    public static Document toDocument(User user) {
+    public static Document toDocument(Person person) {
         Document document = new Document();
-        document.append("firstname", user.getFirstname());
-        document.append("lastname", user.getLastname());
+        document.append("firstname", person.getFirstname());
+        document.append("lastname", person.getLastname());
         return document;
     }
 
-    public static User fromDocument(Document document) {
-        User user = new User();
+    public static Person fromDocument(Document document) {
+        Person person = new Person();
 
         ObjectId _id = (ObjectId) document.get("_id");
         String firstname = (String) document.get("firstname");
         String lastname = (String)document.get("lastname");
 
-        user.set_id(_id);
-        user.setFirstname(firstname);
-        user.setLastname(lastname);
+        person.set_id(_id);
+        person.setFirstname(firstname);
+        person.setLastname(lastname);
 
-        return user;
+        return person;
     }
 }

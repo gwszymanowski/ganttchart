@@ -68,7 +68,6 @@ public class ProjectController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Project p = projectRepository.findByName(title);
-
         initializeLabels(p);
         initializeTableView();
         initializeDatesTableView(p);

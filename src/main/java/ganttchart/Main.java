@@ -1,10 +1,12 @@
 package ganttchart;
 
+import ganttchart.gui.elements.GanttMenu;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -28,6 +30,7 @@ public class Main extends Application {
         Parent content = loader.load();
 
         Scene scene = new Scene(content);
+
         primaryStage.setTitle("Log in");
         primaryStage.setScene(scene);
         primaryStage.show();
