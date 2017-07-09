@@ -13,6 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
 
 import java.net.URL;
@@ -66,26 +67,33 @@ public class ProjectController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        Project p = projectRepository.findByName(title);
+
+        initializeLabels(p);
+        initializeTableView();
+        initializeDatesTableView(p);
+    }
+
+    private void initializeLabels(Project p) {
         titleLabel.setText(title);
         memberList.setOnAction(new DialogButtonAction(new MembersDialog()));
         newAssignment.setOnAction(new DialogButtonAction(new NewAssignmentDialog()));
-
-        Project p = projectRepository.findByName(title);
-
         startDateLabel.setText("Startdate is: " + FileUtil.convertDateToString(p.getStartDate()));
         todayIsLabel.setText("Today is: " + FileUtil.convertDateToString(LocalDate.now()));
+    }
 
+    private void initializeTableView() {
         TableColumnFactory factory = new TableColumnFactory();
         duration.setGraphic(factory.getRotated("Duration(days)"));
         completed.setGraphic(factory.getRotated("(%) Completed"));
         workingDays.setGraphic(factory.getRotated("Working days"));
         daysCompleted.setGraphic(factory.getRotated("Days completed"));
         daysRemaining.setGraphic(factory.getRotated("Days remaining"));
+    }
 
+    private void initializeDatesTableView(Project p) {
         datesTableView.setEditable(false);
-
         List<TableColumn> tb = datesTableView.getColumns();
-
         tb.addAll(ProjectService.getPeriod(p));
 
         datesTableView.getColumns().addListener(new ListChangeListener() {

@@ -5,7 +5,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
-
     <top>
         <GridPane>
             <padding>
@@ -24,7 +23,7 @@
         </GridPane>
     </top>
     <left>
-        <TableView id="tableView" >
+        <TableView fx:id="tableView" >
             <columns>
                 <TableColumn text="Title" />
                 <TableColumn text="Type" />
@@ -41,9 +40,6 @@
     </left>
     <center>
         <TableView fx:id="datesTableView" >
-            <columns>
-
-            </columns>
         </TableView>
     </center>
 

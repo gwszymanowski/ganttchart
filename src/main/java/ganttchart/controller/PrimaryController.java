@@ -25,8 +25,6 @@ public class PrimaryController implements Initializable{
     private TreeView projectTreeView;
     @FXML
     private TextField nameField;
-    @FXML
-    private TextField leaderField;
 
     private UserRepository userRepository = new UserRepository();
 
@@ -34,12 +32,12 @@ public class PrimaryController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        new AutoCompletionTextFieldBinding(leaderField, param -> userRepository.getAll());
+        initializeTreeView();
+    }
 
+    private void initializeTreeView() {
         List<Project> projects = projectRepository.getAll();
-
         TreeItem<String> rootItem = new TreeItem<> ("Projects");
-
         projectTreeView.setCellFactory(param -> new ProjectCell());
 
         for(Project p : projects) {

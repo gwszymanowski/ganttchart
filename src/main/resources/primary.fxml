@@ -9,7 +9,7 @@
           fx:controller="ganttchart.controller.PrimaryController">
 
     <left>
-        <TreeView fx:id="projectTreeView">
+        <TreeView fx:id="projectTreeView" >
         </TreeView>
     </left>
 
@@ -20,12 +20,8 @@
             </padding>
             <Label fx:id="name" text="Project name:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
             <TextField fx:id="nameField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label fx:id="leader" text="Leader:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-            <TextField fx:id="leaderField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Button fx:id="create" text="Create" GridPane.columnIndex="0" GridPane.rowIndex="3" onAction="#createProjectAction"  />
+            <Button fx:id="create" text="Create" GridPane.columnIndex="0" GridPane.rowIndex="2" onAction="#createProjectAction"  />
         </GridPane>
     </center>
-
-
 
 </BorderPane>

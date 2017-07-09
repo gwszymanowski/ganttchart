@@ -13,6 +13,7 @@ public final class TableColumnFactory {
         Label label = new Label(title);
         label.setRotate(270);
         label.setPadding(new Insets(5,5,5,5));
+        label.setMinWidth(100);
         return new Group(label);
     }
 
