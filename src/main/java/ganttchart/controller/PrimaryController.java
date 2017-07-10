@@ -14,17 +14,8 @@ import java.util.ResourceBundle;
  */
 public class PrimaryController implements Initializable{
 
-//    @FXML
-//    private TreeView projectTreeView;
-//    @FXML
-//    private TextField nameField;
-
     @FXML
     private TableView projectTable;
-
-    private UserRepository userRepository = new UserRepository();
-
-    private ProjectRepository projectRepository = new ProjectRepository();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

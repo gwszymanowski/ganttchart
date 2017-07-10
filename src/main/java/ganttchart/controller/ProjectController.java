@@ -2,7 +2,7 @@ package ganttchart.controller;
 
 import ganttchart.gui.elements.Dialogable;
 import ganttchart.gui.elements.MembersDialog;
-import ganttchart.gui.elements.NewAssignmentDialog;
+import ganttchart.gui.elements.CreateAssignmentDialog;
 import ganttchart.model.Project;
 import ganttchart.repository.ProjectRepository;
 import ganttchart.service.ProjectService;
@@ -13,7 +13,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.control.*;
 
 import java.net.URL;
@@ -76,7 +75,7 @@ public class ProjectController implements Initializable {
     private void initializeLabels(Project p) {
         titleLabel.setText(title);
         memberList.setOnAction(new DialogButtonAction(new MembersDialog()));
-        newAssignment.setOnAction(new DialogButtonAction(new NewAssignmentDialog()));
+        newAssignment.setOnAction(new DialogButtonAction(new CreateAssignmentDialog(p)));
         startDateLabel.setText("Startdate is: " + FileUtil.convertDateToString(p.getStartDate()));
         todayIsLabel.setText("Today is: " + FileUtil.convertDateToString(LocalDate.now()));
     }
