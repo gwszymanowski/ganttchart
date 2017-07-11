@@ -31,7 +31,7 @@ public class Main extends Application {
 
         Scene scene = new Scene(content);
 
-        primaryStage.setTitle("Log in");
+        primaryStage.setTitle("Gantt chart");
         primaryStage.setScene(scene);
         primaryStage.show();
     }

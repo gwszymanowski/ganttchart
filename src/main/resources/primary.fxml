@@ -8,6 +8,7 @@
           xmlns:fx="http://javafx.com/fxml"
           fx:controller="ganttchart.controller.PrimaryController"
           >
+
     <top>
         <ganttchart.gui.elements.GanttMenu />
     </top>
@@ -18,31 +19,11 @@
             </padding>
             <TableView fx:id="projectTable">
                 <columns>
-                    <TableColumn text="Name" minWidth="250"/>
+                    <TableColumn fx:id="name" text="Name" minWidth="250"/>
                     <TableColumn text="Options" minWidth="250" />
                 </columns>
             </TableView>
         </GridPane>
     </center>
-
-    <!--<left>-->
-        <!--<TreeView fx:id="projectTreeView" >-->
-        <!--</TreeView>-->
-    <!--</left>-->
-
-    <!--<center>-->
-        <!--<GridPane alignment="center" hgap="10" vgap="10" >-->
-            <!--<padding>-->
-                <!--<Insets top="25" right="25" left="25" bottom="25"/>-->
-            <!--</padding>-->
-            <!--<Label fx:id="name" text="Project name:" GridPane.columnIndex="0" GridPane.rowIndex="1" />-->
-            <!--<TextField fx:id="nameField" GridPane.columnIndex="1" GridPane.rowIndex="1" />-->
-            <!--<Button fx:id="create" text="Create" GridPane.columnIndex="0" GridPane.rowIndex="2" onAction="#createProjectAction"  />-->
-        <!--</GridPane>-->
-    <!--</center>-->
-
-
-
-
 
 </BorderPane>

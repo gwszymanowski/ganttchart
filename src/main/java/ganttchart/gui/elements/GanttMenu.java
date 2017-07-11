@@ -1,9 +1,15 @@
 package ganttchart.gui.elements;
 
+import ganttchart.controller.ProjectController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.Optional;
 
 /**
@@ -31,14 +37,16 @@ public class GanttMenu extends MenuBar {
     private Menu getViewMenu() {
         Menu viewMenu = new Menu("View");
         projectListItem = new MenuItem("projects");
+        projectListItem.setOnAction(new SwitchViewEvent("/primary.fxml"));
         personListItem = new MenuItem("people");
+        personListItem.setOnAction(new SwitchViewEvent("/person.fxml"));
         viewMenu.getItems().addAll(projectListItem, personListItem);
         return viewMenu;
     }
 
     private class ShowDialogEvent implements EventHandler<ActionEvent> {
 
-        private Dialogable dialog;
+        private final Dialogable dialog;
 
         public ShowDialogEvent(Dialogable dialog) {
             this.dialog = dialog;
@@ -53,4 +61,31 @@ public class GanttMenu extends MenuBar {
         }
     }
 
+    private class SwitchViewEvent implements EventHandler<ActionEvent> {
+
+        private final String path;
+
+        public SwitchViewEvent(String path) {
+            this.path = path;
+        }
+
+        @Override
+        public void handle(ActionEvent event) {
+            Stage stage = null;
+            Parent root = null;
+            try {
+                stage = (Stage) getScene().getWindow();
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(getClass().getResource(path));
+                root = loader.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
+    }
 }
+
