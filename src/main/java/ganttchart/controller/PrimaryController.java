@@ -1,7 +1,5 @@
 package ganttchart.controller;
 
-import ganttchart.repository.ProjectRepository;
-import ganttchart.repository.UserRepository;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;

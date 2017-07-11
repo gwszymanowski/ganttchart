@@ -11,7 +11,7 @@ import org.controlsfx.control.ListSelectionView;
 /**
  * Created by gwszymanowski on 2017-07-07.
  */
-public class MembersDialog extends Dialog<Pair<String, String>> implements Dialogable {
+public class MembersDialog extends Dialog<ButtonType> implements Dialogable {
 
     public MembersDialog() {
         setTitle("Edit members");
@@ -22,6 +22,11 @@ public class MembersDialog extends Dialog<Pair<String, String>> implements Dialo
         getDialogPane().getButtonTypes().addAll(loginButtonType);
 
         getDialogPane().setContent(new MembersGridPane());
+    }
+
+    @Override
+    public void save() {
+
     }
 
     private class MembersGridPane extends GridPane {

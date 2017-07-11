@@ -1,31 +1,32 @@
 package ganttchart.gui.elements;
 
-import ganttchart.model.Assignment;
 import ganttchart.model.Project;
-import impl.org.controlsfx.autocompletion.AutoCompletionTextFieldBinding;
 import javafx.geometry.Insets;
-import javafx.scene.control.*;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import javafx.util.Callback;
-import javafx.util.Pair;
-import org.controlsfx.control.textfield.AutoCompletionBinding;
-
-import java.util.Collection;
 
 /**
  * Created by gwszymanowski on 2017-07-07.
  */
-public class CreateAssignmentDialog extends Dialog<Pair<String,String>> implements Dialogable {
+public class CreateAssignmentDialog extends Dialog<ButtonType> implements Dialogable {
 
     public CreateAssignmentDialog(Project project) {
         setTitle("Create assignment");
         setHeaderText(null);
         setGraphic(null);
 
-        ButtonType loginButtonType = new ButtonType("Create", ButtonBar.ButtonData.OK_DONE);
+        ButtonType loginButtonType = new ButtonType("Create");
         getDialogPane().getButtonTypes().addAll(loginButtonType);
 
         getDialogPane().setContent(new CreateAssignmentGridPane(project));
+    }
+
+    @Override
+    public void save() {
+
     }
 
     private class CreateAssignmentGridPane extends GridPane {

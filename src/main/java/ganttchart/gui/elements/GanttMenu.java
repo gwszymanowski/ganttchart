@@ -2,16 +2,16 @@ package ganttchart.gui.elements;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
+
+import java.util.Optional;
 
 /**
  * Created by gwszymanowski on 2017-07-09.
  */
 public class GanttMenu extends MenuBar {
 
-    MenuItem projectItem, personItem, projectListItem, personListItem;
+    private MenuItem projectItem, personItem, projectListItem, personListItem;
 
     public GanttMenu() {
         super();
@@ -46,7 +46,10 @@ public class GanttMenu extends MenuBar {
 
         @Override
         public void handle(ActionEvent event) {
-            dialog.showAndWait();
+            Optional<ButtonType> result = dialog.showAndWait();
+
+            if(result.isPresent() && Optional.of(result.get()).get().getButtonData() == ButtonBar.ButtonData.OTHER)
+                dialog.save();
         }
     }
 

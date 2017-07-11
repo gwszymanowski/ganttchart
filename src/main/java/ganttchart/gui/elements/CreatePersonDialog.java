@@ -1,14 +1,22 @@
 package ganttchart.gui.elements;
 
+import ganttchart.model.Person;
+import ganttchart.model.Project;
+import ganttchart.repository.PersonRepository;
+import ganttchart.util.AlertElementType;
+import ganttchart.util.AlertReason;
+import ganttchart.util.AlertUtil;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import javafx.util.Pair;
 
 /**
  * Created by gwszymanowski on 2017-07-10.
  */
-public class CreatePersonDialog extends Dialog<Pair<String,String>> implements Dialogable {
+public class CreatePersonDialog extends Dialog<ButtonType> implements Dialogable {
+
+    private CreatePersonGridPane gridpane = new CreatePersonGridPane();
+    private PersonRepository repo = new PersonRepository();
 
     public CreatePersonDialog() {
         setTitle("Create person");
@@ -18,12 +26,28 @@ public class CreatePersonDialog extends Dialog<Pair<String,String>> implements D
         ButtonType loginButtonType = new ButtonType("Create", ButtonBar.ButtonData.OK_DONE);
         getDialogPane().getButtonTypes().addAll(loginButtonType);
 
-        getDialogPane().setContent(new CreatePersonGridPane());
+        getDialogPane().setContent(gridpane);
+    }
+
+    @Override
+    public void save() {
+        String firstname = gridpane.firstnameField.getText();
+        String lastname = gridpane.lastnameField.getText();
+
+        if(firstname.length() == 0 || lastname.length() == 0)
+            AlertUtil.getErrorAlert(AlertReason.ZERO_LENGTH).showAndWait();
+        else if(repo.ifExists(firstname, lastname))
+            AlertUtil.getErrorAlert(AlertReason.ALREADY_EXISTS).showAndWait();
+        else {
+            repo.save(new Person(firstname, lastname));
+            AlertUtil.getSaveConfirmAlert(AlertElementType.PROJECT).showAndWait();
+        }
+
     }
 
     private class CreatePersonGridPane extends GridPane {
 
-        TextField firstnameField, lastnameField;
+        private TextField firstnameField, lastnameField;
 
         public CreatePersonGridPane() {
             setHgap(10);
@@ -31,10 +55,8 @@ public class CreatePersonDialog extends Dialog<Pair<String,String>> implements D
             setPadding(new Insets(20, 150, 10, 10));
 
             firstnameField = new TextField();
-
             add(new Label("Firstname: "), 0, 1);
             add(firstnameField, 1, 1);
-
 
             lastnameField = new TextField();
             add(new Label("Lastname: "), 0, 2);

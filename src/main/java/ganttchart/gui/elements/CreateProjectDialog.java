@@ -1,24 +1,55 @@
 package ganttchart.gui.elements;
 
+import ganttchart.model.Project;
+import ganttchart.repository.ProjectRepository;
+import ganttchart.util.AlertElementType;
+import ganttchart.util.AlertReason;
+import ganttchart.util.AlertUtil;
+import javafx.event.EventDispatchChain;
 import javafx.geometry.Insets;
-import javafx.scene.control.*;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import javafx.util.Pair;
 
 /**
  * Created by gwszymanowski on 2017-07-10.
  */
-public class CreateProjectDialog extends Dialog<Pair<String,String>> implements Dialogable {
+public class CreateProjectDialog extends Dialog<ButtonType> implements Dialogable {
+
+    private CreateProjectGridPane gridpane = new CreateProjectGridPane();
+    private ProjectRepository repo = new ProjectRepository();
 
     public CreateProjectDialog() {
         setTitle("Create project");
         setHeaderText(null);
         setGraphic(null);
+        ButtonType confirmButtonType = new ButtonType("Create");
 
-        ButtonType loginButtonType = new ButtonType("Create", ButtonBar.ButtonData.OK_DONE);
-        getDialogPane().getButtonTypes().addAll(loginButtonType);
+        getDialogPane().getButtonTypes().addAll(confirmButtonType);
 
-       getDialogPane().setContent(new CreateProjectGridPane());
+        getDialogPane().setContent(gridpane);
+    }
+
+    @Override
+    public EventDispatchChain buildEventDispatchChain(EventDispatchChain tail) {
+        return super.buildEventDispatchChain(tail);
+    }
+
+    @Override
+    public void save() {
+        String name = gridpane.nameField.getText();
+
+        if(name.length() == 0)
+            AlertUtil.getErrorAlert(AlertReason.ZERO_LENGTH).showAndWait();
+        else if(repo.ifExists(name))
+            AlertUtil.getErrorAlert(AlertReason.ALREADY_EXISTS).showAndWait();
+        else {
+            repo.save(new Project(name));
+            AlertUtil.getSaveConfirmAlert(AlertElementType.PROJECT).showAndWait();
+        }
+
     }
 
     private class CreateProjectGridPane extends GridPane {
@@ -34,7 +65,6 @@ public class CreateProjectDialog extends Dialog<Pair<String,String>> implements 
 
             add(new Label("Name: "), 0, 1);
             add(nameField, 1, 1);
-
         }
     }
 

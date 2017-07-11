@@ -1,7 +1,7 @@
 package ganttchart.gui.elements;
 
 import ganttchart.controller.ProjectController;
-import ganttchart.repository.UserRepository;
+import ganttchart.repository.PersonRepository;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -18,7 +18,7 @@ import java.io.IOException;
  */
 public class ProjectCell extends TreeCell<String> {
 
-    final private UserRepository userRepository = new UserRepository();
+    final private PersonRepository userRepository = new PersonRepository();
     private String title;
 
     public ProjectCell() {

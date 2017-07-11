@@ -1,14 +1,19 @@
 package ganttchart.repository;
 
 
+import com.jayway.jsonpath.Criteria;
 import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Filters;
 import ganttchart.model.Person;
 import ganttchart.service.UserService;
 import ganttchart.util.ConnectionManager;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 
+import javax.management.Query;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,11 +23,11 @@ import static com.mongodb.client.model.Filters.eq;
 /**
  * Created by gwszymanowski on 2017-05-17.
  */
-public class UserRepository {
+public class PersonRepository {
 
     private MongoCollection<Document> collection = null;
 
-    public UserRepository() {
+    public PersonRepository() {
         collection = ConnectionManager.getDatabase().getCollection("user");
     }
 
@@ -65,6 +70,12 @@ public class UserRepository {
         }
 
         return people;
+    }
+
+    public boolean ifExists(String firstname, String lastname) {
+        Document doc = collection.find(Filters.and( Filters.eq("firstname", firstname),
+                Filters.eq("lastname", lastname))).first();
+        return doc != null ? true : false;
     }
 
 }

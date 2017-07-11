@@ -46,7 +46,7 @@ public class ProjectRepository {
         return ProjectService.fromDocument(doc);
     }
 
-    public boolean validateByName(String name) {
+    public boolean ifExists(String name) {
         Document doc = collection.find(eq("name", name)).first();
         return doc != null ? true : false;
     }
