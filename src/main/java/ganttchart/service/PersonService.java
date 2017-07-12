@@ -7,9 +7,9 @@ import org.bson.types.ObjectId;
 /**
  * Created by gwszymanowski on 2017-07-09.
  */
-public class UserService {
+public class PersonService {
 
-    private UserService() {
+    private PersonService() {
     }
 
     public static Document toDocument(Person person) {

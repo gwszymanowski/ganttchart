@@ -1,11 +1,10 @@
 package ganttchart.gui.elements;
 
 import ganttchart.model.Person;
-import ganttchart.model.Project;
 import ganttchart.repository.PersonRepository;
 import ganttchart.util.AlertElementType;
 import ganttchart.util.AlertReason;
-import ganttchart.util.AlertUtil;
+import ganttchart.util.AlertFactory;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -23,7 +22,7 @@ public class CreatePersonDialog extends Dialog<ButtonType> implements Dialogable
         setHeaderText(null);
         setGraphic(null);
 
-        ButtonType loginButtonType = new ButtonType("Create", ButtonBar.ButtonData.OK_DONE);
+        ButtonType loginButtonType = new ButtonType("Create");
         getDialogPane().getButtonTypes().addAll(loginButtonType);
 
         getDialogPane().setContent(gridpane);
@@ -33,14 +32,13 @@ public class CreatePersonDialog extends Dialog<ButtonType> implements Dialogable
     public void save() {
         String firstname = gridpane.firstnameField.getText();
         String lastname = gridpane.lastnameField.getText();
-
         if(firstname.length() == 0 || lastname.length() == 0)
-            AlertUtil.getErrorAlert(AlertReason.ZERO_LENGTH).showAndWait();
+            AlertFactory.getErrorAlert(AlertReason.ZERO_LENGTH).showAndWait();
         else if(repo.ifExists(firstname, lastname))
-            AlertUtil.getErrorAlert(AlertReason.ALREADY_EXISTS).showAndWait();
+            AlertFactory.getErrorAlert(AlertReason.ALREADY_EXISTS).showAndWait();
         else {
             repo.save(new Person(firstname, lastname));
-            AlertUtil.getSaveConfirmAlert(AlertElementType.PROJECT).showAndWait();
+            AlertFactory.getSaveConfirmAlert(AlertElementType.PROJECT).showAndWait();
         }
 
     }

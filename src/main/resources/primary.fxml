@@ -19,8 +19,8 @@
             </padding>
             <TableView fx:id="projectTable">
                 <columns>
-                    <TableColumn fx:id="name" text="Name" minWidth="250"/>
-                    <TableColumn text="Options" minWidth="250" />
+                    <TableColumn fx:id="nameColumn" text="Name" minWidth="250"/>
+                    <TableColumn fx:id="optionsColumn" text="Options" minWidth="250" />
                 </columns>
             </TableView>
         </GridPane>

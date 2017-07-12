@@ -1,5 +1,6 @@
 package ganttchart.gui.elements;
 
+import ganttchart.controller.PersonController;
 import ganttchart.controller.ProjectController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -55,7 +56,6 @@ public class GanttMenu extends MenuBar {
         @Override
         public void handle(ActionEvent event) {
             Optional<ButtonType> result = dialog.showAndWait();
-
             if(result.isPresent() && Optional.of(result.get()).get().getButtonData() == ButtonBar.ButtonData.OTHER)
                 dialog.save();
         }

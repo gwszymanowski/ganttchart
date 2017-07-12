@@ -5,16 +5,15 @@ import javafx.scene.control.Alert;
 /**
  * Created by gwszymanowski on 2017-07-11.
  */
-public class AlertUtil {
+public class AlertFactory {
 
-    private AlertUtil() {}
+    private AlertFactory() {}
 
     public static Alert getErrorAlert(AlertReason reason) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error Dialog");
         alert.setContentText(null);
         alert.setHeaderText(reason.toString());
-
         return alert;
     }
 

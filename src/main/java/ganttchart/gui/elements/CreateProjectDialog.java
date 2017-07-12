@@ -4,7 +4,7 @@ import ganttchart.model.Project;
 import ganttchart.repository.ProjectRepository;
 import ganttchart.util.AlertElementType;
 import ganttchart.util.AlertReason;
-import ganttchart.util.AlertUtil;
+import ganttchart.util.AlertFactory;
 import javafx.event.EventDispatchChain;
 import javafx.geometry.Insets;
 import javafx.scene.control.ButtonType;
@@ -42,12 +42,12 @@ public class CreateProjectDialog extends Dialog<ButtonType> implements Dialogabl
         String name = gridpane.nameField.getText();
 
         if(name.length() == 0)
-            AlertUtil.getErrorAlert(AlertReason.ZERO_LENGTH).showAndWait();
+            AlertFactory.getErrorAlert(AlertReason.ZERO_LENGTH).showAndWait();
         else if(repo.ifExists(name))
-            AlertUtil.getErrorAlert(AlertReason.ALREADY_EXISTS).showAndWait();
+            AlertFactory.getErrorAlert(AlertReason.ALREADY_EXISTS).showAndWait();
         else {
             repo.save(new Project(name));
-            AlertUtil.getSaveConfirmAlert(AlertElementType.PROJECT).showAndWait();
+            AlertFactory.getSaveConfirmAlert(AlertElementType.PROJECT).showAndWait();
         }
 
     }

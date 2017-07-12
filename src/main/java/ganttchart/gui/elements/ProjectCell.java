@@ -1,6 +1,7 @@
 package ganttchart.gui.elements;
 
 import ganttchart.controller.ProjectController;
+import ganttchart.model.Project;
 import ganttchart.repository.PersonRepository;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -16,9 +17,8 @@ import java.io.IOException;
 /**
  * Created by gwszymanowski on 2017-07-02.
  */
-public class ProjectCell extends TreeCell<String> {
+public class ProjectCell extends TableCell<Project, String> {
 
-    final private PersonRepository userRepository = new PersonRepository();
     private String title;
 
     public ProjectCell() {
@@ -28,23 +28,19 @@ public class ProjectCell extends TreeCell<String> {
     @Override
     protected void updateItem(String item, boolean empty) {
         super.updateItem(item, empty);
-        if (empty) {
-            setGraphic(null);
-            setText(null);
-        } else if(getTreeItem().getParent() != null && getTreeItem().getParent().getValue().equals("Projects")){
-            this.title = item;
-            HBox cellBox = new HBox(10);
-            Label label = new Label(item);
-            Button goButton = new Button("Go");
-            goButton.setOnAction(new GoButtonManager());
-            label.prefHeightProperty().bind(goButton.heightProperty());
-            cellBox.getChildren().addAll(goButton, label );
-            setGraphic(cellBox);
 
-        } else {
-            setGraphic(null);
-            setText(item);
-        }
+            if(getTableRow().getItem() != null) {
+                this.title = item;
+                HBox cellBox = new HBox(10);
+                Label label = new Label(item);
+                Button goButton = new Button("Go");
+                goButton.setOnAction(new GoButtonManager());
+                Button editButton = new Button("Edit");
+                Button deleteButton = new Button("Delete");
+                label.prefHeightProperty().bind(goButton.heightProperty());
+                cellBox.getChildren().addAll(goButton, editButton, deleteButton, label );
+                setGraphic(cellBox);
+            }
 
     }
 

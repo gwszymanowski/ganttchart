@@ -104,4 +104,9 @@ public class Project implements Comparable<Project> {
     public int compareTo(Project o) {
         return startDate.compareTo(o.getStartDate());
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }
