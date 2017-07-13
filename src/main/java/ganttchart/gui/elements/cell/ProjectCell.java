@@ -3,21 +3,21 @@ package ganttchart.gui.elements.cell;
 import ganttchart.controller.ProjectController;
 import ganttchart.gui.elements.dialog.ProjectDialog;
 import ganttchart.model.Project;
-import ganttchart.util.AlertElementType;
+import ganttchart.repository.ProjectRepository;
+import ganttchart.util.ElementType;
 import ganttchart.util.AlertFactory;
+import ganttchart.util.OperationType;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableCell;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Optional;
 
 /**
  * Created by gwszymanowski on 2017-07-02.
@@ -25,6 +25,7 @@ import java.io.IOException;
 public class ProjectCell extends TableCell<Project, String> {
 
     private String title;
+    private ProjectRepository repo = new ProjectRepository();
 
     public ProjectCell() {
         super();
@@ -69,8 +70,15 @@ public class ProjectCell extends TableCell<Project, String> {
 
         @Override
         public void handle(ActionEvent event) {
-            Alert alert = AlertFactory.getWarningAlert(AlertElementType.PROJECT);
-            alert.showAndWait();
+            Alert alert = AlertFactory.getWarningAlert(ElementType.PROJECT);
+            ButtonType deleteButtonType = new ButtonType("Delete", ButtonBar.ButtonData.APPLY);
+            alert.getButtonTypes().setAll(deleteButtonType);
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if(result.isPresent() && Optional.of(result.get()).get().getButtonData() == ButtonBar.ButtonData.APPLY) {
+                repo.delete(title);
+                AlertFactory.getInformationAlert(ElementType.PERSON, OperationType.DELETE).showAndWait();
+            }
         }
     }
 

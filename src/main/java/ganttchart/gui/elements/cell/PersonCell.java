@@ -2,9 +2,10 @@ package ganttchart.gui.elements.cell;
 
 import ganttchart.gui.elements.dialog.PersonDialog;
 import ganttchart.model.Person;
-import ganttchart.util.AlertElementType;
+import ganttchart.repository.PersonRepository;
+import ganttchart.util.ElementType;
 import ganttchart.util.AlertFactory;
-import ganttchart.util.FileUtil;
+import ganttchart.util.OperationType;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.*;
@@ -18,6 +19,7 @@ import java.util.Optional;
 public class PersonCell extends TableCell<Person, String> {
 
     private String[] rowContent;
+    private PersonRepository repo = new PersonRepository();
 
     public PersonCell() {
         super();
@@ -57,35 +59,18 @@ public class PersonCell extends TableCell<Person, String> {
 
         @Override
         public void handle(ActionEvent event) {
-            Alert alert = AlertFactory.getWarningAlert(AlertElementType.PERSON);
+            Alert alert = AlertFactory.getWarningAlert(ElementType.PERSON);
 
             ButtonType deleteButtonType = new ButtonType("Delete", ButtonBar.ButtonData.APPLY);
             alert.getButtonTypes().setAll(deleteButtonType);
 
             Optional<ButtonType> result = alert.showAndWait();
             if(result.isPresent() && Optional.of(result.get()).get().getButtonData() == ButtonBar.ButtonData.APPLY) {
-                System.out.println("TEST");
+                repo.delete(rowContent[0], rowContent[1]);
+                AlertFactory.getInformationAlert(ElementType.PERSON, OperationType.DELETE).showAndWait();
             }
 
         }
     }
-
-//    private void reload() {
-//        Stage stage = null;
-//        Parent root = null;
-//
-//        try {
-//            stage = (Stage) getScene().getWindow();
-//            FXMLLoader loader = new FXMLLoader();
-//            loader.setLocation(getClass().getResource("/person.fxml"));
-//            root = loader.load();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        Scene scene = new Scene(root);
-//        stage.setScene(scene);
-//        stage.show();
-//    }
 
 }

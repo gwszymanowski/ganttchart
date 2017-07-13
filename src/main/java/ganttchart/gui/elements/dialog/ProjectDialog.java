@@ -2,9 +2,10 @@ package ganttchart.gui.elements.dialog;
 
 import ganttchart.model.Project;
 import ganttchart.repository.ProjectRepository;
-import ganttchart.util.AlertElementType;
+import ganttchart.util.ElementType;
 import ganttchart.util.AlertReason;
 import ganttchart.util.AlertFactory;
+import ganttchart.util.OperationType;
 import javafx.event.EventDispatchChain;
 import javafx.geometry.Insets;
 import javafx.scene.control.ButtonType;
@@ -28,7 +29,6 @@ public class ProjectDialog extends Dialog<ButtonType> implements Dialogable {
         ButtonType confirmButtonType = new ButtonType("Save");
 
         getDialogPane().getButtonTypes().addAll(confirmButtonType);
-
         getDialogPane().setContent(gridpane);
     }
 
@@ -48,7 +48,7 @@ public class ProjectDialog extends Dialog<ButtonType> implements Dialogable {
         else {
             repo.save(new Project(name));
             gridpane.nameField.setText("");
-            AlertFactory.getSaveConfirmAlert(AlertElementType.PROJECT).showAndWait();
+            AlertFactory.getInformationAlert(ElementType.PROJECT, OperationType.SAVE).showAndWait();
         }
     }
 

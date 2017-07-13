@@ -49,4 +49,10 @@ public class PersonRepository implements CRUD {
         return doc != null ? true : false;
     }
 
+    public void delete(String firstname, String lastname) {
+        Document doc = collection.find(Filters.and( Filters.eq("firstname", firstname),
+                Filters.eq("lastname", lastname))).first();
+        collection.deleteOne(doc);
+    }
+
 }

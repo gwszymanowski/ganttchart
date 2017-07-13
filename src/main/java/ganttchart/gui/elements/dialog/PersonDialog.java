@@ -2,11 +2,11 @@ package ganttchart.gui.elements.dialog;
 
 import ganttchart.model.Person;
 import ganttchart.repository.PersonRepository;
-import ganttchart.util.AlertElementType;
+import ganttchart.util.ElementType;
 import ganttchart.util.AlertReason;
 import ganttchart.util.AlertFactory;
+import ganttchart.util.OperationType;
 import javafx.geometry.Insets;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 
@@ -41,7 +41,7 @@ public class PersonDialog extends Dialog<ButtonType> implements Dialogable {
         else {
             repo.save(new Person(firstname, lastname));
             fillFields("", "");
-            AlertFactory.getSaveConfirmAlert(AlertElementType.PROJECT).showAndWait();
+            AlertFactory.getInformationAlert(ElementType.PROJECT, OperationType.SAVE).showAndWait();
         }
 
     }
