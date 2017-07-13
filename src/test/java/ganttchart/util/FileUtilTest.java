@@ -25,10 +25,13 @@ public class FileUtilTest {
     public void convertStringtoDate() {
         LocalDate date =  LocalDate.of(2013, 12, 18);
         String dateString = "18-12-2013";
-
         LocalDate given = FileUtil.convertStringToLocalDate(dateString);
-
         assertEquals(date, given);
+    }
+
+    @Test
+    public void stringConcatenation() {
+        assertEquals(14, FileUtil.concatenateString("Ala ", "has ", "a ", "cat.").length());
     }
 
 }

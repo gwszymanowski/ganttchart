@@ -1,5 +1,6 @@
 package ganttchart.controller;
 
+import ganttchart.gui.elements.cell.PersonCell;
 import ganttchart.model.Person;
 import ganttchart.repository.PersonRepository;
 import javafx.fxml.FXML;
@@ -25,11 +26,15 @@ public class PersonController implements Initializable {
     @FXML
     private TableColumn<Person, String> lastnameColumn;
 
+    @FXML
+    private TableColumn<Person, String> optionsColumn;
+
     private PersonRepository repo = new PersonRepository();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         personTable.setColumnResizePolicy(p -> true);
+        optionsColumn.setCellFactory(column -> new PersonCell());
         firstnameColumn.setCellValueFactory(new PropertyValueFactory<>("firstname"));
         lastnameColumn.setCellValueFactory(new PropertyValueFactory<>("lastname"));
         refresh();

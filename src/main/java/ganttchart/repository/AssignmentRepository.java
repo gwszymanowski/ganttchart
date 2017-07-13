@@ -15,7 +15,7 @@ import static com.mongodb.client.model.Filters.eq;
 /**
  * Created by gwszymanowski on 2017-05-26.
  */
-public class AssignmentRepository {
+public class AssignmentRepository implements CRUD {
 
     private MongoCollection<Document> collection = null;
 

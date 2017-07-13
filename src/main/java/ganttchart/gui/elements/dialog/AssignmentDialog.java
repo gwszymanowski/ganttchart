@@ -1,4 +1,4 @@
-package ganttchart.gui.elements;
+package ganttchart.gui.elements.dialog;
 
 import ganttchart.model.Project;
 import javafx.geometry.Insets;
@@ -11,9 +11,9 @@ import javafx.scene.layout.GridPane;
 /**
  * Created by gwszymanowski on 2017-07-07.
  */
-public class CreateAssignmentDialog extends Dialog<ButtonType> implements Dialogable {
+public class AssignmentDialog extends Dialog<ButtonType> implements Dialogable {
 
-    public CreateAssignmentDialog(Project project) {
+    public AssignmentDialog(Project project) {
         setTitle("Create assignment");
         setHeaderText(null);
         setGraphic(null);

@@ -1,8 +1,8 @@
 package ganttchart.controller;
 
-import ganttchart.gui.elements.Dialogable;
-import ganttchart.gui.elements.MembersDialog;
-import ganttchart.gui.elements.CreateAssignmentDialog;
+import ganttchart.gui.elements.dialog.Dialogable;
+import ganttchart.gui.elements.dialog.MembersDialog;
+import ganttchart.gui.elements.dialog.AssignmentDialog;
 import ganttchart.model.Project;
 import ganttchart.repository.ProjectRepository;
 import ganttchart.service.ProjectService;
@@ -75,9 +75,9 @@ public class ProjectController implements Initializable {
     private void initializeLabels(Project p) {
         titleLabel.setText(title);
         memberList.setOnAction(new DialogButtonAction(new MembersDialog()));
-        newAssignment.setOnAction(new DialogButtonAction(new CreateAssignmentDialog(p)));
-        startDateLabel.setText("Startdate is: " + FileUtil.convertDateToString(p.getStartDate()));
-        todayIsLabel.setText("Today is: " + FileUtil.convertDateToString(LocalDate.now()));
+        newAssignment.setOnAction(new DialogButtonAction(new AssignmentDialog(p)));
+        startDateLabel.setText(FileUtil.concatenateString("Startdate is: " , FileUtil.convertDateToString(p.getStartDate())));
+        todayIsLabel.setText(FileUtil.concatenateString("Today is: " , FileUtil.convertDateToString(LocalDate.now())));
     }
 
     private void initializeTableView() {

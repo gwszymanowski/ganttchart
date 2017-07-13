@@ -1,4 +1,4 @@
-package ganttchart.gui.elements;
+package ganttchart.gui.elements.dialog;
 
 import ganttchart.model.Project;
 import ganttchart.repository.ProjectRepository;
@@ -16,16 +16,16 @@ import javafx.scene.layout.GridPane;
 /**
  * Created by gwszymanowski on 2017-07-10.
  */
-public class CreateProjectDialog extends Dialog<ButtonType> implements Dialogable {
+public class ProjectDialog extends Dialog<ButtonType> implements Dialogable {
 
     private CreateProjectGridPane gridpane = new CreateProjectGridPane();
     private ProjectRepository repo = new ProjectRepository();
 
-    public CreateProjectDialog() {
+    public ProjectDialog() {
         setTitle("Create project");
         setHeaderText(null);
         setGraphic(null);
-        ButtonType confirmButtonType = new ButtonType("Create");
+        ButtonType confirmButtonType = new ButtonType("Save");
 
         getDialogPane().getButtonTypes().addAll(confirmButtonType);
 
@@ -47,10 +47,16 @@ public class CreateProjectDialog extends Dialog<ButtonType> implements Dialogabl
             AlertFactory.getErrorAlert(AlertReason.ALREADY_EXISTS).showAndWait();
         else {
             repo.save(new Project(name));
+            gridpane.nameField.setText("");
             AlertFactory.getSaveConfirmAlert(AlertElementType.PROJECT).showAndWait();
         }
-
     }
+
+    public void fillFields(String name) {
+        gridpane.nameField.setText(name);
+    }
+
+
 
     private class CreateProjectGridPane extends GridPane {
 
@@ -67,5 +73,7 @@ public class CreateProjectDialog extends Dialog<ButtonType> implements Dialogabl
             add(nameField, 1, 1);
         }
     }
+
+
 
 }

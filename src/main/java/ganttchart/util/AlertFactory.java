@@ -21,9 +21,18 @@ public class AlertFactory {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Information Dialog");
         alert.setContentText(null);
-        String text = "New " + elementType + " has been created!";
-        alert.setHeaderText(text);
+        alert.setHeaderText(FileUtil.concatenateString("New ", elementType.toString(), " has been created!"));
         return alert;
     }
+
+    public static Alert getWarningAlert(AlertElementType elementType) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Warning Dialog");
+        alert.setContentText(null);
+        alert.setHeaderText(FileUtil.concatenateString("Are you sure you want to delete this ", elementType.toString(), "?"));
+        return alert;
+    }
+
+
 
 }

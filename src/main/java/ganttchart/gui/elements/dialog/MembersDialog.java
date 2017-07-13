@@ -1,4 +1,4 @@
-package ganttchart.gui.elements;
+package ganttchart.gui.elements.dialog;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.ButtonBar;
@@ -18,7 +18,7 @@ public class MembersDialog extends Dialog<ButtonType> implements Dialogable {
         setHeaderText(null);
         setGraphic(null);
 
-        ButtonType loginButtonType = new ButtonType("Change", ButtonBar.ButtonData.OK_DONE);
+        ButtonType loginButtonType = new ButtonType("Change");
         getDialogPane().getButtonTypes().addAll(loginButtonType);
 
         getDialogPane().setContent(new MembersGridPane());

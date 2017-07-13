@@ -19,7 +19,7 @@ import static com.mongodb.client.model.Filters.eq;
 /**
  * Created by gwszymanowski on 2017-05-17.
  */
-public class PersonRepository {
+public class PersonRepository implements CRUD {
 
     private MongoCollection<Document> collection = null;
 

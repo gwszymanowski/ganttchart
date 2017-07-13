@@ -1,4 +1,4 @@
-package ganttchart.gui.elements;
+package ganttchart.gui.elements.dialog;
 
 import ganttchart.model.Person;
 import ganttchart.repository.PersonRepository;
@@ -6,26 +6,28 @@ import ganttchart.util.AlertElementType;
 import ganttchart.util.AlertReason;
 import ganttchart.util.AlertFactory;
 import javafx.geometry.Insets;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 
 /**
  * Created by gwszymanowski on 2017-07-10.
  */
-public class CreatePersonDialog extends Dialog<ButtonType> implements Dialogable {
+public class PersonDialog extends Dialog<ButtonType> implements Dialogable {
 
     private CreatePersonGridPane gridpane = new CreatePersonGridPane();
     private PersonRepository repo = new PersonRepository();
 
-    public CreatePersonDialog() {
+    public PersonDialog() {
         setTitle("Create person");
         setHeaderText(null);
         setGraphic(null);
 
-        ButtonType loginButtonType = new ButtonType("Create");
+        ButtonType loginButtonType = new ButtonType("Save");
         getDialogPane().getButtonTypes().addAll(loginButtonType);
 
         getDialogPane().setContent(gridpane);
+
     }
 
     @Override
@@ -38,9 +40,15 @@ public class CreatePersonDialog extends Dialog<ButtonType> implements Dialogable
             AlertFactory.getErrorAlert(AlertReason.ALREADY_EXISTS).showAndWait();
         else {
             repo.save(new Person(firstname, lastname));
+            fillFields("", "");
             AlertFactory.getSaveConfirmAlert(AlertElementType.PROJECT).showAndWait();
         }
 
+    }
+
+    public void fillFields(String firstname, String lastname) {
+        gridpane.firstnameField.setText(firstname);
+        gridpane.lastnameField.setText(lastname);
     }
 
     private class CreatePersonGridPane extends GridPane {

@@ -1,7 +1,8 @@
 package ganttchart.gui.elements;
 
-import ganttchart.controller.PersonController;
-import ganttchart.controller.ProjectController;
+import ganttchart.gui.elements.dialog.Dialogable;
+import ganttchart.gui.elements.dialog.PersonDialog;
+import ganttchart.gui.elements.dialog.ProjectDialog;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -28,9 +29,9 @@ public class GanttMenu extends MenuBar {
     private Menu getCreateMenu() {
         Menu createMenu = new Menu("Create");
         projectItem = new MenuItem("project");
-        projectItem.setOnAction(new ShowDialogEvent(new CreateProjectDialog()));
+        projectItem.setOnAction(new ShowDialogEvent(new ProjectDialog()));
         personItem = new MenuItem("person");
-        personItem.setOnAction(new ShowDialogEvent(new CreatePersonDialog()));
+        personItem.setOnAction(new ShowDialogEvent(new PersonDialog()));
         createMenu.getItems().addAll(projectItem, personItem);
         return createMenu;
     }

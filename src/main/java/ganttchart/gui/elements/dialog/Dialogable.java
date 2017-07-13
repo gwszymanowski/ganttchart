@@ -1,4 +1,4 @@
-package ganttchart.gui.elements;
+package ganttchart.gui.elements.dialog;
 
 import javafx.scene.control.ButtonType;
 import javafx.util.Pair;

@@ -1,14 +1,19 @@
-package ganttchart.gui.elements;
+package ganttchart.gui.elements.cell;
 
 import ganttchart.controller.ProjectController;
+import ganttchart.gui.elements.dialog.ProjectDialog;
 import ganttchart.model.Project;
-import ganttchart.repository.PersonRepository;
+import ganttchart.util.AlertElementType;
+import ganttchart.util.AlertFactory;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
@@ -31,17 +36,42 @@ public class ProjectCell extends TableCell<Project, String> {
 
             if(getTableRow().getItem() != null) {
                 this.title = item;
-                HBox cellBox = new HBox(10);
-                Label label = new Label(item);
-                Button goButton = new Button("Go");
-                goButton.setOnAction(new GoButtonManager());
-                Button editButton = new Button("Edit");
-                Button deleteButton = new Button("Delete");
-                label.prefHeightProperty().bind(goButton.heightProperty());
-                cellBox.getChildren().addAll(goButton, editButton, deleteButton, label );
-                setGraphic(cellBox);
+                initializeComponents();
             }
 
+    }
+
+    private void initializeComponents() {
+        HBox cellBox = new HBox(10);
+        Label label = new Label(title);
+        Button goButton = new Button("Go");
+        goButton.setOnAction(new GoButtonManager());
+        Button editButton = new Button("Edit");
+        editButton.setOnAction(new EditProjectEvent());
+        Button deleteButton = new Button("Delete");
+        deleteButton.setOnAction(new DeleteProjectEvent());
+        label.prefHeightProperty().bind(goButton.heightProperty());
+        cellBox.getChildren().addAll(goButton, editButton, deleteButton, label );
+        setGraphic(cellBox);
+    }
+
+    private class EditProjectEvent implements EventHandler<ActionEvent> {
+
+        @Override
+        public void handle(ActionEvent event) {
+            ProjectDialog cp = new ProjectDialog();
+            cp.fillFields(title);
+            cp.showAndWait();
+        }
+    }
+
+    private class DeleteProjectEvent implements EventHandler<ActionEvent> {
+
+        @Override
+        public void handle(ActionEvent event) {
+            Alert alert = AlertFactory.getWarningAlert(AlertElementType.PROJECT);
+            alert.showAndWait();
+        }
     }
 
     private class GoButtonManager implements EventHandler<ActionEvent> {

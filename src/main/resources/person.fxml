@@ -25,7 +25,7 @@
                             <TableColumn fx:id="lastnameColumn" text="Lastname" minWidth="250" />
                         </columns>
                     </TableColumn>
-                    <TableColumn text="Options" minWidth="250"/>
+                    <TableColumn fx:id="optionsColumn"  text="Options" minWidth="250"/>
                 </columns>
             </TableView>
         </GridPane>
