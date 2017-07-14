@@ -1,5 +1,7 @@
 package ganttchart.service;
 
+import com.mongodb.BasicDBList;
+import ganttchart.model.Assignment;
 import ganttchart.model.Project;
 import ganttchart.model.Person;
 import ganttchart.util.FileUtil;
@@ -23,7 +25,7 @@ public class ProjectService {
         List<TableColumn> tb = new LinkedList<>();
         TableColumnFactory tcf = new TableColumnFactory();
         LocalDate first = p.getStartDate();
-        LocalDate last = p.getLastDay();
+        LocalDate last = getLastDay(p.getTasks());
 
         while(!first.equals(last)) {
             TableColumn col = new TableColumn();
@@ -38,7 +40,7 @@ public class ProjectService {
         Document document = new Document();
         document.append("name", project.getName());
         document.append("startDate", project.getStartDateString());
-        document.append("members", project.getMembersList());
+        document.append("members", PersonService.getMembersList(project.getMembers()));
         document.append("tasks", project.getTasks());
         return document;
     }
@@ -57,6 +59,14 @@ public class ProjectService {
         project.setStartDate(FileUtil.convertStringToLocalDate(startdateString));
 
         return project;
+    }
+
+
+    public static LocalDate getLastDay(List<Assignment> tasks) {
+        if(tasks.size() == 0)
+            return LocalDate.now();
+
+        return tasks.stream().map(u -> u.getFinishDate()).max(LocalDate::compareTo).get();
     }
 
 }

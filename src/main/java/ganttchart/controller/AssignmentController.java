@@ -75,7 +75,7 @@ public class AssignmentController implements Initializable {
 
     private void initializeLabels(Project p) {
         titleLabel.setText(title);
-        memberList.setOnAction(new DialogButtonAction(new MembersDialog()));
+        memberList.setOnAction(new DialogButtonAction(new MembersDialog(p)));
         newAssignment.setOnAction(new DialogButtonAction(new AssignmentDialog(p)));
         startDateLabel.setText(FileUtil.concatenateString("Startdate is: " , FileUtil.convertDateToString(p.getStartDate())));
         todayIsLabel.setText(FileUtil.concatenateString("Today is: " , FileUtil.convertDateToString(LocalDate.now())));
@@ -93,6 +93,7 @@ public class AssignmentController implements Initializable {
     private void initializeDatesTableView(Project p) {
         datesTableView.setEditable(false);
         List<TableColumn> tb = datesTableView.getColumns();
+        tb.stream().forEach(x -> x.setResizable(false));
         tb.addAll(ProjectService.getPeriod(p));
 
         datesTableView.getColumns().addListener(new ListChangeListener() {

@@ -19,7 +19,7 @@ public class Project implements Comparable<Project> {
     private ObjectId _id;
     private String name = "null";
     private LocalDate startDate = LocalDate.now();
-    private Set<Assignment> tasks = new LinkedHashSet<>();
+    private List<Assignment> tasks = new LinkedList<>();
     private List<Person> members = new LinkedList<>();
 
     public Project() {
@@ -61,28 +61,12 @@ public class Project implements Comparable<Project> {
         return startDate != null ? FileUtil.convertDateToString(startDate) : "null";
     }
 
-    public Set<Assignment> getTasks() {
+    public List<Assignment> getTasks() {
         return tasks;
     }
 
-    public void setTasks(Set<Assignment> tasks) {
+    public void setTasks(List<Assignment> tasks) {
         this.tasks = tasks;
-    }
-
-    public BasicDBList getMembersList() {
-        BasicDBList members = new BasicDBList();
-
-        for(int i = 0; i < members.size(); i++)
-            members.add(members.get(i));
-
-        return members;
-    }
-
-    public LocalDate getLastDay() {
-        if(tasks.size() == 0)
-            return LocalDate.now();
-
-        return tasks.stream().map(u -> u.getFinishDate()).max(LocalDate::compareTo).get();
     }
 
     @Override

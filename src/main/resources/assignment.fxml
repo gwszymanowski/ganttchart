@@ -46,8 +46,11 @@
         </TableView>
     </left>
     <center>
-        <TableView fx:id="datesTableView" >
-        </TableView>
+        <ScrollPane hbarPolicy="AS_NEEDED" vbarPolicy="AS_NEEDED"  fitToHeight="true">
+            <TableView fx:id="datesTableView" >
+
+            </TableView>
+        </ScrollPane>
     </center>
 
 </BorderPane>
