@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml">
+    <top>
+        <BorderPane>
+            <top>
+                <ganttchart.gui.elements.GanttMenu />
+            </top>
+            <center>
+                <GridPane>
+                    <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    </padding>
+                    <Label fx:id="titleLabel" style="-fx-font: NORMAL 20 Tahoma;"  GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                    <Label fx:id="startDateLabel"  GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                    <Label fx:id="todayIsLabel"  GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                    <ButtonBar fx:id="buttonBar" GridPane.columnIndex="0" GridPane.rowIndex="3">
+                        <buttons>
+                            <Button fx:id="newAssignment" text="New task" />
+                            <Button fx:id="memberList" text="Members" />
+                        </buttons>
+                    </ButtonBar>
+                </GridPane>
+            </center>
+        </BorderPane>
+
+    </top>
+    <left>
+        <TableView fx:id="tableView" >
+            <columns>
+                <TableColumn text="Title" />
+                <TableColumn text="Type" />
+                <TableColumn text="Executor" />
+                <TableColumn text="Start" />
+                <TableColumn text="End" />
+                <TableColumn fx:id="duration" />
+                <TableColumn fx:id="completed" />
+                <TableColumn fx:id="workingDays" />
+                <TableColumn fx:id="daysCompleted" />
+                <TableColumn fx:id="daysRemaining" />
+            </columns>
+        </TableView>
+    </left>
+    <center>
+        <TableView fx:id="datesTableView" >
+        </TableView>
+    </center>
+
+</BorderPane>

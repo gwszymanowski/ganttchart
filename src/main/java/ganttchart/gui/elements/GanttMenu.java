@@ -39,7 +39,7 @@ public class GanttMenu extends MenuBar {
     private Menu getViewMenu() {
         Menu viewMenu = new Menu("View");
         projectListItem = new MenuItem("projects");
-        projectListItem.setOnAction(new SwitchViewEvent("/primary.fxml"));
+        projectListItem.setOnAction(new SwitchViewEvent("/project.fxml"));
         personListItem = new MenuItem("people");
         personListItem.setOnAction(new SwitchViewEvent("/person.fxml"));
         viewMenu.getItems().addAll(projectListItem, personListItem);

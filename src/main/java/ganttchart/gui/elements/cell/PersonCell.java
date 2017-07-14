@@ -21,10 +21,6 @@ public class PersonCell extends TableCell<Person, String> {
     private String[] rowContent;
     private PersonRepository repo = new PersonRepository();
 
-    public PersonCell() {
-        super();
-    }
-
     @Override
     protected void updateItem(String item, boolean empty) {
         super.updateItem(item, empty);

@@ -1,6 +1,6 @@
 package ganttchart.gui.elements.cell;
 
-import ganttchart.controller.ProjectController;
+import ganttchart.controller.AssignmentController;
 import ganttchart.gui.elements.dialog.ProjectDialog;
 import ganttchart.model.Project;
 import ganttchart.repository.ProjectRepository;
@@ -27,32 +27,27 @@ public class ProjectCell extends TableCell<Project, String> {
     private String title;
     private ProjectRepository repo = new ProjectRepository();
 
-    public ProjectCell() {
-        super();
-    }
-
     @Override
     protected void updateItem(String item, boolean empty) {
         super.updateItem(item, empty);
-
-            if(getTableRow().getItem() != null) {
-                this.title = item;
+            Object rowItem = getTableRow().getItem();
+            if(rowItem != null) {
+                this.title = rowItem.toString();
                 initializeComponents();
             }
-
     }
 
     private void initializeComponents() {
         HBox cellBox = new HBox(10);
         Label label = new Label(title);
-        Button goButton = new Button("Go");
-        goButton.setOnAction(new GoButtonManager());
+        Button detailsButton = new Button("Details");
+        detailsButton.setOnAction(new DetailsButtonManager());
         Button editButton = new Button("Edit");
         editButton.setOnAction(new EditProjectEvent());
         Button deleteButton = new Button("Delete");
         deleteButton.setOnAction(new DeleteProjectEvent());
-        label.prefHeightProperty().bind(goButton.heightProperty());
-        cellBox.getChildren().addAll(goButton, editButton, deleteButton, label );
+        label.prefHeightProperty().bind(detailsButton.heightProperty());
+        cellBox.getChildren().addAll(detailsButton, editButton, deleteButton);
         setGraphic(cellBox);
     }
 
@@ -82,19 +77,20 @@ public class ProjectCell extends TableCell<Project, String> {
         }
     }
 
-    private class GoButtonManager implements EventHandler<ActionEvent> {
+    private class DetailsButtonManager implements EventHandler<ActionEvent> {
 
         @Override
         public void handle(ActionEvent event) {
             Stage stage = null;
             Parent root = null;
-            ProjectController projectController = new ProjectController(title);
-
+            AssignmentController projectController = new AssignmentController(title);
+            System.out.println(title);
             try {
                 stage = (Stage) getScene().getWindow();
                 FXMLLoader loader = new FXMLLoader();
-                loader.setLocation(getClass().getResource("/project.fxml"));
+                loader.setLocation(getClass().getResource("/assignment.fxml"));
                 loader.setController(projectController);
+                System.out.println(loader);
                 root = loader.load();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -103,8 +99,6 @@ public class ProjectCell extends TableCell<Project, String> {
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.show();
-
         }
     }
-
 }
