@@ -22,9 +22,17 @@ public class Assignment implements Comparable<Assignment>{
     private LocalDate finishDate = LocalDate.now();
     private int workingDays;
     private int completed; // in %
+    private Person taskOwner;
     private List<Assignment> subTasks = new LinkedList<>();
 
     public Assignment() {
+    }
+
+    public Assignment(String title, LocalDate startDate, LocalDate finishDate, Person taskOwner) {
+        this.title = title;
+        this.startDate = startDate;
+        this.finishDate = finishDate;
+        this.taskOwner = taskOwner;
     }
 
     public ObjectId get_id() {
@@ -93,6 +101,22 @@ public class Assignment implements Comparable<Assignment>{
 
     public String finishDateString() {
         return FileUtil.convertDateToString(finishDate);
+    }
+
+    public Person getTaskOwner() {
+        return taskOwner;
+    }
+
+    public void setTaskOwner(Person taskOwner) {
+        this.taskOwner = taskOwner;
+    }
+
+    public List<Assignment> getSubTasks() {
+        return subTasks;
+    }
+
+    public void setSubTasks(List<Assignment> subTasks) {
+        this.subTasks = subTasks;
     }
 
     public void addSubTask(Assignment assignment) {

@@ -84,13 +84,11 @@ public class ProjectCell extends TableCell<Project, String> {
             Stage stage = null;
             Parent root = null;
             AssignmentController projectController = new AssignmentController(title);
-            System.out.println(title);
             try {
                 stage = (Stage) getScene().getWindow();
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(getClass().getResource("/assignment.fxml"));
                 loader.setController(projectController);
-                System.out.println(loader);
                 root = loader.load();
             } catch (IOException e) {
                 e.printStackTrace();

@@ -1,11 +1,13 @@
 package ganttchart.repository;
 
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Filters;
 import ganttchart.model.Assignment;
 import ganttchart.service.AssignmentService;
 import ganttchart.util.ConnectionManager;
 import org.bson.Document;
 
+import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -47,4 +49,11 @@ public class AssignmentRepository implements CRUD {
         }
         return assignments;
     }
+
+    public boolean ifExists(String title, LocalDate startDate, LocalDate endDate) {
+        Document doc = collection.find(Filters.and( Filters.eq("title", title),
+                Filters.eq("startDate", startDate),  Filters.eq("endDate", endDate))).first();
+        return doc != null ? true : false;
+    }
+
 }
