@@ -13,6 +13,7 @@ import org.bson.types.ObjectId;
 import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by gwszymanowski on 2017-07-09.
@@ -41,7 +42,7 @@ public class ProjectService {
         document.append("name", project.getName());
         document.append("startDate", project.getStartDateString());
         document.append("members", PersonService.getMembersList(project.getMembers()));
-        document.append("tasks", project.getTasks());
+        document.append("tasks", AssignmentService.getAssignmentList(project.getTasks()));
         return document;
     }
 
@@ -54,7 +55,7 @@ public class ProjectService {
         project.set_id(_id);
         project.setName(name);
 
-        List<Person> members = project.getMembers();
+        Set<Person> members = project.getMembers();
         project.setMembers(members);
         project.setStartDate(FileUtil.convertStringToLocalDate(startdateString));
 
@@ -63,10 +64,7 @@ public class ProjectService {
 
 
     public static LocalDate getLastDay(List<Assignment> tasks) {
-        if(tasks.size() == 0)
-            return LocalDate.now();
-
-        return tasks.stream().map(u -> u.getFinishDate()).max(LocalDate::compareTo).get();
+        return tasks.size() == 0 ? LocalDate.now() : tasks.stream().map(u -> u.getFinishDate()).max(LocalDate::compareTo).get();
     }
 
 }

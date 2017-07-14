@@ -28,6 +28,10 @@ public class ProjectRepository implements CRUD {
         collection.insertOne(ProjectService.toDocument(entity));
     }
 
+    public void update(Project entity) {
+        collection.updateOne(eq("name", entity.getName()), ProjectService.toDocument(entity));
+    }
+
     public List<Project> getAll() {
         List<Project> projects = new LinkedList<>();
 

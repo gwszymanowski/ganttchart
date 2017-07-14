@@ -2,10 +2,10 @@ package ganttchart.gui.elements.dialog;
 
 import ganttchart.model.Project;
 import ganttchart.repository.ProjectRepository;
-import ganttchart.util.ElementType;
-import ganttchart.util.AlertReason;
-import ganttchart.util.AlertFactory;
-import ganttchart.util.OperationType;
+import ganttchart.util.alert.ElementType;
+import ganttchart.util.alert.AlertReason;
+import ganttchart.util.alert.AlertFactory;
+import ganttchart.util.alert.OperationType;
 import javafx.event.EventDispatchChain;
 import javafx.geometry.Insets;
 import javafx.scene.control.ButtonType;

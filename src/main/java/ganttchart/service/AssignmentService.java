@@ -1,9 +1,15 @@
 package ganttchart.service;
 
+import com.mongodb.BasicDBList;
 import ganttchart.model.Assignment;
+import ganttchart.model.Person;
 import ganttchart.util.FileUtil;
 import org.bson.Document;
 import org.bson.types.ObjectId;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by gwszymanowski on 2017-07-09.
@@ -43,6 +49,10 @@ public class AssignmentService {
         a.setCompleted(completed);
 
         return a;
+    }
+
+    public static BasicDBList getAssignmentList(final List<Assignment> assignments) {
+        return assignments.stream().map(AssignmentService::toDocument).collect(Collectors.toCollection(BasicDBList::new));
     }
 
 }

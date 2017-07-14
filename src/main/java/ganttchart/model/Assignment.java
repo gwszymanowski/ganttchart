@@ -1,12 +1,9 @@
 package ganttchart.model;
 
 import ganttchart.util.FileUtil;
-import org.bson.Document;
 import org.bson.types.ObjectId;
 
-import java.time.Duration;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -22,16 +19,20 @@ public class Assignment implements Comparable<Assignment>{
     private LocalDate finishDate = LocalDate.now();
     private int workingDays;
     private int completed; // in %
-    private Person taskOwner;
+    private Person taskOwner = new Person();
     private List<Assignment> subTasks = new LinkedList<>();
 
     public Assignment() {
     }
 
-    public Assignment(String title, LocalDate startDate, LocalDate finishDate, Person taskOwner) {
+    public Assignment(String title, LocalDate startDate, LocalDate finishDate) {
         this.title = title;
         this.startDate = startDate;
         this.finishDate = finishDate;
+    }
+
+    public Assignment(String title, LocalDate startDate, LocalDate finishDate, Person taskOwner) {
+        this(title, startDate, finishDate);
         this.taskOwner = taskOwner;
     }
 
@@ -146,5 +147,10 @@ public class Assignment implements Comparable<Assignment>{
     @Override
     public int compareTo(Assignment o) {
         return startDate.compareTo(o.getStartDate());
+    }
+
+    @Override
+    public String toString() {
+        return title;
     }
 }

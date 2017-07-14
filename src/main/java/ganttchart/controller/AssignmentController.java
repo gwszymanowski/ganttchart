@@ -8,6 +8,9 @@ import ganttchart.repository.ProjectRepository;
 import ganttchart.service.ProjectService;
 import ganttchart.util.FileUtil;
 import ganttchart.util.TableColumnFactory;
+import ganttchart.util.alert.AlertFactory;
+import ganttchart.util.alert.ElementType;
+import ganttchart.util.alert.OperationType;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -122,7 +125,13 @@ public class AssignmentController implements Initializable {
 
         @Override
         public void handle(ActionEvent event) {
-            dialog.showAndWait();
+
+            Optional<ButtonType> result = dialog.showAndWait();
+            System.out.println(Optional.of(result.get()));
+            if(result.isPresent() && Optional.of(result.get()).get().getButtonData() == ButtonBar.ButtonData.APPLY) {
+                dialog.save();
+                AlertFactory.getInformationAlert(ElementType.ASSIGNMENT, OperationType.SAVE).showAndWait();
+            }
         }
     }
 

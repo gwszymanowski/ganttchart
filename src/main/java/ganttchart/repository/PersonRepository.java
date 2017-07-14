@@ -1,8 +1,6 @@
 package ganttchart.repository;
 
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
 import ganttchart.model.Person;
@@ -10,11 +8,7 @@ import ganttchart.service.PersonService;
 import ganttchart.util.ConnectionManager;
 import org.bson.Document;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-
-import static com.mongodb.client.model.Filters.eq;
+import java.util.*;
 
 /**
  * Created by gwszymanowski on 2017-05-17.
@@ -31,8 +25,8 @@ public class PersonRepository implements CRUD {
         collection.insertOne(PersonService.toDocument(entity));
     }
 
-    public List<Person> getAll() {
-        List<Person> people = new LinkedList<>();
+    public Set<Person> getAll() {
+        Set<Person> people = new HashSet<>();
         Iterator<Document> documents = collection.find().iterator();
 
         while(documents.hasNext()) {

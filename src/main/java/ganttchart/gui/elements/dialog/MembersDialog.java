@@ -5,6 +5,7 @@ import ganttchart.model.Project;
 import ganttchart.repository.PersonRepository;
 import ganttchart.service.PersonService;
 import ganttchart.service.ProjectService;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
@@ -23,6 +24,7 @@ public class MembersDialog extends Dialog<ButtonType> implements Dialogable {
 
     private Project project;
     private PersonRepository repository = new PersonRepository();
+    private MembersGridPane gridpane;
 
     public MembersDialog(Project project) {
         this.project = project;
@@ -32,8 +34,8 @@ public class MembersDialog extends Dialog<ButtonType> implements Dialogable {
 
         ButtonType loginButtonType = new ButtonType("Change");
         getDialogPane().getButtonTypes().addAll(loginButtonType);
-
-        getDialogPane().setContent(new MembersGridPane());
+        gridpane = new MembersGridPane();
+        getDialogPane().setContent(gridpane);
     }
 
     @Override
@@ -42,18 +44,29 @@ public class MembersDialog extends Dialog<ButtonType> implements Dialogable {
     }
 
     private class MembersGridPane extends GridPane {
+
+        private ListSelectionView<String> view;
+
         public MembersGridPane() {
             setHgap(10);
             setVgap(10);
             setPadding(new Insets(20, 150, 10, 10));
 
-            ListSelectionView<String> view = new ListSelectionView<>();
+            view = new ListSelectionView<>();
             view.getSourceItems().addAll(PersonService.getMembersToString(project.getMembers()));
 
-            List<Person> notAdded = PersonService.getNotAdded(project.getMembers(), repository.getAll());
+            Set<Person> notAdded = PersonService.getNotAdded(project.getMembers(), repository.getAll());
 
             view.getTargetItems().addAll(PersonService.getMembersToString(notAdded));
             add(view, 1, 1);
+        }
+
+        public ObservableList<String> getSourceItems() {
+            return view.getSourceItems();
+        }
+
+        public ObservableList<String> getTargetItems() {
+            return view.getTargetItems();
         }
     }
 }

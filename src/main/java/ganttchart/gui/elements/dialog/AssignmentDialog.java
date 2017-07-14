@@ -4,15 +4,18 @@ import ganttchart.model.Assignment;
 import ganttchart.model.Person;
 import ganttchart.model.Project;
 import ganttchart.repository.AssignmentRepository;
-import ganttchart.util.AlertFactory;
-import ganttchart.util.AlertReason;
-import ganttchart.util.ElementType;
-import ganttchart.util.OperationType;
+import ganttchart.repository.ProjectRepository;
+import ganttchart.util.alert.AlertFactory;
+import ganttchart.util.alert.AlertReason;
+import ganttchart.util.alert.ElementType;
+import ganttchart.util.alert.OperationType;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by gwszymanowski on 2017-07-07.
@@ -20,14 +23,16 @@ import java.time.LocalDate;
 public class AssignmentDialog extends Dialog<ButtonType> implements Dialogable {
 
     private CreateAssignmentGridPane gridpane;
-    private AssignmentRepository repo = new AssignmentRepository();
+    private Project project;
+    private ProjectRepository repo = new ProjectRepository();
 
     public AssignmentDialog(Project project) {
+        this.project = project;
         setTitle("Create assignment");
         setHeaderText(null);
         setGraphic(null);
 
-        ButtonType loginButtonType = new ButtonType("Create");
+        ButtonType loginButtonType = new ButtonType("Create", ButtonBar.ButtonData.APPLY);
         getDialogPane().getButtonTypes().addAll(loginButtonType);
 
         gridpane = new CreateAssignmentGridPane(project);
@@ -37,18 +42,29 @@ public class AssignmentDialog extends Dialog<ButtonType> implements Dialogable {
     @Override
     public void save() {
         String title = gridpane.titleField.getText();
-        String[] taskOwner = gridpane.taskOwnerField.getText().split(" ");
         LocalDate startDate = gridpane.startDatePicker.getValue();
         LocalDate endDate = gridpane.endDatePicker.getValue();
 
         if(title.length() == 0)
             AlertFactory.getErrorAlert(AlertReason.ZERO_LENGTH).showAndWait();
-        else if(repo.ifExists(title, startDate, endDate))
-            AlertFactory.getErrorAlert(AlertReason.ALREADY_EXISTS).showAndWait();
+//        else if(repo.ifExists(title, startDate, endDate))
+//            AlertFactory.getErrorAlert(AlertReason.ALREADY_EXISTS).showAndWait();
         else {
-            repo.save(new Assignment(title, startDate, endDate, new Person(taskOwner[0], taskOwner[1])));
-            fillFields("", "", null, null);
-            AlertFactory.getInformationAlert(ElementType.PROJECT, OperationType.SAVE).showAndWait();
+            String taskOwnerText = gridpane.taskOwnerField.getText();
+
+            if(taskOwnerText.length() == 0) {
+                List<Assignment> assignments = project.getTasks();
+                assignments.add(new Assignment(title, startDate, endDate));
+                repo.update(project);
+            }
+            else {
+                String[] taskOwner = taskOwnerText.split(" ");
+                project.getTasks().add(new Assignment(title, startDate, endDate, new Person(taskOwner[0], taskOwner[1])));
+                repo.update(project);
+            }
+
+            fillFields(title, taskOwnerText, startDate, endDate);
+
         }
     }
 
@@ -68,7 +84,7 @@ public class AssignmentDialog extends Dialog<ButtonType> implements Dialogable {
 
             titleField = new TextField();
 
-            add(new Label("Firstname: "), 0, 1);
+            add(new Label("Title: "), 0, 1);
             add(titleField, 1, 1);
 
             taskOwnerField = new TextField();

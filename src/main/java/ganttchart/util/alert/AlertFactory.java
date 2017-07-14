@@ -1,5 +1,6 @@
-package ganttchart.util;
+package ganttchart.util.alert;
 
+import ganttchart.util.FileUtil;
 import javafx.scene.control.Alert;
 
 /**
