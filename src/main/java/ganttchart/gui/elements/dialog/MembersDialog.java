@@ -3,6 +3,7 @@ package ganttchart.gui.elements.dialog;
 import ganttchart.model.Person;
 import ganttchart.model.Project;
 import ganttchart.repository.PersonRepository;
+import ganttchart.repository.ProjectRepository;
 import ganttchart.service.PersonService;
 import ganttchart.service.ProjectService;
 import javafx.collections.ObservableList;
@@ -23,7 +24,8 @@ import java.util.Set;
 public class MembersDialog extends Dialog<ButtonType> implements Dialogable {
 
     private Project project;
-    private PersonRepository repository = new PersonRepository();
+    private PersonRepository personRepository = new PersonRepository();
+    private ProjectRepository projectRepository = new ProjectRepository();
     private MembersGridPane gridpane;
 
     public MembersDialog(Project project) {
@@ -32,7 +34,7 @@ public class MembersDialog extends Dialog<ButtonType> implements Dialogable {
         setHeaderText(null);
         setGraphic(null);
 
-        ButtonType loginButtonType = new ButtonType("Change");
+        ButtonType loginButtonType = new ButtonType("Change", ButtonBar.ButtonData.APPLY);
         getDialogPane().getButtonTypes().addAll(loginButtonType);
         gridpane = new MembersGridPane();
         getDialogPane().setContent(gridpane);
@@ -40,7 +42,9 @@ public class MembersDialog extends Dialog<ButtonType> implements Dialogable {
 
     @Override
     public void save() {
-
+        Set<Person> added = PersonService.getMembers(gridpane.getSourceItems());
+        project.setMembers(added);
+        projectRepository.update(project);
     }
 
     private class MembersGridPane extends GridPane {
@@ -55,7 +59,7 @@ public class MembersDialog extends Dialog<ButtonType> implements Dialogable {
             view = new ListSelectionView<>();
             view.getSourceItems().addAll(PersonService.getMembersToString(project.getMembers()));
 
-            Set<Person> notAdded = PersonService.getNotAdded(project.getMembers(), repository.getAll());
+            Set<Person> notAdded = PersonService.getNotAdded(project.getMembers(), personRepository.getAll());
 
             view.getTargetItems().addAll(PersonService.getMembersToString(notAdded));
             add(view, 1, 1);

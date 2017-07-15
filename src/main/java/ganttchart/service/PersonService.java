@@ -2,6 +2,7 @@ package ganttchart.service;
 
 import com.mongodb.BasicDBList;
 import ganttchart.model.Person;
+import javafx.collections.ObservableList;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
@@ -50,6 +51,15 @@ public class PersonService {
 
     public static Set<Person> getNotAdded(final Set<Person> alreadyAdded, Set<Person> allPeople) {
         return allPeople.stream().filter(x -> !alreadyAdded.contains(x)).collect(Collectors.toCollection(HashSet::new));
+    }
+
+    public static Set<Person> getMembers(final ObservableList<String> elements) {
+        Set<Person> people = new HashSet<>();
+        for(String fullname : elements) {
+            String[] text = fullname.split(" ");
+            people.add(new Person(text[0], text[1]));
+        }
+        return people;
     }
 
 }

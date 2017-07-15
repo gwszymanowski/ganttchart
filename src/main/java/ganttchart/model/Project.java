@@ -1,12 +1,14 @@
 package ganttchart.model;
 
 
-import com.mongodb.BasicDBList;
 import ganttchart.util.FileUtil;
 import org.bson.types.ObjectId;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by gwszymanowski on 2017-05-13.
@@ -46,6 +48,10 @@ public class Project implements Comparable<Project> {
 
     public void setMembers(Set<Person> members) { this.members = members; }
 
+    public void addMember(Person person) {
+        members.add(person);
+    }
+
     public LocalDate getStartDate() {
         return startDate;
     }
@@ -64,6 +70,10 @@ public class Project implements Comparable<Project> {
 
     public void setTasks(List<Assignment> tasks) {
         this.tasks = tasks;
+    }
+
+    public void addTask(Assignment task) {
+        tasks.add(task);
     }
 
     @Override

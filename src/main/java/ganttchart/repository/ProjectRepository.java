@@ -29,7 +29,7 @@ public class ProjectRepository implements CRUD {
     }
 
     public void update(Project entity) {
-        collection.updateOne(eq("name", entity.getName()), ProjectService.toDocument(entity));
+        collection.replaceOne(eq("name", entity.getName()), ProjectService.toDocument(entity));
     }
 
     public List<Project> getAll() {
@@ -47,6 +47,7 @@ public class ProjectRepository implements CRUD {
 
     public Project findByName(String name) {
         Document doc = collection.find(eq("name", name)).first();
+        System.out.println(doc);
         return ProjectService.fromDocument(doc);
     }
 

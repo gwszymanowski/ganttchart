@@ -49,14 +49,17 @@ public class ProjectService {
     public static Project fromDocument(Document document) {
         Project project = new Project();
         ObjectId _id = (ObjectId) document.get("_id");
-        String name = (String) document.get("name");
-
-        String startdateString = (String) document.get("startDate");
         project.set_id(_id);
+        String name = (String) document.get("name");
         project.setName(name);
 
-        Set<Person> members = project.getMembers();
-        project.setMembers(members);
+        List<Document> memberDocuments = (List<Document>) document.get("members");
+        memberDocuments.stream().forEach(x -> project.addMember(PersonService.fromDocument(x)));
+
+        List<Document> taskDocuments = (List<Document>) document.get("tasks");
+        taskDocuments.stream().forEach(x -> project.addTask(AssignmentService.fromDocument(x)));
+
+        String startdateString = (String) document.get("startDate");
         project.setStartDate(FileUtil.convertStringToLocalDate(startdateString));
 
         return project;

@@ -127,10 +127,9 @@ public class AssignmentController implements Initializable {
         public void handle(ActionEvent event) {
 
             Optional<ButtonType> result = dialog.showAndWait();
-            System.out.println(Optional.of(result.get()));
             if(result.isPresent() && Optional.of(result.get()).get().getButtonData() == ButtonBar.ButtonData.APPLY) {
                 dialog.save();
-                AlertFactory.getInformationAlert(ElementType.ASSIGNMENT, OperationType.SAVE).showAndWait();
+                AlertFactory.getInformationAlert(ElementType.OTHER, OperationType.SAVE).showAndWait();
             }
         }
     }
