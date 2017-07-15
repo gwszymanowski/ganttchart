@@ -48,7 +48,7 @@ public class ProjectDialog extends Dialog<ButtonType> implements Dialogable {
         else {
             repo.save(new Project(name));
             gridpane.nameField.setText("");
-            AlertFactory.getInformationAlert(ElementType.PROJECT, OperationType.SAVE).showAndWait();
+            //AlertFactory.getInformationAlert(ElementType.PROJECT, OperationType.SAVE).showAndWait();
         }
     }
 

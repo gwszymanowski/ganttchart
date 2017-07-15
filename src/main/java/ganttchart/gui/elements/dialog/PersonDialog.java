@@ -41,7 +41,7 @@ public class PersonDialog extends Dialog<ButtonType> implements Dialogable {
         else {
             repo.save(new Person(firstname, lastname));
             fillFields("", "");
-            AlertFactory.getInformationAlert(ElementType.PROJECT, OperationType.SAVE).showAndWait();
+           // AlertFactory.getInformationAlert(ElementType.PROJECT, OperationType.SAVE).showAndWait();
         }
 
     }

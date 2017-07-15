@@ -69,6 +69,14 @@ public class Person implements Comparable<Person>{
 
     @Override
     public String toString() {
-        return firstname + " " + lastname;
+        if(firstname.equals("null") || lastname.equals("null"))
+            return "none";
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(firstname);
+        sb.append(" ");
+        sb.append(lastname);
+
+        return sb.toString();
     }
 }

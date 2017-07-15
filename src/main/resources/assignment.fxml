@@ -32,16 +32,13 @@
     <left>
         <TableView fx:id="tableView" >
             <columns>
-                <TableColumn text="Title" />
-                <TableColumn text="Type" />
-                <TableColumn text="Executor" />
-                <TableColumn text="Start" />
-                <TableColumn text="End" />
-                <TableColumn fx:id="duration" />
-                <TableColumn fx:id="completed" />
-                <TableColumn fx:id="workingDays" />
-                <TableColumn fx:id="daysCompleted" />
-                <TableColumn fx:id="daysRemaining" />
+                <TableColumn fx:id="titleColumn" text="Title" />
+                <TableColumn fx:id="taskOwnerColumn" text="task owner" />
+                <TableColumn fx:id="startColumn" text="Start" />
+                <TableColumn fx:id="endColumn" text="End" />
+                <TableColumn fx:id="durationColumn" />
+                <TableColumn fx:id="completedColumn" />
+                <TableColumn fx:id="workingDaysColumn" />
             </columns>
         </TableView>
     </left>

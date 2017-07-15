@@ -14,7 +14,7 @@ public class Assignment implements Comparable<Assignment>{
 
     private ObjectId _id;
     private String title = "null";
-    private int number = 0;
+    private int number;
     private LocalDate startDate = LocalDate.now();
     private LocalDate finishDate = LocalDate.now();
     private int workingDays;

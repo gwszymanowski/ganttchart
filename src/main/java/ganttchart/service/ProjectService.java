@@ -22,21 +22,6 @@ public class ProjectService {
 
     private ProjectService() {}
 
-    public static List<TableColumn> getPeriod(Project p) {
-        List<TableColumn> tb = new LinkedList<>();
-        TableColumnFactory tcf = new TableColumnFactory();
-        LocalDate first = p.getStartDate();
-        LocalDate last = getLastDay(p.getTasks());
-
-        while(!first.equals(last)) {
-            TableColumn col = new TableColumn();
-            col.setGraphic(tcf.getRotated(FileUtil.convertDateToString(first)));
-            tb.add(col);
-            first = first.plusDays(1);
-        }
-        return tb;
-    }
-
     public static Document toDocument(Project project) {
         Document document = new Document();
         document.append("name", project.getName());
@@ -65,9 +50,36 @@ public class ProjectService {
         return project;
     }
 
+    public static List<TableColumn> getPeriod(Project p) {
+        List<TableColumn> tb = new LinkedList<>();
+        TableColumnFactory tcf = new TableColumnFactory();
+        LocalDate first = p.getStartDate();
+        LocalDate last = getLastDay(p.getTasks());
+
+        while(!first.equals(last)) {
+            TableColumn col = new TableColumn();
+            col.setGraphic(tcf.getRotated(FileUtil.convertDateToString(first)));
+            tb.add(col);
+            first = first.plusDays(1);
+        }
+        return tb;
+    }
 
     public static LocalDate getLastDay(List<Assignment> tasks) {
         return tasks.size() == 0 ? LocalDate.now() : tasks.stream().map(u -> u.getFinishDate()).max(LocalDate::compareTo).get();
+    }
+
+    public static List<String> getAllDaysToString(Project p) {
+        List<String> list = new LinkedList<>();
+        LocalDate start = p.getStartDate();
+        LocalDate end = getLastDay(p.getTasks());
+
+        while(!start.equals(end)) {
+            list.add(FileUtil.convertDateToString(start));
+            start = start.plusDays(1);
+        }
+
+        return list;
     }
 
 }

@@ -12,11 +12,15 @@ import ganttchart.util.alert.AlertFactory;
 import ganttchart.util.alert.ElementType;
 import ganttchart.util.alert.OperationType;
 import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.paint.Color;
+import javafx.util.Callback;
 
 import java.net.URL;
 import java.time.LocalDate;
@@ -28,19 +32,28 @@ import java.util.*;
 public class AssignmentController implements Initializable {
 
     @FXML
-    private TableColumn duration;
+    private TableColumn titleColumn;
 
     @FXML
-    private TableColumn completed;
+    private TableColumn typeColumn;
 
     @FXML
-    private TableColumn workingDays;
+    private TableColumn taskOwnerColumn;
 
     @FXML
-    private TableColumn daysCompleted;
+    private TableColumn startColumn;
 
     @FXML
-    private TableColumn daysRemaining;
+    private TableColumn endColumn;
+
+    @FXML
+    private TableColumn durationColumn;
+
+    @FXML
+    private TableColumn completedColumn;
+
+    @FXML
+    private TableColumn workingDaysColumn;
 
     @FXML
     private Label titleLabel;
@@ -50,6 +63,9 @@ public class AssignmentController implements Initializable {
 
     @FXML
     private Label todayIsLabel;
+
+    @FXML
+    private TableView tableView;
 
     @FXML
     private TableView datesTableView;
@@ -62,6 +78,7 @@ public class AssignmentController implements Initializable {
 
     private String title;
     private ProjectRepository projectRepository = new ProjectRepository();
+    private Project p;
 
     public AssignmentController(String title) {
         this.title = title;
@@ -69,14 +86,16 @@ public class AssignmentController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Project p = projectRepository.findByName(title);
+        this.p = projectRepository.findByName(title);
 
-        initializeLabels(p);
+        initializeLabels();
         initializeTableView();
-        initializeDatesTableView(p);
+        initializeDatesTableView();
+        fillTable();
+        fillDatesTable();
     }
 
-    private void initializeLabels(Project p) {
+    private void initializeLabels() {
         titleLabel.setText(title);
         memberList.setOnAction(new DialogButtonAction(new MembersDialog(p)));
         newAssignment.setOnAction(new DialogButtonAction(new AssignmentDialog(p)));
@@ -86,14 +105,13 @@ public class AssignmentController implements Initializable {
 
     private void initializeTableView() {
         TableColumnFactory factory = new TableColumnFactory();
-        duration.setGraphic(factory.getRotated("Duration(days)"));
-        completed.setGraphic(factory.getRotated("(%) Completed"));
-        workingDays.setGraphic(factory.getRotated("Working days"));
-        daysCompleted.setGraphic(factory.getRotated("Days completed"));
-        daysRemaining.setGraphic(factory.getRotated("Days remaining"));
+        durationColumn.setGraphic(factory.getRotated("Duration(days)"));
+        completedColumn.setGraphic(factory.getRotated("(%) Completed"));
+        workingDaysColumn.setGraphic(factory.getRotated("Working days"));
+
     }
 
-    private void initializeDatesTableView(Project p) {
+    private void initializeDatesTableView() {
         datesTableView.setEditable(false);
         List<TableColumn> tb = datesTableView.getColumns();
         tb.stream().forEach(x -> x.setResizable(false));
@@ -113,6 +131,32 @@ public class AssignmentController implements Initializable {
             }
         });
 
+    }
+
+    private void fillTable() {
+        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        taskOwnerColumn.setCellValueFactory(new PropertyValueFactory<>("taskOwner"));
+        startColumn.setCellValueFactory(new PropertyValueFactory<>("startDate"));
+        endColumn.setCellValueFactory(new PropertyValueFactory<>("endDate"));
+        durationColumn.setCellValueFactory(new PropertyValueFactory<>("duration"));
+        completedColumn.setCellValueFactory(new PropertyValueFactory<>("completed"));
+        refresh();
+    }
+
+    private void fillDatesTable() {
+        ObservableList<TableColumn> columns = datesTableView.getColumns();
+        List<String> dates = ProjectService.getAllDaysToString(p);
+
+        for(TableColumn tb : columns) {
+            if(dates.contains(tb.getGraphic().getAccessibleHelp())) {
+                /// to be finished ///
+            }
+        }
+
+    }
+
+    public void refresh() {
+        tableView.getItems().setAll(p.getTasks());
     }
 
     private class DialogButtonAction implements EventHandler<ActionEvent> {
