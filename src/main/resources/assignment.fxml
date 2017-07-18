@@ -29,7 +29,7 @@
         </BorderPane>
 
     </top>
-    <center>
+    <left>
         <ScrollPane hbarPolicy="AS_NEEDED" vbarPolicy="AS_NEEDED"  fitToHeight="true">
             <TableView fx:id="tableView" >
                 <columns>
@@ -44,13 +44,13 @@
                 </columns>
             </TableView>
         </ScrollPane>
-    </center>
-    <!--<center>-->
-        <!--<ScrollPane hbarPolicy="AS_NEEDED" vbarPolicy="AS_NEEDED"  fitToHeight="true">-->
-            <!--<TableView fx:id="datesTableView" >-->
+    </left>
+    <center>
+        <ScrollPane hbarPolicy="AS_NEEDED" vbarPolicy="AS_NEEDED"  fitToHeight="true">
+            <TableView fx:id="datesTableView" >
 
-            <!--</TableView>-->
-        <!--</ScrollPane>-->
-    <!--</center>-->
+            </TableView>
+        </ScrollPane>
+    </center>
 
 </BorderPane>

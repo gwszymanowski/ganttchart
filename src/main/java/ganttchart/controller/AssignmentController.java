@@ -75,6 +75,9 @@ public class AssignmentController implements Initializable {
     private TableView tableView;
 
     @FXML
+    private TableView datesTableView;
+
+    @FXML
     private Button newAssignment;
 
     @FXML
@@ -96,7 +99,7 @@ public class AssignmentController implements Initializable {
         initializeTableView();
         initializeDatesTableView();
         fillTable();
-       // fillDatesTable();
+        fillDatesTable();
     }
 
     private void initializeLabels() {
@@ -116,32 +119,25 @@ public class AssignmentController implements Initializable {
     }
 
     private void initializeDatesTableView() {
-       ObservableList<TableColumn> tableColumns = tableView.getColumns();
+       ObservableList<TableColumn> tableColumns = datesTableView.getColumns();
        List<TableColumn> dates = ProjectService.getPeriod(p);
 
        dates.stream().forEach(x -> tableColumns.add(x));
 
-//       for(TableColumn tb : dates) {
-//           tableColumns.add(tb);
-//       }
+        datesTableView.getColumns().addListener(new ListChangeListener() {
+            public boolean suspended;
 
-//        tableView.getColumns().addAll();
-//        System.out.println(datesList.size());
-//        tableView.getColumns().addAll(datesList);
-     //   System.out.println(tableView.getColumns().size());
-//        tableView.getColumns().addListener(new ListChangeListener() {
-//            public boolean suspended;
-//
-//            @Override
-//            public void onChanged(Change change) {
-//                change.next();
-//                if (change.wasReplaced() && !suspended) {
-//                    this.suspended = true;
-//                    tableView.getColumns().setAll(ProjectService.getPeriod(p));
-//                    this.suspended = false;
-//                }
-//            }
-//        });
+            @Override
+            public void onChanged(Change change) {
+                change.next();
+                if (change.wasReplaced() && !suspended) {
+                    this.suspended = true;
+                    datesTableView.getColumns().setAll(ProjectService.getPeriod(p));
+                    fillDatesTable();
+                    this.suspended = false;
+                }
+            }
+        });
 
     }
 
@@ -154,58 +150,34 @@ public class AssignmentController implements Initializable {
         completedColumn.setCellValueFactory(new PropertyValueFactory<>("completed"));
         workingDaysColumn.setCellValueFactory(new PropertyValueFactory<>("workingDays"));
 
-       // List<String> dates = ProjectService.getAllDaysToString(p);
+        refresh();
+    }
 
-        ObservableList<TableColumn> tableColumns = tableView.getColumns();
+    private void fillDatesTable() {
+        ObservableList<TableColumn> tableColumns = datesTableView.getColumns();
 
         int tbsize = tableColumns.size();
 
         for(Assignment a : p.getTasks()) {
             List<String> dates = AssignmentService.getAllDaysToString(a);
 
-            System.out.println(dates);
-            for(int i = 7; i < tbsize; i++) {
+            for(int i = 0; i < tbsize; i++) {
 
                 TableColumn help = tableColumns.get(i);
                 if(dates.contains(help.getGraphic().getAccessibleHelp())){
                     help.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(help.getGraphic().getAccessibleHelp()));
-                    //help.setCellFactory(column -> new DatesCell(AssignmentService.getAllDaysToString(a)));
-
                     help.setCellFactory(column -> new DatesCell(p));
                 }
 
             }
         }
 
-
-
-
-        refresh();
+        datesTableView.getItems().setAll(p.getTasks());
     }
-//
-//    private void fillDatesTable() {
-//        ObservableList<TableColumn> columns = datesTableView.getColumns();
-//        List<String> dates = ProjectService.getAllDaysToString(p);
-//        Iterator<String> it = dates.iterator();
-//        for(TableColumn tb : columns) {
-//            tb.setCellValueFactory(new PropertyValueFactory<>(it.next()));
-//        }
-//
-//        List<Assignment> tasks = p.getTasks();
-//
-//        for(Assignment a : tasks) {
-//            datesTableView.getItems().add(AssignmentService.getAllDays(a));
-//        }
-//
-//
-////        List<String> dates = ProjectService.getAllDaysToString(p);
-////
-//
-//
-//    }
 
     public void refresh() {
         tableView.getItems().setAll(p.getTasks());
+        datesTableView.getItems().setAll(p.getTasks());
     }
 
     private class DialogButtonAction implements EventHandler<ActionEvent> {

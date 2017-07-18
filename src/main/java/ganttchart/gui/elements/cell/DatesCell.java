@@ -27,18 +27,16 @@ public class DatesCell extends TableCell<String, String> {
     protected void updateItem(String item, boolean empty) {
         super.updateItem(item, empty);
 
-        if(!empty) {
+        if(!empty && getTableRow() != null) {
             Object tableItem = getTableRow().getItem();
             Optional<Assignment> assignment = project.getTasks().stream().filter(x -> x.getTitle().equals(tableItem.toString())).findFirst();
 
             if(assignment.isPresent()) {
                 if (AssignmentService.getAllDaysToString(assignment.get()).contains(item)) {
-                    this.setTextFill(Color.RED);
-                    setText(item);
+                    setStyle("-fx-background-color:#8099FF");
+                    setText(" ");
                 }
             }
-
-
         }
 
     }
