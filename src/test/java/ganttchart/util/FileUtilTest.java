@@ -30,6 +30,14 @@ public class FileUtilTest {
     }
 
     @Test
+    public void convertStringtoDateAmericanFormat() {
+        LocalDate date =  LocalDate.of(2013, 12, 18);
+        String dateString = "2013-12-18";
+        LocalDate given = FileUtil.convertStringToLocalDateUSFormat(dateString);
+        assertEquals(date, given);
+    }
+
+    @Test
     public void stringConcatenation() {
         assertEquals(14, FileUtil.concatenateString("Ala ", "has ", "a ", "cat.").length());
     }

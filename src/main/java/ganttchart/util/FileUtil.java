@@ -28,6 +28,11 @@ public final class FileUtil {
         return LocalDate.parse(date, formatter);
     }
 
+    public static LocalDate convertStringToLocalDateUSFormat(String date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return LocalDate.parse(date, formatter);
+    }
+
     public static String concatenateString(String ... val) {
         String[] arr = val;
         StringBuilder sb = new StringBuilder();

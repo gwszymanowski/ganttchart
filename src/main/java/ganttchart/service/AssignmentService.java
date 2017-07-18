@@ -26,30 +26,22 @@ public class AssignmentService {
     public static Document toDocument(Assignment assignment) {
         Document document = new Document();
         document.append("title", assignment.getTitle());
-        document.append("number", assignment.getNumber());
         document.append("startDate", assignment.startDateString());
         document.append("finishDate", assignment.finishDateString());
-        document.append("workingDays", assignment.getWorkingDays());
         document.append("completed", assignment.getCompleted());
         return document;
     }
 
     public static Assignment fromDocument(Document document) {
         Assignment a = new Assignment();
-        ObjectId _id = (ObjectId) document.get("_id");
         String title = (String) document.get("title");
-        Integer number = (Integer) document.get("number");
         String startdateString = (String) document.get("startDate");
         String finishdateString = (String) document.get("finishDate");
-        Integer workingDays = (Integer) document.get("workingDays");
         Integer completed = (Integer) document.get("completed");
 
-        a.set_id(_id);
         a.setTitle(title);
-        a.setNumber(number);
         a.setStartDate(FileUtil.convertStringToLocalDate(startdateString));
         a.setFinishDate(FileUtil.convertStringToLocalDate(finishdateString));
-        a.setWorkingDays(workingDays);
         a.setCompleted(completed);
 
         return a;
@@ -83,6 +75,18 @@ public class AssignmentService {
         }
 
         return list;
+    }
+
+    public static int getDayNumber(LocalDate beginDate, String currDateString) {
+        int count = 0;
+        LocalDate curr = FileUtil.convertStringToLocalDate(currDateString);
+
+        while(!beginDate.equals(curr)) {
+            count++;
+            beginDate = beginDate.plusDays(1);
+        }
+
+        return count;
     }
 
 

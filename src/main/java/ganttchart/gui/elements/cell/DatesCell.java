@@ -4,12 +4,7 @@ import ganttchart.model.Assignment;
 import ganttchart.model.Project;
 import ganttchart.service.AssignmentService;
 import javafx.scene.control.TableCell;
-import javafx.scene.control.TableRow;
-import javafx.scene.paint.Color;
 
-import java.time.LocalDate;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -29,12 +24,17 @@ public class DatesCell extends TableCell<String, String> {
 
         if(!empty && getTableRow() != null) {
             Object tableItem = getTableRow().getItem();
-            Optional<Assignment> assignment = project.getTasks().stream().filter(x -> x.getTitle().equals(tableItem.toString())).findFirst();
+            Optional<Assignment> assignmentOptional = project.getTasks().stream().filter(x -> x.getTitle().equals(tableItem.toString())).findFirst();
 
-            if(assignment.isPresent()) {
-                if (AssignmentService.getAllDaysToString(assignment.get()).contains(item)) {
-                    setStyle("-fx-background-color:#8099FF");
-                    setText(" ");
+            if(assignmentOptional.isPresent()) {
+                Assignment assignment = assignmentOptional.get();
+                if (AssignmentService.getAllDaysToString(assignment).contains(item)) {
+
+                    if(AssignmentService.getDayNumber(assignment.getStartDate(), item)*25 <= assignment.getCompleted())
+                        setStyle("-fx-background-color:#8099FF");
+                    else
+                        setStyle("-fx-background-color:#808080");
+                    setText(null);
                 }
             }
         }

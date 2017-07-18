@@ -3,9 +3,12 @@ package ganttchart.model;
 import ganttchart.util.FileUtil;
 import org.bson.types.ObjectId;
 
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.temporal.TemporalUnit;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by gwszymanowski on 2017-05-17.
@@ -14,13 +17,12 @@ public class Assignment implements Comparable<Assignment>{
 
     private ObjectId _id;
     private String title = "null";
-    private int number;
     private LocalDate startDate = LocalDate.now();
     private LocalDate finishDate = LocalDate.now();
-    private int workingDays;
-    private int completed; // in %
+    private transient int workingDays;
+    private transient int completed; // in %
     private Person taskOwner = new Person();
-    private List<Assignment> subTasks = new LinkedList<>();
+    private transient long duration;
 
     public Assignment() {
     }
@@ -36,10 +38,6 @@ public class Assignment implements Comparable<Assignment>{
         this.taskOwner = taskOwner;
     }
 
-    public ObjectId get_id() {
-        return _id;
-    }
-
     public void set_id(ObjectId _id) {
         this._id = _id;
     }
@@ -50,14 +48,6 @@ public class Assignment implements Comparable<Assignment>{
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public int getNumber() {
-        return number;
-    }
-
-    public void setNumber(int number) {
-        this.number = number;
     }
 
     public LocalDate getStartDate() {
@@ -76,8 +66,9 @@ public class Assignment implements Comparable<Assignment>{
         this.finishDate = finishDate;
     }
 
-    public String getDuration() {
-        return "NONE";
+    public long getDuration() {
+       // Duration duration = Duration.between(startDate, finishDate);
+        return 0L;
     }
 
     public int getWorkingDays() {
@@ -102,26 +93,6 @@ public class Assignment implements Comparable<Assignment>{
 
     public String finishDateString() {
         return FileUtil.convertDateToString(finishDate);
-    }
-
-    public Person getTaskOwner() {
-        return taskOwner;
-    }
-
-    public void setTaskOwner(Person taskOwner) {
-        this.taskOwner = taskOwner;
-    }
-
-    public List<Assignment> getSubTasks() {
-        return subTasks;
-    }
-
-    public void setSubTasks(List<Assignment> subTasks) {
-        this.subTasks = subTasks;
-    }
-
-    public void addSubTask(Assignment assignment) {
-        subTasks.add(assignment);
     }
 
     @Override

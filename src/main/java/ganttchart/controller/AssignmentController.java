@@ -1,8 +1,6 @@
 package ganttchart.controller;
 
 import ganttchart.gui.elements.cell.DatesCell;
-import ganttchart.gui.elements.cell.PersonCell;
-import ganttchart.gui.elements.cell.ProjectCell;
 import ganttchart.gui.elements.dialog.Dialogable;
 import ganttchart.gui.elements.dialog.MembersDialog;
 import ganttchart.gui.elements.dialog.AssignmentDialog;
@@ -17,7 +15,6 @@ import ganttchart.util.alert.AlertFactory;
 import ganttchart.util.alert.ElementType;
 import ganttchart.util.alert.OperationType;
 import javafx.beans.property.ReadOnlyStringWrapper;
-import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -26,8 +23,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.paint.Color;
-import javafx.util.Callback;
 
 import java.net.URL;
 import java.time.LocalDate;
@@ -145,7 +140,7 @@ public class AssignmentController implements Initializable {
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         taskOwnerColumn.setCellValueFactory(new PropertyValueFactory<>("taskOwner"));
         startColumn.setCellValueFactory(new PropertyValueFactory<>("startDate"));
-        endColumn.setCellValueFactory(new PropertyValueFactory<>("endDate"));
+        endColumn.setCellValueFactory(new PropertyValueFactory<>("finishDate"));
         durationColumn.setCellValueFactory(new PropertyValueFactory<>("duration"));
         completedColumn.setCellValueFactory(new PropertyValueFactory<>("completed"));
         workingDaysColumn.setCellValueFactory(new PropertyValueFactory<>("workingDays"));
@@ -170,6 +165,7 @@ public class AssignmentController implements Initializable {
                 }
 
             }
+
         }
 
         datesTableView.getItems().setAll(p.getTasks());
