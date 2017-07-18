@@ -1,16 +1,23 @@
 package ganttchart.controller;
 
+import ganttchart.gui.elements.cell.DatesCell;
+import ganttchart.gui.elements.cell.PersonCell;
+import ganttchart.gui.elements.cell.ProjectCell;
 import ganttchart.gui.elements.dialog.Dialogable;
 import ganttchart.gui.elements.dialog.MembersDialog;
 import ganttchart.gui.elements.dialog.AssignmentDialog;
+import ganttchart.model.Assignment;
 import ganttchart.model.Project;
 import ganttchart.repository.ProjectRepository;
+import ganttchart.service.AssignmentService;
 import ganttchart.service.ProjectService;
 import ganttchart.util.FileUtil;
 import ganttchart.util.TableColumnFactory;
 import ganttchart.util.alert.AlertFactory;
 import ganttchart.util.alert.ElementType;
 import ganttchart.util.alert.OperationType;
+import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -68,9 +75,6 @@ public class AssignmentController implements Initializable {
     private TableView tableView;
 
     @FXML
-    private TableView datesTableView;
-
-    @FXML
     private Button newAssignment;
 
     @FXML
@@ -92,7 +96,7 @@ public class AssignmentController implements Initializable {
         initializeTableView();
         initializeDatesTableView();
         fillTable();
-        fillDatesTable();
+       // fillDatesTable();
     }
 
     private void initializeLabels() {
@@ -112,24 +116,32 @@ public class AssignmentController implements Initializable {
     }
 
     private void initializeDatesTableView() {
-        datesTableView.setEditable(false);
-        List<TableColumn> tb = datesTableView.getColumns();
-        tb.stream().forEach(x -> x.setResizable(false));
-        tb.addAll(ProjectService.getPeriod(p));
+       ObservableList<TableColumn> tableColumns = tableView.getColumns();
+       List<TableColumn> dates = ProjectService.getPeriod(p);
 
-        datesTableView.getColumns().addListener(new ListChangeListener() {
-            public boolean suspended;
+       dates.stream().forEach(x -> tableColumns.add(x));
 
-            @Override
-            public void onChanged(Change change) {
-                change.next();
-                if (change.wasReplaced() && !suspended) {
-                    this.suspended = true;
-                    datesTableView.getColumns().setAll(ProjectService.getPeriod(p));
-                    this.suspended = false;
-                }
-            }
-        });
+//       for(TableColumn tb : dates) {
+//           tableColumns.add(tb);
+//       }
+
+//        tableView.getColumns().addAll();
+//        System.out.println(datesList.size());
+//        tableView.getColumns().addAll(datesList);
+     //   System.out.println(tableView.getColumns().size());
+//        tableView.getColumns().addListener(new ListChangeListener() {
+//            public boolean suspended;
+//
+//            @Override
+//            public void onChanged(Change change) {
+//                change.next();
+//                if (change.wasReplaced() && !suspended) {
+//                    this.suspended = true;
+//                    tableView.getColumns().setAll(ProjectService.getPeriod(p));
+//                    this.suspended = false;
+//                }
+//            }
+//        });
 
     }
 
@@ -140,20 +152,57 @@ public class AssignmentController implements Initializable {
         endColumn.setCellValueFactory(new PropertyValueFactory<>("endDate"));
         durationColumn.setCellValueFactory(new PropertyValueFactory<>("duration"));
         completedColumn.setCellValueFactory(new PropertyValueFactory<>("completed"));
-        refresh();
-    }
+        workingDaysColumn.setCellValueFactory(new PropertyValueFactory<>("workingDays"));
 
-    private void fillDatesTable() {
-        ObservableList<TableColumn> columns = datesTableView.getColumns();
-        List<String> dates = ProjectService.getAllDaysToString(p);
+       // List<String> dates = ProjectService.getAllDaysToString(p);
 
-        for(TableColumn tb : columns) {
-            if(dates.contains(tb.getGraphic().getAccessibleHelp())) {
-                /// to be finished ///
+        ObservableList<TableColumn> tableColumns = tableView.getColumns();
+
+        int tbsize = tableColumns.size();
+
+        for(Assignment a : p.getTasks()) {
+            List<String> dates = AssignmentService.getAllDaysToString(a);
+
+            System.out.println(dates);
+            for(int i = 7; i < tbsize; i++) {
+
+                TableColumn help = tableColumns.get(i);
+                if(dates.contains(help.getGraphic().getAccessibleHelp())){
+                    help.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(help.getGraphic().getAccessibleHelp()));
+                    //help.setCellFactory(column -> new DatesCell(AssignmentService.getAllDaysToString(a)));
+
+                    help.setCellFactory(column -> new DatesCell(p));
+                }
+
             }
         }
 
+
+
+
+        refresh();
     }
+//
+//    private void fillDatesTable() {
+//        ObservableList<TableColumn> columns = datesTableView.getColumns();
+//        List<String> dates = ProjectService.getAllDaysToString(p);
+//        Iterator<String> it = dates.iterator();
+//        for(TableColumn tb : columns) {
+//            tb.setCellValueFactory(new PropertyValueFactory<>(it.next()));
+//        }
+//
+//        List<Assignment> tasks = p.getTasks();
+//
+//        for(Assignment a : tasks) {
+//            datesTableView.getItems().add(AssignmentService.getAllDays(a));
+//        }
+//
+//
+////        List<String> dates = ProjectService.getAllDaysToString(p);
+////
+//
+//
+//    }
 
     public void refresh() {
         tableView.getItems().setAll(p.getTasks());

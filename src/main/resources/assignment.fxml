@@ -29,25 +29,28 @@
         </BorderPane>
 
     </top>
-    <left>
-        <TableView fx:id="tableView" >
-            <columns>
-                <TableColumn fx:id="titleColumn" text="Title" />
-                <TableColumn fx:id="taskOwnerColumn" text="task owner" />
-                <TableColumn fx:id="startColumn" text="Start" />
-                <TableColumn fx:id="endColumn" text="End" />
-                <TableColumn fx:id="durationColumn" />
-                <TableColumn fx:id="completedColumn" />
-                <TableColumn fx:id="workingDaysColumn" />
-            </columns>
-        </TableView>
-    </left>
     <center>
         <ScrollPane hbarPolicy="AS_NEEDED" vbarPolicy="AS_NEEDED"  fitToHeight="true">
-            <TableView fx:id="datesTableView" >
+            <TableView fx:id="tableView" >
+                <columns>
+                    <TableColumn fx:id="titleColumn" text="Title" />
+                    <TableColumn fx:id="taskOwnerColumn" text="task owner" />
+                    <TableColumn fx:id="startColumn" text="Start" />
+                    <TableColumn fx:id="endColumn" text="End" />
+                    <TableColumn fx:id="durationColumn" />
+                    <TableColumn fx:id="completedColumn" />
+                    <TableColumn fx:id="workingDaysColumn" />
 
+                </columns>
             </TableView>
         </ScrollPane>
     </center>
+    <!--<center>-->
+        <!--<ScrollPane hbarPolicy="AS_NEEDED" vbarPolicy="AS_NEEDED"  fitToHeight="true">-->
+            <!--<TableView fx:id="datesTableView" >-->
+
+            <!--</TableView>-->
+        <!--</ScrollPane>-->
+    <!--</center>-->
 
 </BorderPane>

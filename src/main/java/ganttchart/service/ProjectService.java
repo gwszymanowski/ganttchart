@@ -82,4 +82,17 @@ public class ProjectService {
         return list;
     }
 
+    public static List<LocalDate> getAllDays(Project p) {
+        List<LocalDate> list = new LinkedList<>();
+        LocalDate start = p.getStartDate();
+        LocalDate end = getLastDay(p.getTasks());
+
+        while(!start.equals(end)) {
+            list.add(start);
+            start = start.plusDays(1);
+        }
+
+        return list;
+    }
+
 }

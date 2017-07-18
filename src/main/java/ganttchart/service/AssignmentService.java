@@ -3,11 +3,15 @@ package ganttchart.service;
 import com.mongodb.BasicDBList;
 import ganttchart.model.Assignment;
 import ganttchart.model.Person;
+import ganttchart.model.Project;
 import ganttchart.util.FileUtil;
 import org.bson.Document;
 import org.bson.types.ObjectId;
+import org.springframework.expression.spel.ast.Assign;
 
+import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -54,5 +58,33 @@ public class AssignmentService {
     public static BasicDBList getAssignmentList(final List<Assignment> assignments) {
         return assignments.stream().map(AssignmentService::toDocument).collect(Collectors.toCollection(BasicDBList::new));
     }
+
+    public static List<LocalDate> getAllDays(Assignment a) {
+        List<LocalDate> list = new LinkedList<>();
+        LocalDate start = a.getStartDate();
+        LocalDate end = a.getFinishDate();
+
+        while(!start.equals(end)) {
+            list.add(start);
+            start = start.plusDays(1);
+        }
+
+        return list;
+    }
+
+    public static List<String> getAllDaysToString(Assignment a) {
+        List<String> list = new LinkedList<>();
+        LocalDate start = a.getStartDate();
+        LocalDate end = a.getFinishDate();
+
+        while(!start.equals(end)) {
+            list.add(FileUtil.convertDateToString(start));
+            start = start.plusDays(1);
+        }
+
+        return list;
+    }
+
+
 
 }
