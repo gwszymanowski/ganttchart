@@ -30,7 +30,10 @@ public class DatesCell extends TableCell<String, String> {
                 Assignment assignment = assignmentOptional.get();
                 if (AssignmentService.getAllDaysToString(assignment).contains(item)) {
 
-                    if(AssignmentService.getDayNumber(assignment.getStartDate(), item)*25 <= assignment.getCompleted())
+                    int dayNumber = AssignmentService.getDayNumber(assignment.getStartDate(), item);
+                    int cellValue = AssignmentService.getCellPercentageValue(assignment.getStartDate(), assignment.getFinishDate());
+
+                    if(dayNumber*cellValue < assignment.getCompleted())
                         setStyle("-fx-background-color:#8099FF");
                     else
                         setStyle("-fx-background-color:#808080");

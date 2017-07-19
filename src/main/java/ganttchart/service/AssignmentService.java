@@ -89,6 +89,17 @@ public class AssignmentService {
         return count;
     }
 
+    public static int getCellPercentageValue(LocalDate beginDate, LocalDate currDate) {
+        int count = 0;
+
+        while(!beginDate.equals(currDate)) {
+            count++;
+            beginDate = beginDate.plusDays(1);
+        }
+
+        return 100/count;
+    }
+
 
 
 }
