@@ -4,6 +4,7 @@ import ganttchart.model.Assignment;
 import ganttchart.model.Person;
 import ganttchart.model.Project;
 import ganttchart.repository.ProjectRepository;
+import ganttchart.service.ProjectService;
 import ganttchart.util.alert.AlertFactory;
 import ganttchart.util.alert.AlertReason;
 import javafx.collections.FXCollections;
@@ -27,8 +28,6 @@ public class AssignmentDialog extends Dialog<ButtonType> implements Dialogable {
     public AssignmentDialog(Project project) {
         this.project = project;
         setTitle("Create assignment");
-        setHeaderText(null);
-        setGraphic(null);
 
         ButtonType loginButtonType = new ButtonType("Create", ButtonBar.ButtonData.APPLY);
         getDialogPane().getButtonTypes().addAll(loginButtonType);
@@ -88,7 +87,7 @@ public class AssignmentDialog extends Dialog<ButtonType> implements Dialogable {
 
             ObservableList<String> options =
             FXCollections.observableArrayList(
-                    project.getMembersToArray()
+                    ProjectService.getMembersToArray(project.getMembers())
             );
             taskOwnerBox = new ComboBox(options);
             add(new Label("Task owner: "), 0, 2);

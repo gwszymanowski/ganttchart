@@ -24,8 +24,6 @@ public class ProjectDialog extends Dialog<ButtonType> implements Dialogable {
 
     public ProjectDialog() {
         setTitle("Create project");
-        setHeaderText(null);
-        setGraphic(null);
         ButtonType confirmButtonType = new ButtonType("Save");
 
         getDialogPane().getButtonTypes().addAll(confirmButtonType);
@@ -55,8 +53,6 @@ public class ProjectDialog extends Dialog<ButtonType> implements Dialogable {
     public void fillFields(String name) {
         gridpane.nameField.setText(name);
     }
-
-
 
     private class CreateProjectGridPane extends GridPane {
 

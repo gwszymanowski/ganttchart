@@ -47,7 +47,6 @@ public class ProjectRepository implements CRUD {
 
     public Project findByName(String name) {
         Document doc = collection.find(eq("name", name)).first();
-        System.out.println(doc);
         return ProjectService.fromDocument(doc);
     }
 

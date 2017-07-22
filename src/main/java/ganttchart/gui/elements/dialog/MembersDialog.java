@@ -31,8 +31,6 @@ public class MembersDialog extends Dialog<ButtonType> implements Dialogable {
     public MembersDialog(Project project) {
         this.project = project;
         setTitle("Edit members");
-        setHeaderText(null);
-        setGraphic(null);
 
         ButtonType loginButtonType = new ButtonType("Change", ButtonBar.ButtonData.APPLY);
         getDialogPane().getButtonTypes().addAll(loginButtonType);

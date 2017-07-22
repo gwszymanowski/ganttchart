@@ -157,17 +157,13 @@ public class AssignmentController implements Initializable {
             List<String> dates = AssignmentService.getAllDaysToString(a);
 
             for(int i = 0; i < tbsize; i++) {
-
                 TableColumn help = tableColumns.get(i);
                 if(dates.contains(help.getGraphic().getAccessibleHelp())){
                     help.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(help.getGraphic().getAccessibleHelp()));
                     help.setCellFactory(column -> new DatesCell(p));
                 }
-
             }
-
         }
-
         datesTableView.getItems().setAll(p.getTasks());
     }
 

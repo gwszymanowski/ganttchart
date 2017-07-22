@@ -20,8 +20,6 @@ public class PersonDialog extends Dialog<ButtonType> implements Dialogable {
 
     public PersonDialog() {
         setTitle("Create person");
-        setHeaderText(null);
-        setGraphic(null);
 
         ButtonType loginButtonType = new ButtonType("Save");
         getDialogPane().getButtonTypes().addAll(loginButtonType);

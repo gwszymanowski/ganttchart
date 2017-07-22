@@ -49,17 +49,8 @@ public class Project implements Comparable<Project> {
         members.add(person);
     }
 
-    public String[] getMembersToArray() {
-        String[] array = new String[members.size()];
-
-        Iterator<Person> people = members.iterator();
-        int i = 0;
-        while(people.hasNext()){
-            array[i] = people.next().toString();
-            i++;
-        }
-
-        return array;
+    public void addMembers(Person ... people) {
+        members.addAll(Arrays.asList(people));
     }
 
     public LocalDate getStartDate() {
@@ -84,6 +75,10 @@ public class Project implements Comparable<Project> {
 
     public void addTask(Assignment task) {
         tasks.add(task);
+    }
+
+    public void addTasks(Assignment ... assignments) {
+        tasks.addAll(Arrays.asList(assignments));
     }
 
     @Override

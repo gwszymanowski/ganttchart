@@ -11,6 +11,7 @@ import org.bson.Document;
 import org.bson.types.ObjectId;
 
 import java.time.LocalDate;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -93,6 +94,19 @@ public class ProjectService {
         }
 
         return list;
+    }
+
+    public static String[] getMembersToArray(Set<Person> members) {
+        String[] array = new String[members.size()];
+
+        Iterator<Person> people = members.iterator();
+        int i = 0;
+        while(people.hasNext()){
+            array[i] = people.next().toString();
+            i++;
+        }
+
+        return array;
     }
 
 }
