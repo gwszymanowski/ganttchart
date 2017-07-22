@@ -1,10 +1,12 @@
 package ganttchart.controller;
 
+import ganttchart.gui.elements.cell.AssignmentCell;
 import ganttchart.gui.elements.cell.DatesCell;
 import ganttchart.gui.elements.dialog.Dialogable;
 import ganttchart.gui.elements.dialog.MembersDialog;
 import ganttchart.gui.elements.dialog.AssignmentDialog;
 import ganttchart.model.Assignment;
+import ganttchart.model.Person;
 import ganttchart.model.Project;
 import ganttchart.repository.ProjectRepository;
 import ganttchart.service.AssignmentService;
@@ -34,28 +36,25 @@ import java.util.*;
 public class AssignmentController implements Initializable {
 
     @FXML
-    private TableColumn titleColumn;
+    private TableColumn title;
 
     @FXML
-    private TableColumn typeColumn;
+    private TableColumn taskOwner;
 
     @FXML
-    private TableColumn taskOwnerColumn;
+    private TableColumn startDate;
 
     @FXML
-    private TableColumn startColumn;
+    private TableColumn finishDate;
 
     @FXML
-    private TableColumn endColumn;
+    private TableColumn duration;
 
     @FXML
-    private TableColumn durationColumn;
+    private TableColumn completed;
 
     @FXML
-    private TableColumn completedColumn;
-
-    @FXML
-    private TableColumn workingDaysColumn;
+    private TableColumn workingDays;
 
     @FXML
     private Label titleLabel;
@@ -78,18 +77,17 @@ public class AssignmentController implements Initializable {
     @FXML
     private Button memberList;
 
-    private String title;
+    private String titleValue;
     private ProjectRepository projectRepository = new ProjectRepository();
     private Project p;
 
     public AssignmentController(String title) {
-        this.title = title;
+        this.titleValue = title;
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        this.p = projectRepository.findByName(title);
-
+        this.p = projectRepository.findByName(titleValue);
         initializeLabels();
         initializeTableView();
         initializeDatesTableView();
@@ -98,7 +96,7 @@ public class AssignmentController implements Initializable {
     }
 
     private void initializeLabels() {
-        titleLabel.setText(title);
+        titleLabel.setText(titleValue);
         memberList.setOnAction(new DialogButtonAction(new MembersDialog(p)));
         newAssignment.setOnAction(new DialogButtonAction(new AssignmentDialog(p)));
         startDateLabel.setText(FileUtil.concatenateString("Startdate is: " , FileUtil.convertDateToString(p.getStartDate())));
@@ -107,9 +105,9 @@ public class AssignmentController implements Initializable {
 
     private void initializeTableView() {
         TableColumnFactory factory = new TableColumnFactory();
-        durationColumn.setGraphic(factory.getRotated("Duration(days)"));
-        workingDaysColumn.setGraphic(factory.getRotated("Days left"));
-        completedColumn.setGraphic(factory.getRotated("(%) Completed"));
+        duration.setGraphic(factory.getRotated("Duration(days)"));
+        workingDays.setGraphic(factory.getRotated("Days left"));
+        completed.setGraphic(factory.getRotated("(%) Completed"));
 
     }
 
@@ -137,13 +135,13 @@ public class AssignmentController implements Initializable {
     }
 
     private void fillTable() {
-        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-        taskOwnerColumn.setCellValueFactory(new PropertyValueFactory<>("taskOwner"));
-        startColumn.setCellValueFactory(new PropertyValueFactory<>("startDate"));
-        endColumn.setCellValueFactory(new PropertyValueFactory<>("finishDate"));
-        durationColumn.setCellValueFactory(new PropertyValueFactory<>("duration"));
-        completedColumn.setCellValueFactory(new PropertyValueFactory<>("completed"));
-        workingDaysColumn.setCellValueFactory(new PropertyValueFactory<>("workingDays"));
+
+        ObservableList<TableColumn> cols = tableView.getColumns();
+
+        for(TableColumn tb : cols) {
+            tb.setCellValueFactory(new PropertyValueFactory<>(tb.getId().toString()));
+            tb.setCellFactory(column -> new AssignmentCell());
+        }
 
         refresh();
     }

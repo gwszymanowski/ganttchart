@@ -30,11 +30,9 @@ public class PersonService {
     public static Person fromDocument(Document document) {
         Person person = new Person();
 
-        ObjectId _id = (ObjectId) document.get("_id");
         String firstname = (String) document.get("firstname");
         String lastname = (String)document.get("lastname");
 
-        person.set_id(_id);
         person.setFirstname(firstname);
         person.setLastname(lastname);
 

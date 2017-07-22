@@ -33,13 +33,13 @@
         <ScrollPane hbarPolicy="AS_NEEDED" vbarPolicy="AS_NEEDED"  fitToHeight="true">
             <TableView fx:id="tableView" >
                 <columns>
-                    <TableColumn fx:id="titleColumn" text="Title" />
-                    <TableColumn fx:id="taskOwnerColumn" text="task owner" />
-                    <TableColumn fx:id="startColumn" text="Start" />
-                    <TableColumn fx:id="endColumn" text="End" />
-                    <TableColumn fx:id="durationColumn" />
-                    <TableColumn fx:id="completedColumn" />
-                    <TableColumn fx:id="workingDaysColumn" />
+                    <TableColumn fx:id="title" text="Title" />
+                    <TableColumn fx:id="taskOwner" text="Task owner" />
+                    <TableColumn fx:id="startDate" text="Start" />
+                    <TableColumn fx:id="finishDate" text="End" />
+                    <TableColumn fx:id="duration" />
+                    <TableColumn fx:id="completed" />
+                    <TableColumn fx:id="workingDays" />
 
                 </columns>
             </TableView>

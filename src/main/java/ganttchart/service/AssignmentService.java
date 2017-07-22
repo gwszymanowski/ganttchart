@@ -26,6 +26,7 @@ public class AssignmentService {
     public static Document toDocument(Assignment assignment) {
         Document document = new Document();
         document.append("title", assignment.getTitle());
+        document.append("taskOwner", assignment.getTaskOwner());
         document.append("startDate", assignment.startDateString());
         document.append("finishDate", assignment.finishDateString());
         document.append("completed", assignment.getCompleted());
@@ -35,6 +36,8 @@ public class AssignmentService {
     public static Assignment fromDocument(Document document) {
         Assignment a = new Assignment();
         String title = (String) document.get("title");
+
+      //  String fullname = (String) document.get("taskOwner");
         String startdateString = (String) document.get("startDate");
         String finishdateString = (String) document.get("finishDate");
         Integer completed = (Integer) document.get("completed");
@@ -43,6 +46,7 @@ public class AssignmentService {
         a.setStartDate(FileUtil.convertStringToLocalDate(startdateString));
         a.setFinishDate(FileUtil.convertStringToLocalDate(finishdateString));
         a.setCompleted(completed);
+        a.setTaskOwner(new Person("Seba galecki"));
 
         return a;
     }

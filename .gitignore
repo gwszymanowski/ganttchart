@@ -1,12 +1,4 @@
 target/*
-target/classes/ganttchart.Main.class
-target/classes/gui/CreateProjectView.class
-target/classes/gui/GanttMenu.class
-target/classes/gui/gui/general/PrimaryView.class
-target/classes/gui/MainTable.class
-target/classes/gui/gui/general/SignupView.class
-target/classes/gui/gui/general/LoginView.class
-target/classes/gui/gui/general/MainFrame.class
 .idea/*
 .idea/compiler.xml
 .idea/kotlinc.xml
@@ -17,3 +9,4 @@ target/classes/gui/gui/general/MainFrame.class
 .idea/validation.xml
 .idea/libraries
 ganttchart.iml
+target/

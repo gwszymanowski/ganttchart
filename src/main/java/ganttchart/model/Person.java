@@ -15,6 +15,12 @@ public class Person implements Comparable<Person>{
     public Person() {
     }
 
+    public Person(String fullname) {
+        String[] args = fullname.split(" ");
+        firstname = args[0];
+        lastname = args[1];
+    }
+
     public Person(String firstname, String lastname) {
         this.firstname = firstname;
         this.lastname = lastname;
@@ -39,6 +45,7 @@ public class Person implements Comparable<Person>{
     public void setLastname(String lastname) {
         this.lastname = lastname;
     }
+
 
     @Override
     public boolean equals(Object o) {

@@ -34,8 +34,7 @@ public class ProjectService {
 
     public static Project fromDocument(Document document) {
         Project project = new Project();
-        ObjectId _id = (ObjectId) document.get("_id");
-        project.set_id(_id);
+
         String name = (String) document.get("name");
         project.setName(name);
 

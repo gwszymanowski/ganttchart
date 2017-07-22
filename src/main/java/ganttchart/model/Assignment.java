@@ -94,6 +94,14 @@ public class Assignment implements Comparable<Assignment>{
         return FileUtil.convertDateToString(finishDate);
     }
 
+    public Person getTaskOwner() {
+        return taskOwner;
+    }
+
+    public void setTaskOwner(Person taskOwner) {
+        this.taskOwner = taskOwner;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

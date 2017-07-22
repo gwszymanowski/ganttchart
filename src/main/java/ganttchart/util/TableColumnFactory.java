@@ -10,7 +10,6 @@ import javafx.scene.control.Label;
 public final class TableColumnFactory {
 
     public Group getRotated(String title) {
-
         Label label = new Label(title);
         label.setRotate(270);
         label.setPadding(new Insets(5,5,5,5));

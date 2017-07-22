@@ -33,7 +33,7 @@ public class FileUtilTest {
     public void convertStringtoDateAmericanFormat() {
         LocalDate date =  LocalDate.of(2013, 12, 18);
         String dateString = "2013-12-18";
-        LocalDate given = FileUtil.convertStringToLocalDateUSFormat(dateString);
+        LocalDate given = FileUtil.convertStringToLocalDate(dateString);
         assertEquals(date, given);
     }
 
