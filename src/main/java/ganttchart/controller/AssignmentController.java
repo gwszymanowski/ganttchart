@@ -108,8 +108,8 @@ public class AssignmentController implements Initializable {
     private void initializeTableView() {
         TableColumnFactory factory = new TableColumnFactory();
         durationColumn.setGraphic(factory.getRotated("Duration(days)"));
+        workingDaysColumn.setGraphic(factory.getRotated("Days left"));
         completedColumn.setGraphic(factory.getRotated("(%) Completed"));
-        workingDaysColumn.setGraphic(factory.getRotated("Working days"));
 
     }
 

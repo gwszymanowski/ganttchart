@@ -3,19 +3,17 @@ package ganttchart.gui.elements.dialog;
 import ganttchart.model.Assignment;
 import ganttchart.model.Person;
 import ganttchart.model.Project;
-import ganttchart.repository.AssignmentRepository;
 import ganttchart.repository.ProjectRepository;
 import ganttchart.util.alert.AlertFactory;
 import ganttchart.util.alert.AlertReason;
-import ganttchart.util.alert.ElementType;
-import ganttchart.util.alert.OperationType;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Created by gwszymanowski on 2017-07-07.
@@ -50,8 +48,8 @@ public class AssignmentDialog extends Dialog<ButtonType> implements Dialogable {
 //        else if(repo.ifExists(title, startDate, endDate))
 //            AlertFactory.getErrorAlert(AlertReason.ALREADY_EXISTS).showAndWait();
         else {
-            String taskOwnerText = gridpane.taskOwnerField.getText();
-
+            String taskOwnerText = gridpane.taskOwnerBox.getValue().toString();
+            System.out.println(taskOwnerText);
             if(taskOwnerText.length() == 0) {
                 List<Assignment> assignments = project.getTasks();
                 assignments.add(new Assignment(title, startDate, endDate));
@@ -63,19 +61,20 @@ public class AssignmentDialog extends Dialog<ButtonType> implements Dialogable {
                 repo.update(project);
             }
 
-            fillFields(title, taskOwnerText, startDate, endDate);
+            fillFields(title, startDate, endDate);
 
         }
     }
 
-    public void fillFields(String title, String taskOwner, LocalDate startDate, LocalDate endDate) {
-        gridpane.setValues(title, taskOwner, startDate, endDate);
+    public void fillFields(String title, LocalDate startDate, LocalDate endDate) {
+        gridpane.setValues(title, startDate, endDate);
     }
 
     private class CreateAssignmentGridPane extends GridPane {
 
-        private TextField titleField, taskOwnerField;
+        private TextField titleField;
         private DatePicker startDatePicker, endDatePicker;
+        private ComboBox taskOwnerBox;
 
         public CreateAssignmentGridPane(Project project) {
             setHgap(10);
@@ -87,9 +86,13 @@ public class AssignmentDialog extends Dialog<ButtonType> implements Dialogable {
             add(new Label("Title: "), 0, 1);
             add(titleField, 1, 1);
 
-            taskOwnerField = new TextField();
+            ObservableList<String> options =
+            FXCollections.observableArrayList(
+                    project.getMembersToArray()
+            );
+            taskOwnerBox = new ComboBox(options);
             add(new Label("Task owner: "), 0, 2);
-            add(taskOwnerField, 1, 2);
+            add(taskOwnerBox, 1, 2);
 
             startDatePicker = new DatePicker();
             add(new Label("Start: "), 0, 3);
@@ -101,9 +104,8 @@ public class AssignmentDialog extends Dialog<ButtonType> implements Dialogable {
 
         }
 
-        public void setValues(String title, String taskOwner, LocalDate startDate, LocalDate endDate) {
+        public void setValues(String title, LocalDate startDate, LocalDate endDate) {
             titleField.setText(title);
-            taskOwnerField.setText(taskOwner);
             startDatePicker.setValue(startDate);
             endDatePicker.setValue(endDate);
         }
