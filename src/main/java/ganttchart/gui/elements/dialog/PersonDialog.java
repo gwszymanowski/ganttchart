@@ -2,10 +2,8 @@ package ganttchart.gui.elements.dialog;
 
 import ganttchart.model.Person;
 import ganttchart.repository.PersonRepository;
-import ganttchart.util.alert.ElementType;
-import ganttchart.util.alert.AlertReason;
-import ganttchart.util.alert.AlertFactory;
-import ganttchart.util.alert.OperationType;
+import ganttchart.gui.elements.alert.AlertReason;
+import ganttchart.gui.elements.alert.AlertFactory;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;

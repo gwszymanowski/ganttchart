@@ -1,13 +1,17 @@
 package ganttchart.gui.elements.cell;
 
-import ganttchart.model.Assignment;
+import ganttchart.gui.elements.alert.AssignmentChoiceAlert;
 import ganttchart.model.Person;
 import ganttchart.util.FileUtil;
 import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
 import javafx.util.Pair;
+import org.controlsfx.control.PopOver;
 
 import java.time.LocalDate;
 
@@ -21,36 +25,25 @@ public class AssignmentCell extends TableCell<Pair<String, Object>, Object> {
         super.updateItem(item, empty);
 
         if(!empty) {
-
-            if(item instanceof String) {
+            if(item instanceof String)
                 setText((String)item);
-            } else if(item instanceof Person) {
+            else if(item instanceof Person)
                 setText(item.toString());
-            }else if(item instanceof LocalDate) {
+            else if(item instanceof LocalDate)
                 setText(FileUtil.convertDateToString((LocalDate)item));
-            } else {
+            else
                 setText(String.valueOf(item));
-            }
-
-
-
-           // setOnMouseClicked(new PopupEvent(item));
+            setOnMouseClicked(new PopupEvent());
         }
-
     }
 
     private class PopupEvent implements EventHandler<MouseEvent> {
 
-        private String item;
-
-        public PopupEvent(String item) {
-            this.item = item;
-        }
-
         @Override
         public void handle(MouseEvent event) {
             if (event.getButton().equals(MouseButton.SECONDARY)) {
-                System.out.println(item);
+                AssignmentChoiceAlert alert = new AssignmentChoiceAlert(Alert.AlertType.CONFIRMATION);
+                alert.showAndWait();
             }
         }
     }

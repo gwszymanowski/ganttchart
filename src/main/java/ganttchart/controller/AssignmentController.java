@@ -6,16 +6,15 @@ import ganttchart.gui.elements.dialog.Dialogable;
 import ganttchart.gui.elements.dialog.MembersDialog;
 import ganttchart.gui.elements.dialog.AssignmentDialog;
 import ganttchart.model.Assignment;
-import ganttchart.model.Person;
 import ganttchart.model.Project;
 import ganttchart.repository.ProjectRepository;
 import ganttchart.service.AssignmentService;
 import ganttchart.service.ProjectService;
 import ganttchart.util.FileUtil;
 import ganttchart.util.TableColumnFactory;
-import ganttchart.util.alert.AlertFactory;
-import ganttchart.util.alert.ElementType;
-import ganttchart.util.alert.OperationType;
+import ganttchart.gui.elements.alert.AlertFactory;
+import ganttchart.gui.elements.alert.ElementType;
+import ganttchart.gui.elements.alert.OperationType;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -79,7 +78,7 @@ public class AssignmentController implements Initializable {
 
     private String titleValue;
     private ProjectRepository projectRepository = new ProjectRepository();
-    private Project p;
+    private Project project;
 
     public AssignmentController(String title) {
         this.titleValue = title;
@@ -87,7 +86,7 @@ public class AssignmentController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        this.p = projectRepository.findByName(titleValue);
+        project = projectRepository.findByName(titleValue);
         initializeLabels();
         initializeTableView();
         initializeDatesTableView();
@@ -97,9 +96,9 @@ public class AssignmentController implements Initializable {
 
     private void initializeLabels() {
         titleLabel.setText(titleValue);
-        memberList.setOnAction(new DialogButtonAction(new MembersDialog(p)));
-        newAssignment.setOnAction(new DialogButtonAction(new AssignmentDialog(p)));
-        startDateLabel.setText(FileUtil.concatenateString("Startdate is: " , FileUtil.convertDateToString(p.getStartDate())));
+        memberList.setOnAction(new DialogButtonAction(new MembersDialog(project)));
+        newAssignment.setOnAction(new DialogButtonAction(new AssignmentDialog(project)));
+        startDateLabel.setText(FileUtil.concatenateString("Startdate is: " , FileUtil.convertDateToString(project.getStartDate())));
         todayIsLabel.setText(FileUtil.concatenateString("Today is: " , FileUtil.convertDateToString(LocalDate.now())));
     }
 
@@ -113,7 +112,7 @@ public class AssignmentController implements Initializable {
 
     private void initializeDatesTableView() {
        ObservableList<TableColumn> tableColumns = datesTableView.getColumns();
-       List<TableColumn> dates = ProjectService.getPeriod(p);
+       List<TableColumn> dates = ProjectService.getPeriod(project);
 
        dates.stream().forEach(x -> tableColumns.add(x));
 
@@ -125,7 +124,7 @@ public class AssignmentController implements Initializable {
                 change.next();
                 if (change.wasReplaced() && !suspended) {
                     this.suspended = true;
-                    datesTableView.getColumns().setAll(ProjectService.getPeriod(p));
+                    datesTableView.getColumns().setAll(ProjectService.getPeriod(project));
                     fillDatesTable();
                     this.suspended = false;
                 }
@@ -151,23 +150,23 @@ public class AssignmentController implements Initializable {
 
         int tbsize = tableColumns.size();
 
-        for(Assignment a : p.getTasks()) {
+        for(Assignment a : project.getTasks()) {
             List<String> dates = AssignmentService.getAllDaysToString(a);
 
             for(int i = 0; i < tbsize; i++) {
                 TableColumn help = tableColumns.get(i);
                 if(dates.contains(help.getGraphic().getAccessibleHelp())){
                     help.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(help.getGraphic().getAccessibleHelp()));
-                    help.setCellFactory(column -> new DatesCell(p));
+                    help.setCellFactory(column -> new DatesCell(project));
                 }
             }
         }
-        datesTableView.getItems().setAll(p.getTasks());
+        datesTableView.getItems().setAll(project.getTasks());
     }
 
     public void refresh() {
-        tableView.getItems().setAll(p.getTasks());
-        datesTableView.getItems().setAll(p.getTasks());
+        tableView.getItems().setAll(project.getTasks());
+        datesTableView.getItems().setAll(project.getTasks());
     }
 
     private class DialogButtonAction implements EventHandler<ActionEvent> {

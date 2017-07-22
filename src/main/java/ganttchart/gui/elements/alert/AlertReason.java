@@ -1,4 +1,4 @@
-package ganttchart.util.alert;
+package ganttchart.gui.elements.alert;
 
 /**
  * Created by gwszymanowski on 2017-07-11.
