@@ -5,6 +5,7 @@ import ganttchart.gui.elements.alert.AssignmentChoiceAlert;
 import ganttchart.gui.elements.alert.ElementType;
 import ganttchart.gui.elements.alert.OperationType;
 import ganttchart.model.Person;
+import ganttchart.model.Project;
 import ganttchart.util.FileUtil;
 import javafx.event.EventHandler;
 import javafx.scene.control.*;
@@ -22,19 +23,29 @@ import java.util.Optional;
  */
 public class AssignmentCell extends TableCell<Pair<String, Object>, Object> {
 
+    private Project project;
+    private String item;
+
+    public AssignmentCell(Project project) {
+        this.project = project;
+    }
+
     @Override
     protected void updateItem(Object item, boolean empty) {
         super.updateItem(item, empty);
 
         if(!empty) {
-            if(item instanceof String)
-                setText((String)item);
-            else if(item instanceof Person)
+
+            if(item instanceof Person)
                 setText(item.toString());
             else if(item instanceof LocalDate)
                 setText(FileUtil.convertDateToString((LocalDate)item));
-            else
+            else {
                 setText(String.valueOf(item));
+            }
+
+
+            this.item = String.valueOf(item);
             setOnMouseClicked(new PopupEvent());
         }
     }
@@ -53,9 +64,9 @@ public class AssignmentCell extends TableCell<Pair<String, Object>, Object> {
                     if(data == ButtonBar.ButtonData.NO) {
                         System.out.println("EDYTUJEMY");
                     } else if(data == ButtonBar.ButtonData.HELP_2) {
-                        System.out.println("USUWAMY");
+                        alert.delete(project, item);
                     } else if (data == ButtonBar.ButtonData.LEFT) {
-                        System.out.println("ZAPISUJEMY PROGRESS");
+                        alert.saveProgress(project, item);
                     }
 
                 }

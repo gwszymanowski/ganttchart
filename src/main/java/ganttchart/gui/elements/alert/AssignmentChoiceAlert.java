@@ -1,6 +1,9 @@
 package ganttchart.gui.elements.alert;
 
 import ganttchart.gui.elements.dialog.Dialogable;
+import ganttchart.model.Assignment;
+import ganttchart.model.Project;
+import ganttchart.repository.ProjectRepository;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -10,14 +13,17 @@ import javafx.scene.layout.*;
 
 import javax.swing.*;
 
+import java.util.Optional;
+
 import static javafx.scene.layout.HBox.setHgrow;
 
 /**
  * Created by gwszymanowski on 2017-07-22.
  */
-public class AssignmentChoiceAlert extends Alert implements Dialogable {
+public class AssignmentChoiceAlert extends Alert {
 
     private AssignmentChoiceGridpane gridpane;
+    private ProjectRepository projectRepository = new ProjectRepository();
 
     public AssignmentChoiceAlert(AlertType alertType) {
         super(alertType);
@@ -37,9 +43,21 @@ public class AssignmentChoiceAlert extends Alert implements Dialogable {
         getButtonTypes().setAll(editButtonType, deleteButtonType, saveProgressButtonType, cancelButtonType);
     }
 
-    @Override
-    public void save() {
+    public void saveProgress(Project project, String assignmentTitle) {
 
+        Optional<Assignment> optional = project.getTasks().stream().filter(x -> x.getTitle().equals(assignmentTitle)).findFirst();
+        if(optional.isPresent()) {
+            Assignment assignment = optional.get();
+            String percentageString = gridpane.percentFinished.getText();
+            int value = percentageString.length() == 0 ? 0 : Integer.parseInt(percentageString);
+            assignment.setCompleted(value);
+            projectRepository.save(project);
+        }
+    }
+
+    public void delete(Project project, String assignmentTitle) {
+        project.getTasks().removeIf(x -> x.getTitle().equals(assignmentTitle));
+        projectRepository.update(project);
     }
 
     private class AssignmentChoiceGridpane extends GridPane {
