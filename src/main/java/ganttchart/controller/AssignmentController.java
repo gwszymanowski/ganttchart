@@ -137,7 +137,7 @@ public class AssignmentController implements Initializable {
 
         for(TableColumn tb : cols) {
             tb.setCellValueFactory(new PropertyValueFactory<>(tb.getId().toString()));
-            tb.setCellFactory(column -> new AssignmentCell());
+            tb.setCellFactory(column -> new AssignmentCell(project));
         }
 
         refresh();

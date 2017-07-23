@@ -27,14 +27,15 @@ public class AssignmentDialog extends Dialog<ButtonType> implements Dialogable {
 
     public AssignmentDialog(Project project) {
         this.project = project;
-        setTitle("Create assignment");
+        setTitle("Assignment");
 
-        ButtonType loginButtonType = new ButtonType("Create", ButtonBar.ButtonData.APPLY);
+        ButtonType loginButtonType = new ButtonType("Change", ButtonBar.ButtonData.APPLY);
         getDialogPane().getButtonTypes().addAll(loginButtonType);
 
         gridpane = new CreateAssignmentGridPane(project);
         getDialogPane().setContent(gridpane);
     }
+
 
     @Override
     public void save() {
@@ -63,6 +64,12 @@ public class AssignmentDialog extends Dialog<ButtonType> implements Dialogable {
             fillFields(title, startDate, endDate);
 
         }
+    }
+
+    public void update(Project project, String previousTitle) {
+        String title = gridpane.titleField.getText();
+        LocalDate startDate = gridpane.startDatePicker.getValue();
+        LocalDate endDate = gridpane.endDatePicker.getValue();
     }
 
     public void fillFields(String title, LocalDate startDate, LocalDate endDate) {

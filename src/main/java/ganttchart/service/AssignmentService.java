@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -102,6 +103,11 @@ public class AssignmentService {
         }
 
         return 100/count;
+    }
+
+    public static Assignment findAssignmentByTitle(Project p, String title) {
+        Optional<Assignment> optional = p.getTasks().stream().filter(x -> x.getTitle().equals(title)).findFirst();
+        return optional.get();
     }
 
 
