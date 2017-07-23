@@ -58,7 +58,7 @@ public class AssignmentService {
     public static List<LocalDate> getAllDays(Assignment a) {
         List<LocalDate> list = new LinkedList<>();
         LocalDate start = a.getStartDate();
-        LocalDate end = a.getFinishDate();
+        LocalDate end = a.getFinishDate().plusDays(1);
 
         while(!start.equals(end)) {
             list.add(start);
@@ -71,7 +71,7 @@ public class AssignmentService {
     public static List<String> getAllDaysToString(Assignment a) {
         List<String> list = new LinkedList<>();
         LocalDate start = a.getStartDate();
-        LocalDate end = a.getFinishDate();
+        LocalDate end = a.getFinishDate().plusDays(1);
 
         while(!start.equals(end)) {
             list.add(FileUtil.convertDateToString(start));

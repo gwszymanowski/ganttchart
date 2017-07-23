@@ -1,6 +1,5 @@
 package ganttchart.service;
 
-import com.mongodb.BasicDBList;
 import ganttchart.model.Assignment;
 import ganttchart.model.Project;
 import ganttchart.model.Person;
@@ -8,7 +7,6 @@ import ganttchart.util.FileUtil;
 import ganttchart.util.TableColumnFactory;
 import javafx.scene.control.TableColumn;
 import org.bson.Document;
-import org.bson.types.ObjectId;
 
 import java.time.LocalDate;
 import java.util.Iterator;
@@ -54,7 +52,7 @@ public class ProjectService {
         List<TableColumn> tb = new LinkedList<>();
         TableColumnFactory tcf = new TableColumnFactory();
         LocalDate first = p.getStartDate();
-        LocalDate last = getLastDay(p.getTasks());
+        LocalDate last = getLastDay(p.getTasks()).plusDays(1);
 
         while(!first.equals(last)) {
             TableColumn col = new TableColumn();
@@ -72,7 +70,7 @@ public class ProjectService {
     public static List<String> getAllDaysToString(Project p) {
         List<String> list = new LinkedList<>();
         LocalDate start = p.getStartDate();
-        LocalDate end = getLastDay(p.getTasks());
+        LocalDate end = getLastDay(p.getTasks()).plusDays(1);
 
         while(!start.equals(end)) {
             list.add(FileUtil.convertDateToString(start));

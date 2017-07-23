@@ -107,7 +107,6 @@ public class AssignmentController implements Initializable {
         duration.setGraphic(factory.getRotated("Duration(days)"));
         workingDays.setGraphic(factory.getRotated("Days left"));
         completed.setGraphic(factory.getRotated("(%) Completed"));
-
     }
 
     private void initializeDatesTableView() {
@@ -134,7 +133,6 @@ public class AssignmentController implements Initializable {
     }
 
     private void fillTable() {
-
         ObservableList<TableColumn> cols = tableView.getColumns();
 
         for(TableColumn tb : cols) {
