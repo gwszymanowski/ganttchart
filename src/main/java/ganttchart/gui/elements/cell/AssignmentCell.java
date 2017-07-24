@@ -66,6 +66,7 @@ public class AssignmentCell extends TableCell<Pair<String, Object>, Object> {
                     ButtonBar.ButtonData data = Optional.of(result.get()).get().getButtonData();
 
                     Object obj = getTableRow().getTableView().getItems().get(getIndex());
+                    System.out.println("OBJECT " + String.valueOf(obj));
                     if (data == ButtonBar.ButtonData.NO)
                         updateAction(String.valueOf(obj));
                     else if (data == ButtonBar.ButtonData.HELP_2) {

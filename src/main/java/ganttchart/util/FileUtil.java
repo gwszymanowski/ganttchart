@@ -19,20 +19,26 @@ public final class FileUtil {
 
     private FileUtil(){}
 
-    public static String convertDateToString(LocalDate date) {
-        if(date == null)
-            return "null";
+    public static String convertDateToString(final LocalDate date) {
+        String word = null;
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        for (String parse : formats)
+            if(word == null) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern(parse);
+                try {
+                    word = date.format(formatter);
+                } catch (DateTimeParseException e) {
+                }
+        }
 
-        return date.format(formatter);
+        return word;
     }
 
     public static LocalDate convertStringToLocalDate(String date) {
         LocalDate newDate = null;
 
-        if (date != null)
-            for (String parse : formats) {
+        for (String parse : formats)
+            if (newDate == null) {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern(parse);
                 try {
                     newDate = LocalDate.parse(date, formatter);
@@ -42,8 +48,6 @@ public final class FileUtil {
 
         return newDate;
     }
-
-
 
     public static String concatenateString(String ... val) {
         StringBuilder sb = new StringBuilder();

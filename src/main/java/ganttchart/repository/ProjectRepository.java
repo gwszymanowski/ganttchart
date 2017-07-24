@@ -32,6 +32,10 @@ public class ProjectRepository implements CRUD {
         collection.replaceOne(eq("name", entity.getName()), ProjectService.toDocument(entity));
     }
 
+    public void update(Project entity, String oldName) {
+        collection.replaceOne(eq("name", oldName), ProjectService.toDocument(entity));
+    }
+
     public List<Project> getAll() {
         List<Project> projects = new LinkedList<>();
 

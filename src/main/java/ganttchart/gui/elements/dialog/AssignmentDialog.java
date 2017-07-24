@@ -61,7 +61,7 @@ public class AssignmentDialog extends Dialog<ButtonType> implements Dialogable {
 
             project.addTask(ass);
 
-            repo.save(project);
+            repo.update(project);
         }
 
     }

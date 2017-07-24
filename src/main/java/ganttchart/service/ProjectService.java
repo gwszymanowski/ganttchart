@@ -9,10 +9,8 @@ import javafx.scene.control.TableColumn;
 import org.bson.Document;
 
 import java.time.LocalDate;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by gwszymanowski on 2017-07-09.
@@ -63,47 +61,12 @@ public class ProjectService {
         return tb;
     }
 
-    public static LocalDate getLastDay(List<Assignment> tasks) {
+    public static LocalDate getLastDay(Set<Assignment> tasks) {
         return tasks.size() == 0 ? LocalDate.now() : tasks.stream().map(u -> u.getFinishDate()).max(LocalDate::compareTo).get();
     }
 
-    public static List<String> getAllDaysToString(Project p) {
-        List<String> list = new LinkedList<>();
-        LocalDate start = p.getStartDate();
-        LocalDate end = getLastDay(p.getTasks()).plusDays(1);
-
-        while(!start.equals(end)) {
-            list.add(FileUtil.convertDateToString(start));
-            start = start.plusDays(1);
-        }
-
-        return list;
-    }
-
-    public static List<LocalDate> getAllDays(Project p) {
-        List<LocalDate> list = new LinkedList<>();
-        LocalDate start = p.getStartDate();
-        LocalDate end = getLastDay(p.getTasks());
-
-        while(!start.equals(end)) {
-            list.add(start);
-            start = start.plusDays(1);
-        }
-
-        return list;
-    }
-
     public static String[] getMembersToArray(Set<Person> members) {
-        String[] array = new String[members.size()];
-
-        Iterator<Person> people = members.iterator();
-        int i = 0;
-        while(people.hasNext()){
-            array[i] = people.next().toString();
-            i++;
-        }
-
-        return array;
+        return members.stream().map(Person::toString).toArray(String[]::new);
     }
 
 }

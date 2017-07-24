@@ -57,9 +57,7 @@ public class AssignmentChoiceAlert extends Alert {
 
     public void delete(Project project, String assignmentTitle) {
         System.out.println(assignmentTitle);
-        System.out.println(project.getTasks());
         project.getTasks().removeIf(x -> x.getTitle().equals(assignmentTitle));
-        System.out.println(project.getTasks());
         projectRepository.update(project);
     }
 

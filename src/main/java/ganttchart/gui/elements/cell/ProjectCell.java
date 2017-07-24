@@ -24,7 +24,7 @@ import java.util.Optional;
  */
 public class ProjectCell extends TableCell<Project, String> {
 
-    private String name;
+    private Project project;
     private ProjectRepository repo = new ProjectRepository();
 
     @Override
@@ -32,14 +32,14 @@ public class ProjectCell extends TableCell<Project, String> {
         super.updateItem(item, empty);
             Object rowItem = getTableRow().getItem();
             if(rowItem != null) {
-                this.name = rowItem.toString();
+                project = repo.findByName(rowItem.toString());
                 initializeComponents();
             }
     }
 
     private void initializeComponents() {
         HBox cellBox = new HBox(10);
-        Label label = new Label(name);
+        Label label = new Label(project.getName());
         Button detailsButton = new Button("Details");
         detailsButton.setOnAction(new DetailsButtonManager());
         Button editButton = new Button("Edit");
@@ -56,8 +56,12 @@ public class ProjectCell extends TableCell<Project, String> {
         @Override
         public void handle(ActionEvent event) {
             ProjectDialog cp = new ProjectDialog();
-            cp.fillFields(name);
-            cp.showAndWait();
+            cp.fillFields(project.getName());
+            Optional<ButtonType> result = cp.showAndWait();
+            if(result.isPresent()) {
+                cp.update(project);
+                AlertFactory.getInformationAlert(ElementType.PROJECT, OperationType.CHANGED).showAndWait();
+            }
         }
     }
 
@@ -71,7 +75,7 @@ public class ProjectCell extends TableCell<Project, String> {
 
             Optional<ButtonType> result = alert.showAndWait();
             if(result.isPresent() && Optional.of(result.get()).get().getButtonData() == ButtonBar.ButtonData.APPLY) {
-                repo.delete(name);
+                repo.delete(project.getName());
                 AlertFactory.getInformationAlert(ElementType.PERSON, OperationType.DELETE).showAndWait();
             }
         }
@@ -83,7 +87,7 @@ public class ProjectCell extends TableCell<Project, String> {
         public void handle(ActionEvent event) {
             Stage stage = null;
             Parent root = null;
-            AssignmentController projectController = new AssignmentController(name);
+            AssignmentController projectController = new AssignmentController(project.getName());
             try {
                 stage = (Stage) getScene().getWindow();
                 FXMLLoader loader = new FXMLLoader();

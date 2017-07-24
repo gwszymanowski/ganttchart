@@ -45,9 +45,16 @@ public class PersonCell extends TableCell<Person, String> {
 
         @Override
         public void handle(ActionEvent event) {
-            PersonDialog cp = new PersonDialog();
-            cp.fillFields(rowContent[0], rowContent[1]);
-            cp.showAndWait();
+            PersonDialog personDialog = new PersonDialog();
+            Person oldPerson = new Person(rowContent[0], rowContent[1]);
+
+            personDialog.fillFields(rowContent[0], rowContent[1]);
+
+            Optional<ButtonType> result = personDialog.showAndWait();
+            if(result.isPresent() && Optional.of(result.get()).get().getButtonData() == ButtonBar.ButtonData.APPLY) {
+                personDialog.update(oldPerson);
+                AlertFactory.getInformationAlert(ElementType.PERSON, OperationType.DELETE).showAndWait();
+            }
         }
     }
 

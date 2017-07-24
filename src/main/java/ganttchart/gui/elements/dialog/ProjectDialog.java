@@ -1,5 +1,7 @@
 package ganttchart.gui.elements.dialog;
 
+import ganttchart.gui.elements.alert.ElementType;
+import ganttchart.gui.elements.alert.OperationType;
 import ganttchart.model.Project;
 import ganttchart.repository.ProjectRepository;
 import ganttchart.gui.elements.alert.AlertReason;
@@ -44,8 +46,15 @@ public class ProjectDialog extends Dialog<ButtonType> implements Dialogable {
         else {
             repo.save(new Project(name));
             gridpane.nameField.setText("");
-            //AlertFactory.getInformationAlert(ElementType.PROJECT, OperationType.SAVE).showAndWait();
+            AlertFactory.getInformationAlert(ElementType.PROJECT, OperationType.SAVE).showAndWait();
         }
+    }
+
+    public void update(Project project) {
+        String oldName = project.getName();
+        String name = gridpane.nameField.getText();
+        project.setName(name);
+        repo.update(project, oldName);
     }
 
     public void fillFields(String name) {

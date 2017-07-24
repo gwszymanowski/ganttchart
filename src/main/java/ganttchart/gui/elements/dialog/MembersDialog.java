@@ -26,7 +26,7 @@ public class MembersDialog extends Dialog<ButtonType> implements Dialogable {
     private Project project;
     private PersonRepository personRepository = new PersonRepository();
     private ProjectRepository projectRepository = new ProjectRepository();
-    private MembersGridPane gridpane;
+    private MembersGridPane gridpane = new MembersGridPane();
 
     public MembersDialog(Project project) {
         this.project = project;
@@ -34,7 +34,7 @@ public class MembersDialog extends Dialog<ButtonType> implements Dialogable {
 
         ButtonType loginButtonType = new ButtonType("Change", ButtonBar.ButtonData.APPLY);
         getDialogPane().getButtonTypes().addAll(loginButtonType);
-        gridpane = new MembersGridPane();
+
         getDialogPane().setContent(gridpane);
     }
 
@@ -67,8 +67,5 @@ public class MembersDialog extends Dialog<ButtonType> implements Dialogable {
             return view.getSourceItems();
         }
 
-        public ObservableList<String> getTargetItems() {
-            return view.getTargetItems();
-        }
     }
 }

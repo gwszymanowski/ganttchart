@@ -12,10 +12,9 @@ import java.util.*;
  */
 public class Project implements Comparable<Project> {
 
-    private ObjectId _id;
     private String name = "null";
     private LocalDate startDate = LocalDate.now();
-    private List<Assignment> tasks = new LinkedList<>();
+    private Set<Assignment> tasks = new LinkedHashSet<>();
     private Set<Person> members = new HashSet<>();
 
     public Project() {
@@ -23,14 +22,6 @@ public class Project implements Comparable<Project> {
 
     public Project(String name) {
         this.name = name;
-    }
-
-    public ObjectId get_id() {
-        return _id;
-    }
-
-    public void set_id(ObjectId _id) {
-        this._id = _id;
     }
 
     public String getName() {
@@ -65,11 +56,11 @@ public class Project implements Comparable<Project> {
         return startDate != null ? FileUtil.convertDateToString(startDate) : "null";
     }
 
-    public List<Assignment> getTasks() {
+    public Set<Assignment> getTasks() {
         return tasks;
     }
 
-    public void setTasks(List<Assignment> tasks) {
+    public void setTasks(Set<Assignment> tasks) {
         this.tasks = tasks;
     }
 

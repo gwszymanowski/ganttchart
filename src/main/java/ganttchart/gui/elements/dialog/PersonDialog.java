@@ -1,5 +1,7 @@
 package ganttchart.gui.elements.dialog;
 
+import ganttchart.gui.elements.alert.ElementType;
+import ganttchart.gui.elements.alert.OperationType;
 import ganttchart.model.Person;
 import ganttchart.repository.PersonRepository;
 import ganttchart.gui.elements.alert.AlertReason;
@@ -18,12 +20,9 @@ public class PersonDialog extends Dialog<ButtonType> implements Dialogable {
 
     public PersonDialog() {
         setTitle("Create person");
-
         ButtonType loginButtonType = new ButtonType("Save");
         getDialogPane().getButtonTypes().addAll(loginButtonType);
-
         getDialogPane().setContent(gridpane);
-
     }
 
     @Override
@@ -37,7 +36,21 @@ public class PersonDialog extends Dialog<ButtonType> implements Dialogable {
         else {
             repo.save(new Person(firstname, lastname));
             fillFields("", "");
-           // AlertFactory.getInformationAlert(ElementType.PROJECT, OperationType.SAVE).showAndWait();
+            AlertFactory.getInformationAlert(ElementType.PROJECT, OperationType.SAVE).showAndWait();
+        }
+    }
+
+    public void update(Person oldPerson) {
+        String newFirstname = gridpane.firstnameField.getText();
+        String newLastname = gridpane.lastnameField.getText();
+        if(newFirstname.length() == 0 || newLastname.length() == 0)
+            AlertFactory.getErrorAlert(AlertReason.ZERO_LENGTH).showAndWait();
+        else if(repo.ifExists(newFirstname, newLastname))
+            AlertFactory.getErrorAlert(AlertReason.ALREADY_EXISTS).showAndWait();
+        else {
+            repo.update(oldPerson, new Person(newFirstname, newLastname));
+            fillFields("", "");
+            AlertFactory.getInformationAlert(ElementType.PROJECT, OperationType.SAVE).showAndWait();
         }
 
     }

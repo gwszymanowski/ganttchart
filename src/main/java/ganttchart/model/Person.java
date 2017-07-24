@@ -8,7 +8,6 @@ import org.bson.types.ObjectId;
  */
 public class Person implements Comparable<Person>{
 
-    private ObjectId _id;
     private String firstname = "null";
     private String lastname = "null";
 
@@ -17,17 +16,13 @@ public class Person implements Comparable<Person>{
 
     public Person(String fullname) {
         String[] args = fullname.split(" ");
-        firstname = args[0];
-        lastname = args[1];
+        this.firstname = args[0];
+        this.lastname = args[1];
     }
 
     public Person(String firstname, String lastname) {
         this.firstname = firstname;
         this.lastname = lastname;
-    }
-
-    public void set_id(ObjectId _id) {
-        this._id = _id;
     }
 
     public String getFirstname() {

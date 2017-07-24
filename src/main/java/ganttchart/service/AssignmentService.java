@@ -9,11 +9,9 @@ import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.springframework.expression.spel.ast.Assign;
 
+import java.io.File;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -36,9 +34,9 @@ public class AssignmentService {
 
     public static Assignment fromDocument(Document document) {
         Assignment a = new Assignment();
-        String title = (String) document.get("title");
 
-      //  String fullname = (String) document.get("taskOwner");
+        String title = (String) document.get("title");
+        String fullname = (String) document.get("taskOwner");
         String startdateString = (String) document.get("startDate");
         String finishdateString = (String) document.get("finishDate");
         Integer completed = (Integer) document.get("completed");
@@ -47,12 +45,12 @@ public class AssignmentService {
         a.setStartDate(FileUtil.convertStringToLocalDate(startdateString));
         a.setFinishDate(FileUtil.convertStringToLocalDate(finishdateString));
         a.setCompleted(completed);
-        a.setTaskOwner(new Person("Seba galecki"));
+        a.setTaskOwner(new Person(fullname));
 
         return a;
     }
 
-    public static BasicDBList getAssignmentList(final List<Assignment> assignments) {
+    public static BasicDBList getAssignmentList(final Set<Assignment> assignments) {
         return assignments.stream().map(AssignmentService::toDocument).collect(Collectors.toCollection(BasicDBList::new));
     }
 
@@ -70,16 +68,7 @@ public class AssignmentService {
     }
 
     public static List<String> getAllDaysToString(Assignment a) {
-        List<String> list = new LinkedList<>();
-        LocalDate start = a.getStartDate();
-        LocalDate end = a.getFinishDate().plusDays(1);
-
-        while(!start.equals(end)) {
-            list.add(FileUtil.convertDateToString(start));
-            start = start.plusDays(1);
-        }
-
-        return list;
+        return getAllDays(a).stream().map(x -> FileUtil.convertDateToString(x)).collect(Collectors.toList());
     }
 
     public static int getDayNumber(LocalDate beginDate, String currDateString) {
@@ -95,14 +84,8 @@ public class AssignmentService {
     }
 
     public static int getCellPercentageValue(LocalDate beginDate, LocalDate currDate) {
-        int count = 0;
-
-        while(!beginDate.equals(currDate)) {
-            count++;
-            beginDate = beginDate.plusDays(1);
-        }
-
-        return 100/count;
+        String val = FileUtil.convertDateToString(currDate);
+        return 100/getDayNumber(beginDate, val);
     }
 
     public static Assignment findAssignmentByTitle(Project p, String title) {

@@ -17,13 +17,13 @@ import static java.util.concurrent.TimeUnit.DAYS;
 */
 public class Assignment implements Comparable<Assignment>{
 
-    private ObjectId _id;
     private String title = "null";
     private LocalDate startDate = LocalDate.now();
     private LocalDate finishDate = LocalDate.now();
-    private transient int completed; // in %
     private Person taskOwner = new Person();
+    private transient int completed; // in %
     private transient long duration;
+
 
     public Assignment() {
     }
@@ -37,10 +37,6 @@ public class Assignment implements Comparable<Assignment>{
     public Assignment(String title, LocalDate startDate, LocalDate finishDate, Person taskOwner) {
         this(title, startDate, finishDate);
         this.taskOwner = taskOwner;
-    }
-
-    public void set_id(ObjectId _id) {
-        this._id = _id;
     }
 
     public String getTitle() {
