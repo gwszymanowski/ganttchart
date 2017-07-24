@@ -114,22 +114,7 @@ public class AssignmentController implements Initializable {
        List<TableColumn> dates = ProjectService.getPeriod(project);
 
        dates.stream().forEach(x -> tableColumns.add(x));
-
-        datesTableView.getColumns().addListener(new ListChangeListener() {
-            public boolean suspended;
-
-            @Override
-            public void onChanged(Change change) {
-                change.next();
-                if (change.wasReplaced() && !suspended) {
-                    this.suspended = true;
-                    datesTableView.getColumns().setAll(ProjectService.getPeriod(project));
-                    fillDatesTable();
-                    this.suspended = false;
-                }
-            }
-        });
-
+       datesTableView.getColumns().addListener(new ListChangeBlocker());
     }
 
     private void fillTable() {
@@ -139,7 +124,6 @@ public class AssignmentController implements Initializable {
             tb.setCellValueFactory(new PropertyValueFactory<>(tb.getId().toString()));
             tb.setCellFactory(column -> new AssignmentCell(project));
         }
-
         refresh();
     }
 
@@ -159,7 +143,7 @@ public class AssignmentController implements Initializable {
                 }
             }
         }
-        datesTableView.getItems().setAll(project.getTasks());
+        refresh();
     }
 
     public void refresh() {
@@ -186,4 +170,19 @@ public class AssignmentController implements Initializable {
         }
     }
 
+    private class ListChangeBlocker implements ListChangeListener {
+
+        public boolean suspended;
+
+        @Override
+        public void onChanged(Change change) {
+            change.next();
+            if (change.wasReplaced() && !suspended) {
+                this.suspended = true;
+                datesTableView.getColumns().setAll(ProjectService.getPeriod(project));
+                fillDatesTable();
+                this.suspended = false;
+            }
+        }
+    }
 }

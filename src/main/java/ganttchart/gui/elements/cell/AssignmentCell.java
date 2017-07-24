@@ -44,10 +44,8 @@ public class AssignmentCell extends TableCell<Pair<String, Object>, Object> {
                 setText(item.toString());
             else if(item instanceof LocalDate)
                 setText(FileUtil.convertDateToString((LocalDate)item));
-            else {
+            else
                 setText(String.valueOf(item));
-            }
-
 
             this.item = String.valueOf(item);
             setOnMouseClicked(new PopupEvent());
@@ -67,26 +65,31 @@ public class AssignmentCell extends TableCell<Pair<String, Object>, Object> {
 
                     ButtonBar.ButtonData data = Optional.of(result.get()).get().getButtonData();
 
+                    Object obj = getTableRow().getTableView().getItems().get(getIndex());
                     if (data == ButtonBar.ButtonData.NO)
-                        updateAction();
-                    else if (data == ButtonBar.ButtonData.HELP_2)
+                        updateAction(String.valueOf(obj));
+                    else if (data == ButtonBar.ButtonData.HELP_2) {
                         alert.delete(project, item);
-                    else if (data == ButtonBar.ButtonData.LEFT)
-                        alert.saveProgress(project, item);
+                        AlertFactory.getInformationAlert(ElementType.ASSIGNMENT, OperationType.DELETE).showAndWait();
+                    } else if (data == ButtonBar.ButtonData.LEFT) {
+                        alert.saveProgress(project, String.valueOf(obj));
+                        AlertFactory.getInformationAlert(ElementType.PROGRESS, OperationType.CHANGED).showAndWait();
+                    }
+
                 }
             }
         }
 
-        private void updateAction() {
-            Assignment currentTask = AssignmentService.findAssignmentByTitle(project, item);
+        private void updateAction(String element) {
+            Assignment currentTask = AssignmentService.findAssignmentByTitle(project, element);
 
             AssignmentDialog editDialog = new AssignmentDialog(project);
             editDialog.fillFields(currentTask.getTitle(),currentTask.getStartDate(), currentTask.getFinishDate());
 
             Optional<ButtonType> assignResult = editDialog.showAndWait();
             if(assignResult.isPresent() && Optional.of(assignResult.get()).get().getButtonData() == ButtonBar.ButtonData.APPLY) {
-                editDialog.update(project, item);
-                AlertFactory.getInformationAlert(ElementType.OTHER, OperationType.SAVE).showAndWait();
+                editDialog.update(project, element);
+                AlertFactory.getInformationAlert(ElementType.ASSIGNMENT, OperationType.CHANGED).showAndWait();
             }
 
         }

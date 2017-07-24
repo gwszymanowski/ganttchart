@@ -27,7 +27,7 @@ public class AssignmentService {
     public static Document toDocument(Assignment assignment) {
         Document document = new Document();
         document.append("title", assignment.getTitle());
-        document.append("taskOwner", assignment.getTaskOwner());
+        document.append("taskOwner", assignment.getTaskOwner().toString());
         document.append("startDate", assignment.startDateString());
         document.append("finishDate", assignment.finishDateString());
         document.append("completed", assignment.getCompleted());
@@ -109,7 +109,5 @@ public class AssignmentService {
         Optional<Assignment> optional = p.getTasks().stream().filter(x -> x.getTitle().equals(title)).findFirst();
         return optional.get();
     }
-
-
 
 }

@@ -4,7 +4,7 @@ package ganttchart.gui.elements.alert;
  * Created by gwszymanowski on 2017-07-11.
  */
 public enum ElementType {
-    PROJECT("project"), PERSON("person"), ASSIGNMENT("assignment"), OTHER("element");
+    PROJECT("project"), PERSON("person"), ASSIGNMENT("assignment"), PROGRESS("progress"), OTHER("element");
 
     private final String name;
 

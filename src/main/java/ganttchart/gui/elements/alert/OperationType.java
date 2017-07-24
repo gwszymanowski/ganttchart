@@ -4,7 +4,7 @@ package ganttchart.gui.elements.alert;
  * Created by gwszymanowski on 2017-07-13.
  */
 public enum OperationType {
-    SAVE(" has been created!"), DELETE(" has been deleted!");
+    SAVE(" has been created!"), DELETE(" has been deleted!"), CHANGED(" has been changed!");
 
     private String text;
 

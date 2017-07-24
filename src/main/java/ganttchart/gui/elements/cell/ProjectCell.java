@@ -24,7 +24,7 @@ import java.util.Optional;
  */
 public class ProjectCell extends TableCell<Project, String> {
 
-    private String title;
+    private String name;
     private ProjectRepository repo = new ProjectRepository();
 
     @Override
@@ -32,14 +32,14 @@ public class ProjectCell extends TableCell<Project, String> {
         super.updateItem(item, empty);
             Object rowItem = getTableRow().getItem();
             if(rowItem != null) {
-                this.title = rowItem.toString();
+                this.name = rowItem.toString();
                 initializeComponents();
             }
     }
 
     private void initializeComponents() {
         HBox cellBox = new HBox(10);
-        Label label = new Label(title);
+        Label label = new Label(name);
         Button detailsButton = new Button("Details");
         detailsButton.setOnAction(new DetailsButtonManager());
         Button editButton = new Button("Edit");
@@ -56,7 +56,7 @@ public class ProjectCell extends TableCell<Project, String> {
         @Override
         public void handle(ActionEvent event) {
             ProjectDialog cp = new ProjectDialog();
-            cp.fillFields(title);
+            cp.fillFields(name);
             cp.showAndWait();
         }
     }
@@ -71,7 +71,7 @@ public class ProjectCell extends TableCell<Project, String> {
 
             Optional<ButtonType> result = alert.showAndWait();
             if(result.isPresent() && Optional.of(result.get()).get().getButtonData() == ButtonBar.ButtonData.APPLY) {
-                repo.delete(title);
+                repo.delete(name);
                 AlertFactory.getInformationAlert(ElementType.PERSON, OperationType.DELETE).showAndWait();
             }
         }
@@ -83,7 +83,7 @@ public class ProjectCell extends TableCell<Project, String> {
         public void handle(ActionEvent event) {
             Stage stage = null;
             Parent root = null;
-            AssignmentController projectController = new AssignmentController(title);
+            AssignmentController projectController = new AssignmentController(name);
             try {
                 stage = (Stage) getScene().getWindow();
                 FXMLLoader loader = new FXMLLoader();

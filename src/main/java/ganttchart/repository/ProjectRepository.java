@@ -55,8 +55,8 @@ public class ProjectRepository implements CRUD {
         return doc != null ? true : false;
     }
 
-    public void delete(String title) {
-        Document doc = collection.find(eq("title", title)).first();
+    public void delete(String name) {
+        Document doc = collection.find(eq("name", name)).first();
         collection.deleteOne(doc);
     }
 }

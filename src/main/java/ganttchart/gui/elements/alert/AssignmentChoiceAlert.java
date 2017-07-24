@@ -44,19 +44,22 @@ public class AssignmentChoiceAlert extends Alert {
     }
 
     public void saveProgress(Project project, String assignmentTitle) {
-
         Optional<Assignment> optional = project.getTasks().stream().filter(x -> x.getTitle().equals(assignmentTitle)).findFirst();
+
         if(optional.isPresent()) {
             Assignment assignment = optional.get();
             String percentageString = gridpane.percentFinished.getText();
             int value = percentageString.length() == 0 ? 0 : Integer.parseInt(percentageString);
             assignment.setCompleted(value);
-            projectRepository.save(project);
+            projectRepository.update(project);
         }
     }
 
     public void delete(Project project, String assignmentTitle) {
+        System.out.println(assignmentTitle);
+        System.out.println(project.getTasks());
         project.getTasks().removeIf(x -> x.getTitle().equals(assignmentTitle));
+        System.out.println(project.getTasks());
         projectRepository.update(project);
     }
 

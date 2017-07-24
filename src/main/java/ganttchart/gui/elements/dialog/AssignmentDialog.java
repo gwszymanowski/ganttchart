@@ -15,6 +15,7 @@ import javafx.scene.layout.GridPane;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by gwszymanowski on 2017-07-07.
@@ -42,34 +43,57 @@ public class AssignmentDialog extends Dialog<ButtonType> implements Dialogable {
         String title = gridpane.titleField.getText();
         LocalDate startDate = gridpane.startDatePicker.getValue();
         LocalDate endDate = gridpane.endDatePicker.getValue();
+        String taskOwnerText = gridpane.taskOwnerBox.getValue().toString();
+
+        if(repo.ifExists(title))
+            AlertFactory.getErrorAlert(AlertReason.ALREADY_EXISTS).showAndWait();
+        else {
+
+            Assignment ass = new Assignment();
+            ass.setTitle(title);
+            ass.setStartDate(startDate);
+            ass.setFinishDate(endDate);
+
+            if(taskOwnerText.length() != 0) {
+                String[] taskOwner = taskOwnerText.split(" ");
+                ass.setTaskOwner(new Person(taskOwner[0], taskOwner[1]));
+            }
+
+            project.addTask(ass);
+
+            repo.save(project);
+        }
+
+    }
+
+    public void update(Project project, String previousTitle) {
+        makeActions(previousTitle);
+        repo.update(project);
+    }
+
+    public void makeActions(String previousTitle) {
+        String title = gridpane.titleField.getText();
+        LocalDate startDate = gridpane.startDatePicker.getValue();
+        LocalDate endDate = gridpane.endDatePicker.getValue();
+        String taskOwnerText = gridpane.taskOwnerBox.getValue().toString();
 
         if(title.length() == 0)
             AlertFactory.getErrorAlert(AlertReason.ZERO_LENGTH).showAndWait();
-//        else if(repo.ifExists(title, startDate, endDate))
-//            AlertFactory.getErrorAlert(AlertReason.ALREADY_EXISTS).showAndWait();
         else {
-            String taskOwnerText = gridpane.taskOwnerBox.getValue().toString();
-            System.out.println(taskOwnerText);
-            if(taskOwnerText.length() == 0) {
-                List<Assignment> assignments = project.getTasks();
-                assignments.add(new Assignment(title, startDate, endDate));
-                repo.update(project);
-            }
-            else {
+            Optional<Assignment> optional = project.getTasks().stream().filter(x -> x.getTitle().equals(previousTitle)).findFirst();
+            Assignment ass = optional.get();
+            ass.setTitle(title);
+            ass.setStartDate(startDate);
+            ass.setFinishDate(endDate);
+
+            if(taskOwnerText.length() != 0) {
                 String[] taskOwner = taskOwnerText.split(" ");
-                project.getTasks().add(new Assignment(title, startDate, endDate, new Person(taskOwner[0], taskOwner[1])));
-                repo.update(project);
+                ass.setTaskOwner(new Person(taskOwner[0], taskOwner[1]));
             }
 
             fillFields(title, startDate, endDate);
 
         }
-    }
-
-    public void update(Project project, String previousTitle) {
-        String title = gridpane.titleField.getText();
-        LocalDate startDate = gridpane.startDatePicker.getValue();
-        LocalDate endDate = gridpane.endDatePicker.getValue();
     }
 
     public void fillFields(String title, LocalDate startDate, LocalDate endDate) {
