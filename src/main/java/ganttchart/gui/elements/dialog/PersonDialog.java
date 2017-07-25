@@ -31,13 +31,13 @@ public class PersonDialog extends Dialog<ButtonType> implements Dialogable {
     public void save() {
         String firstname = gridpane.firstnameField.getText();
         String lastname = gridpane.lastnameField.getText();
+
         if(firstname.length() == 0 || lastname.length() == 0)
             AlertFactory.getErrorAlert(AlertReason.ZERO_LENGTH).showAndWait();
         else if(repo.ifExists(firstname, lastname))
             AlertFactory.getErrorAlert(AlertReason.ALREADY_EXISTS).showAndWait();
         else {
             repo.save(new Person(firstname, lastname));
-            fillFields("", "");
             AlertFactory.getInformationAlert(ElementType.PROJECT, OperationType.SAVE).showAndWait();
         }
     }
@@ -45,14 +45,12 @@ public class PersonDialog extends Dialog<ButtonType> implements Dialogable {
     public void update(Person oldPerson) {
         String newFirstname = gridpane.firstnameField.getText();
         String newLastname = gridpane.lastnameField.getText();
+
         if(newFirstname.length() == 0 || newLastname.length() == 0)
             AlertFactory.getErrorAlert(AlertReason.ZERO_LENGTH).showAndWait();
-        else if(repo.ifExists(newFirstname, newLastname))
-            AlertFactory.getErrorAlert(AlertReason.ALREADY_EXISTS).showAndWait();
         else {
             repo.update(oldPerson, new Person(newFirstname, newLastname));
             fillFields("", "");
-            AlertFactory.getInformationAlert(ElementType.PROJECT, OperationType.SAVE).showAndWait();
         }
 
     }

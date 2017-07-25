@@ -24,6 +24,11 @@ public class Project implements Comparable<Project> {
         this.name = name;
     }
 
+    public Project(String name, LocalDate startDate) {
+        this.name = name;
+        this.startDate = startDate;
+    }
+
     public String getName() {
         return name;
     }

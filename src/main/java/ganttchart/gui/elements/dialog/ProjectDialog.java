@@ -8,11 +8,10 @@ import ganttchart.gui.elements.alert.AlertReason;
 import ganttchart.gui.elements.alert.AlertFactory;
 import javafx.event.EventDispatchChain;
 import javafx.geometry.Insets;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+
+import java.time.LocalDate;
 
 /**
  * Created by gwszymanowski on 2017-07-10.
@@ -26,7 +25,7 @@ public class ProjectDialog extends Dialog<ButtonType> implements Dialogable {
         this.gridpane = new CreateProjectGridPane();
         this.repo = new ProjectRepository();
         setTitle("Create project");
-        ButtonType confirmButtonType = new ButtonType("Save");
+        ButtonType confirmButtonType = new ButtonType("Save", ButtonBar.ButtonData.APPLY);
 
         getDialogPane().getButtonTypes().addAll(confirmButtonType);
         getDialogPane().setContent(gridpane);
@@ -40,13 +39,14 @@ public class ProjectDialog extends Dialog<ButtonType> implements Dialogable {
     @Override
     public void save() {
         String name = gridpane.nameField.getText();
+        LocalDate startDate = gridpane.startDatePicker.getValue();
 
         if(name.length() == 0)
             AlertFactory.getErrorAlert(AlertReason.ZERO_LENGTH).showAndWait();
         else if(repo.ifExists(name))
             AlertFactory.getErrorAlert(AlertReason.ALREADY_EXISTS).showAndWait();
         else {
-            repo.save(new Project(name));
+            repo.save(new Project(name, startDate));
             gridpane.nameField.setText("");
             AlertFactory.getInformationAlert(ElementType.PROJECT, OperationType.SAVE).showAndWait();
         }
@@ -66,6 +66,7 @@ public class ProjectDialog extends Dialog<ButtonType> implements Dialogable {
     private class CreateProjectGridPane extends GridPane {
 
         private TextField nameField;
+        private DatePicker startDatePicker;
 
         public CreateProjectGridPane() {
             setHgap(10);
@@ -76,6 +77,11 @@ public class ProjectDialog extends Dialog<ButtonType> implements Dialogable {
 
             add(new Label("Name: "), 0, 1);
             add(nameField, 1, 1);
+
+            startDatePicker = new DatePicker();
+            add(new Label("Start: "), 0, 2);
+            add(startDatePicker, 1, 2);
+
         }
     }
 

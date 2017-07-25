@@ -23,7 +23,7 @@ public class GanttMenu extends MenuBar {
 
     public GanttMenu() {
         super();
-        getMenus().addAll(getCreateMenu(), getViewMenu(), getSettingsMenu());
+        getMenus().addAll(getCreateMenu(), getViewMenu());
     }
 
     private Menu getCreateMenu() {
@@ -46,17 +46,6 @@ public class GanttMenu extends MenuBar {
         return viewMenu;
     }
 
-    private Menu getSettingsMenu() {
-        Menu viewMenu = new Menu("Settings");
-        Menu languagesListItem = new Menu("Languages");
-        CheckMenuItem polishLanguage = new CheckMenuItem("Polish");
-        polishLanguage.setSelected(true);
-        CheckMenuItem englishLanguage = new CheckMenuItem("English");
-        languagesListItem.getItems().addAll(polishLanguage, englishLanguage);
-        viewMenu.getItems().addAll(languagesListItem);
-        return viewMenu;
-    }
-
     private class ShowDialogEvent implements EventHandler<ActionEvent> {
 
         private final Dialogable dialog;
@@ -68,7 +57,8 @@ public class GanttMenu extends MenuBar {
         @Override
         public void handle(ActionEvent event) {
             Optional<ButtonType> result = dialog.showAndWait();
-            if(result.isPresent() && Optional.of(result.get()).get().getButtonData() == ButtonBar.ButtonData.OTHER)
+
+            if(result.isPresent() && Optional.of(result.get()).get().getButtonData() == ButtonBar.ButtonData.APPLY)
                 dialog.save();
         }
     }

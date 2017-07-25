@@ -55,9 +55,9 @@ public class PersonCell extends TableCell<Person, String> {
             personDialog.fillFields(rowContent[0], rowContent[1]);
 
             Optional<ButtonType> result = personDialog.showAndWait();
-            if(result.isPresent() && Optional.of(result.get()).get().getButtonData() == ButtonBar.ButtonData.APPLY) {
+            if(result.isPresent() && Optional.of(result.get()).get().getButtonData() == ButtonBar.ButtonData.OTHER) {
                 personDialog.update(oldPerson);
-                AlertFactory.getInformationAlert(ElementType.PERSON, OperationType.DELETE).showAndWait();
+                AlertFactory.getInformationAlert(ElementType.PERSON, OperationType.CHANGED).showAndWait();
             }
         }
     }
