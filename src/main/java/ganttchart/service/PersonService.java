@@ -4,30 +4,27 @@ import com.mongodb.BasicDBList;
 import ganttchart.model.Person;
 import javafx.collections.ObservableList;
 import org.bson.Document;
-import org.bson.types.ObjectId;
 
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
  * Created by gwszymanowski on 2017-07-09.
  */
-public class PersonService {
+public final class PersonService {
 
     private PersonService() {
     }
 
-    public static Document toDocument(Person person) {
+    public static Document toDocument(final Person person) {
         Document document = new Document();
         document.append("firstname", person.getFirstname());
         document.append("lastname", person.getLastname());
         return document;
     }
 
-    public static Person fromDocument(Document document) {
+    public static Person fromDocument(final Document document) {
         Person person = new Person();
 
         String firstname = (String) document.get("firstname");

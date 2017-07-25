@@ -24,12 +24,15 @@ import java.util.Set;
 public class MembersDialog extends Dialog<ButtonType> implements Dialogable {
 
     private Project project;
-    private PersonRepository personRepository = new PersonRepository();
-    private ProjectRepository projectRepository = new ProjectRepository();
-    private MembersGridPane gridpane = new MembersGridPane();
+    private PersonRepository personRepository;
+    private ProjectRepository projectRepository;
+    private MembersGridPane gridpane;
 
     public MembersDialog(Project project) {
         this.project = project;
+        this.personRepository = new PersonRepository();
+        this.projectRepository = new ProjectRepository();
+        this.gridpane = new MembersGridPane();
         setTitle("Edit members");
 
         ButtonType loginButtonType = new ButtonType("Change", ButtonBar.ButtonData.APPLY);
@@ -54,12 +57,12 @@ public class MembersDialog extends Dialog<ButtonType> implements Dialogable {
             setVgap(10);
             setPadding(new Insets(20, 150, 10, 10));
 
-            view = new ListSelectionView<>();
-            view.getSourceItems().addAll(PersonService.getMembersToString(project.getMembers()));
+            this.view = new ListSelectionView<>();
+            this.view.getSourceItems().addAll(PersonService.getMembersToString(project.getMembers()));
 
             Set<Person> notAdded = PersonService.getNotAdded(project.getMembers(), personRepository.getAll());
 
-            view.getTargetItems().addAll(PersonService.getMembersToString(notAdded));
+            this.view.getTargetItems().addAll(PersonService.getMembersToString(notAdded));
             add(view, 1, 1);
         }
 

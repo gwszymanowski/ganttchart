@@ -19,10 +19,12 @@ import javafx.scene.layout.GridPane;
  */
 public class ProjectDialog extends Dialog<ButtonType> implements Dialogable {
 
-    private CreateProjectGridPane gridpane = new CreateProjectGridPane();
-    private ProjectRepository repo = new ProjectRepository();
+    private CreateProjectGridPane gridpane;
+    private ProjectRepository repo;
 
     public ProjectDialog() {
+        this.gridpane = new CreateProjectGridPane();
+        this.repo = new ProjectRepository();
         setTitle("Create project");
         ButtonType confirmButtonType = new ButtonType("Save");
 

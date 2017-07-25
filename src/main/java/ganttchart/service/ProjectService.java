@@ -10,16 +10,15 @@ import org.bson.Document;
 
 import java.time.LocalDate;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Created by gwszymanowski on 2017-07-09.
  */
-public class ProjectService {
+public final class ProjectService {
 
     private ProjectService() {}
 
-    public static Document toDocument(Project project) {
+    public static Document toDocument(final Project project) {
         Document document = new Document();
         document.append("name", project.getName());
         document.append("startDate", project.getStartDateString());
@@ -28,7 +27,7 @@ public class ProjectService {
         return document;
     }
 
-    public static Project fromDocument(Document document) {
+    public static Project fromDocument(final Document document) {
         Project project = new Project();
 
         String name = (String) document.get("name");
@@ -61,11 +60,11 @@ public class ProjectService {
         return tb;
     }
 
-    public static LocalDate getLastDay(Set<Assignment> tasks) {
+    public static LocalDate getLastDay(final Set<Assignment> tasks) {
         return tasks.size() == 0 ? LocalDate.now() : tasks.stream().map(u -> u.getFinishDate()).max(LocalDate::compareTo).get();
     }
 
-    public static String[] getMembersToArray(Set<Person> members) {
+    public static String[] getMembersToArray(final Set<Person> members) {
         return members.stream().map(Person::toString).toArray(String[]::new);
     }
 

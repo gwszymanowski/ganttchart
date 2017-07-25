@@ -6,10 +6,7 @@ import ganttchart.model.Person;
 import ganttchart.model.Project;
 import ganttchart.util.FileUtil;
 import org.bson.Document;
-import org.bson.types.ObjectId;
-import org.springframework.expression.spel.ast.Assign;
 
-import java.io.File;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -17,12 +14,12 @@ import java.util.stream.Collectors;
 /**
  * Created by gwszymanowski on 2017-07-09.
  */
-public class AssignmentService {
+public final class AssignmentService {
 
     private AssignmentService() {
     }
 
-    public static Document toDocument(Assignment assignment) {
+    public static Document toDocument(final Assignment assignment) {
         Document document = new Document();
         document.append("title", assignment.getTitle());
         document.append("taskOwner", assignment.getTaskOwner().toString());
@@ -32,7 +29,7 @@ public class AssignmentService {
         return document;
     }
 
-    public static Assignment fromDocument(Document document) {
+    public static Assignment fromDocument(final Document document) {
         Assignment a = new Assignment();
 
         String title = (String) document.get("title");
@@ -67,11 +64,11 @@ public class AssignmentService {
         return list;
     }
 
-    public static List<String> getAllDaysToString(Assignment a) {
+    public static List<String> getAllDaysToString(final Assignment a) {
         return getAllDays(a).stream().map(x -> FileUtil.convertDateToString(x)).collect(Collectors.toList());
     }
 
-    public static int getDayNumber(LocalDate beginDate, String currDateString) {
+    public static int getDayNumber(LocalDate beginDate, final String currDateString) {
         int count = 0;
         LocalDate curr = FileUtil.convertStringToLocalDate(currDateString);
 

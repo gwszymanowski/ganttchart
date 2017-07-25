@@ -15,10 +15,12 @@ import javafx.scene.layout.GridPane;
  */
 public class PersonDialog extends Dialog<ButtonType> implements Dialogable {
 
-    private CreatePersonGridPane gridpane = new CreatePersonGridPane();
-    private PersonRepository repo = new PersonRepository();
+    private CreatePersonGridPane gridpane;
+    private PersonRepository repo;
 
     public PersonDialog() {
+        this.gridpane = new CreatePersonGridPane();
+        this.repo = new PersonRepository();
         setTitle("Create person");
         ButtonType loginButtonType = new ButtonType("Save");
         getDialogPane().getButtonTypes().addAll(loginButtonType);

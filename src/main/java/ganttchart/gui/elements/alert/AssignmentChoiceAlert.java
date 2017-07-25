@@ -23,16 +23,17 @@ import static javafx.scene.layout.HBox.setHgrow;
 public class AssignmentChoiceAlert extends Alert {
 
     private AssignmentChoiceGridpane gridpane;
-    private ProjectRepository projectRepository = new ProjectRepository();
+    private ProjectRepository projectRepository;
+
+
 
     public AssignmentChoiceAlert(AlertType alertType) {
         super(alertType);
+        this.gridpane = new AssignmentChoiceGridpane();
+        this.projectRepository = new ProjectRepository();
 
         setTitle("Edit Assignment");
         setHeaderText("Choose your option or quickly edit progress.");
-
-        gridpane = new AssignmentChoiceGridpane();
-
         getDialogPane().setContent(gridpane);
 
         ButtonType editButtonType = new ButtonType("Edit", ButtonBar.ButtonData.NO);

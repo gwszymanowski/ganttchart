@@ -77,11 +77,12 @@ public class AssignmentController implements Initializable {
     private Button memberList;
 
     private String titleValue;
-    private ProjectRepository projectRepository = new ProjectRepository();
+    private ProjectRepository projectRepository;
     private Project project;
 
     public AssignmentController(String title) {
         this.titleValue = title;
+        this.projectRepository = new ProjectRepository();
     }
 
     @Override

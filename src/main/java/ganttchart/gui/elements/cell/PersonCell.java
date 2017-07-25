@@ -19,7 +19,11 @@ import java.util.Optional;
 public class PersonCell extends TableCell<Person, String> {
 
     private String[] rowContent;
-    private PersonRepository repo = new PersonRepository();
+    private PersonRepository repo;
+
+    public PersonCell() {
+        this.repo = new PersonRepository();
+    }
 
     @Override
     protected void updateItem(String item, boolean empty) {

@@ -1,38 +1,39 @@
 package ganttchart.util;
 
-import dummy.DummyProjectFactory;
+import dummy.ProjectDummy;
 import ganttchart.model.Project;
-import ganttchart.repository.ProjectRepository;
-import ganttchart.service.ProjectService;
-import javafx.scene.control.TableColumn;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameter;
+import org.junit.runners.Parameterized.Parameters;
 
-import java.util.List;
-
-import static junit.framework.TestCase.assertEquals;
-
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 
 /**
- * Created by gwszymanowski on 2017-07-21.
+ * Created by gwszymanowski on 2017-07-25.
  */
+@RunWith(Parameterized.class)
 public class ProjectServiceTest {
 
+    @Parameters
+    public static Collection<Project[]> projects() {
+        Collection<Project[]> collection = new ArrayList<>();
 
-    @BeforeClass
-    public static void setup() {
+        Project[] all = {ProjectDummy.project1(), ProjectDummy.project2()};
+        collection.add(all);
 
+        return collection;
     }
 
-    @Test
-    public void getPeriodTest() {
-        Project p = DummyProjectFactory.project1();
+    @Parameter
+    public Project project1;
 
-        List<TableColumn> columns = ProjectService.getPeriod(p);
+    @Parameter(1)
+    public Project project2;
 
-        assertEquals(10, columns.size());
 
-    }
 
 
 }

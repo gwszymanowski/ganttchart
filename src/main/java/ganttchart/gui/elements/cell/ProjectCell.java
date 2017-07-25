@@ -32,7 +32,7 @@ public class ProjectCell extends TableCell<Project, String> {
         super.updateItem(item, empty);
             Object rowItem = getTableRow().getItem();
             if(rowItem != null) {
-                project = repo.findByName(rowItem.toString());
+                this.project = repo.findByName(rowItem.toString());
                 initializeComponents();
             }
     }

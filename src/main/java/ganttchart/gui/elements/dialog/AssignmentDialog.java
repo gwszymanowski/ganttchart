@@ -28,12 +28,13 @@ public class AssignmentDialog extends Dialog<ButtonType> implements Dialogable {
 
     public AssignmentDialog(Project project) {
         this.project = project;
+        this.repo = new ProjectRepository();
+        this.gridpane = new CreateAssignmentGridPane(project);
         setTitle("Assignment");
 
         ButtonType loginButtonType = new ButtonType("Change", ButtonBar.ButtonData.APPLY);
         getDialogPane().getButtonTypes().addAll(loginButtonType);
 
-        gridpane = new CreateAssignmentGridPane(project);
         getDialogPane().setContent(gridpane);
     }
 
