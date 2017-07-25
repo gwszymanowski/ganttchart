@@ -72,6 +72,9 @@ public final class AssignmentService {
         int count = 0;
         LocalDate curr = FileUtil.convertStringToLocalDate(currDateString);
 
+        if(beginDate.compareTo(curr) > 0)
+            throw new IllegalArgumentException("Second date cannot occur earlier than first one");
+
         while(!beginDate.equals(curr)) {
             count++;
             beginDate = beginDate.plusDays(1);

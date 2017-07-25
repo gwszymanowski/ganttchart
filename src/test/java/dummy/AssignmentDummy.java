@@ -39,4 +39,18 @@ public final class AssignmentDummy {
         return new LinkedHashSet<>(Arrays.asList(a1, a2));
     }
 
+    public static Assignment single1() {
+        LocalDate a1begin = LocalDate.of(2017, 6, 25);
+        LocalDate a1end = LocalDate.of(2017, 7, 7);
+
+        return new Assignment("Having a break", a1begin, a1end, new Person("Johny Walker"));
+    }
+
+    public static Assignment single2() {
+        LocalDate a1begin = LocalDate.of(2017, 7, 25);
+        LocalDate a1end = LocalDate.of(2017, 8, 7);
+
+        return new Assignment("Coming back to work", a1begin, a1end, new Person("Johny Walker"));
+    }
+
 }

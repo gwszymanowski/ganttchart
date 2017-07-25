@@ -25,15 +25,10 @@ public final class PersonService {
     }
 
     public static Person fromDocument(final Document document) {
-        Person person = new Person();
-
         String firstname = (String) document.get("firstname");
         String lastname = (String)document.get("lastname");
 
-        person.setFirstname(firstname);
-        person.setLastname(lastname);
-
-        return person;
+        return new Person(firstname, lastname);
     }
 
     public static BasicDBList getMembersList(final Set<Person> members) {
