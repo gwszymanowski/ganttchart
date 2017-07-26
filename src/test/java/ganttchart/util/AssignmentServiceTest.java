@@ -17,6 +17,7 @@ import java.util.List;
 
 import static ganttchart.service.AssignmentService.getCellPercentageValue;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by gwszymanowski on 2017-07-18.
@@ -72,7 +73,7 @@ public class AssignmentServiceTest {
     @Test
     public void getCellPercentageValueTest2() {
         int average = AssignmentService.getCellPercentageValue(assignment2.getStartDate(), assignment2.getFinishDate());
-        assertEquals(7, average);
+        assertTrue( average == 7);
     }
 
 }

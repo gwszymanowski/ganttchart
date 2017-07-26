@@ -9,7 +9,6 @@ import ganttchart.model.Project;
 import ganttchart.service.AssignmentService;
 import ganttchart.service.PersonService;
 import ganttchart.service.ProjectService;
-import javafx.scene.control.TableColumn;
 import org.bson.Document;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,11 +17,16 @@ import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Set;
 
-import static junit.framework.TestCase.assertEquals;
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.CoreMatchers.both;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsEqual.equalTo;
 
 /**
  * Created by gwszymanowski on 2017-07-25.
@@ -62,31 +66,35 @@ public class ProjectServiceTest {
         dummy.stream().forEach(x -> tasks.add(AssignmentService.toDocument(x)));
         document.append("tasks", tasks);
 
-        assertTrue(document.equals(ProjectService.toDocument(project1)));
+        assertThat(document,is(equalTo(ProjectService.toDocument(project1))));
     }
 
     @Test
     public void getLastDayTest1() {
-        assertEquals(LocalDate.of(2017, 4, 15), ProjectService.getLastDay(project1.getTasks()));
+        LocalDate expected = LocalDate.of(2017, 4, 15);
+        LocalDate given = ProjectService.getLastDay(project1.getTasks());
+        assertThat(expected, is(equalTo(given)));
     }
 
     @Test
     public void getLastDayTest2() {
-        assertEquals(LocalDate.of(2017, 7, 10), ProjectService.getLastDay(project2.getTasks()));
+        LocalDate expected = LocalDate.of(2017, 7, 10);
+        LocalDate given = ProjectService.getLastDay(project2.getTasks());
+        assertThat(expected, is(equalTo(given)));
     }
 
     @Test
     public void getMembersToArrayTest1() {
         String[] expected = {"Adam Smith", "John Locke"};
         String[] given = ProjectService.getMembersToArray(project1.getMembers());
-        assertArrayEquals(expected, given);
+        assertThat(given, both(is(arrayContainingInAnyOrder(expected))).and(is(arrayWithSize(2))));
     }
 
     @Test
     public void getMembersToArrayTest2() {
         String[] expected = {"Hans Zimmerman", "Krzysztof Marchewka"};
         String[] given = ProjectService.getMembersToArray(project2.getMembers());
-        assertArrayEquals(expected, given);
+        assertThat(given, both(is(arrayContainingInAnyOrder(expected))).and(is(not(emptyArray()))));
     }
 
 }

@@ -13,6 +13,13 @@ import org.junit.runners.Parameterized.Parameter;
 import java.util.*;
 import java.util.stream.Stream;
 
+import static org.hamcrest.CoreMatchers.both;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -51,13 +58,14 @@ public class PersonServiceTest {
 
     @Test
     public void personToDocumentTest() {
+        Document expected = new Document();
+        expected.append("firstname", "Benjamin");
+        expected.append("lastname", "Graham");
+
         Person person = people1[0];
+        Document given = PersonService.toDocument(person);
 
-        Document document = new Document();
-        document.append("firstname", "Benjamin");
-        document.append("lastname", "Graham");
-
-        assertTrue(document.equals(PersonService.toDocument(person)));
+        assertThat(expected, is(equalTo(given)));
     }
 
     @Test
@@ -66,15 +74,19 @@ public class PersonServiceTest {
         document.append("firstname", "Alexander");
         document.append("lastname", "Hamilton");
 
-        assertTrue(people2[0].equals(PersonService.fromDocument(document)));
+        Person given = PersonService.fromDocument(document);
+        Person expected = people2[0];
+        assertThat(expected, is(equalTo(given)));
     }
 
     @Test
     public void getMembersToStringTest() {
-        Set<Person> people = new HashSet<>(Arrays.asList(people1));
-        Set<String> peopleString = new HashSet<>(Arrays.asList("Benjamin Graham", "George Washington"));
+        Set<String> expected = new HashSet<>(Arrays.asList("Benjamin Graham", "George Washington"));
 
-        assertTrue(peopleString.equals(PersonService.getMembersToString(people)));
+        Set<Person> data = new HashSet<>(Arrays.asList(people1));
+        Set<String> given = PersonService.getMembersToString(data);
+
+        assertThat(expected, both(hasSize(2)).and(is(equalTo(given))));
     }
 
     @Test

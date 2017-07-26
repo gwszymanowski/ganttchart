@@ -16,6 +16,13 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Stream;
 
+import static org.hamcrest.CoreMatchers.both;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.isEmptyString;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -38,34 +45,34 @@ public class FileUtilTest {
     }
 
     @Parameter
-    public LocalDate day1;
+    public LocalDate expected1;
 
     @Parameter(1)
-    public LocalDate day2;
+    public LocalDate expected2;
 
     @Test
     public void convertDateToString() {
-        String dateString = FileUtil.convertDateToString(day1);
-        assertEquals("18-12-2013", dateString);
+        String given = FileUtil.convertDateToString(expected1);
+        assertThat("18-12-2013", is(equalTo(given)));
     }
 
     @Test
     public void convertStringtoDate() {
-        String dateString = "03-08-2015";
-        LocalDate given = FileUtil.convertStringToLocalDate(dateString);
-        assertEquals(day2, given);
+        LocalDate given = FileUtil.convertStringToLocalDate("03-08-2015");
+        assertThat(expected2, is(equalTo(given)));
     }
 
     @Test
     public void convertStringtoDateAmericanFormat() {
-        String dateString = "2013-12-18";
-        LocalDate given = FileUtil.convertStringToLocalDate(dateString);
-        assertEquals(day1, given);
+        LocalDate given = FileUtil.convertStringToLocalDate("2013-12-18");
+        assertEquals(expected1, given);
     }
 
     @Test
     public void stringConcatenation() {
-        assertEquals(14, FileUtil.concatenateString("Ala ", "has ", "a ", "cat.").length());
+        String given = FileUtil.concatenateString("Ala ", "has ", "a ", "cat.");
+        String expected = "Ala has a cat.";
+        assertThat(expected, is(given));
     }
 
 }
