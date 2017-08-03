@@ -11,6 +11,7 @@ import ganttchart.model.Project;
 import ganttchart.service.AssignmentService;
 import ganttchart.util.FileUtil;
 import javafx.event.EventHandler;
+import javafx.event.EventTarget;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -47,10 +48,15 @@ public class AssignmentCell extends TableCell<Pair<String, Object>, Object> {
             else
                 setText(String.valueOf(item));
 
-            this.item = String.valueOf(item);
+            try {
+                this.item = getTableRow().getItem().toString();
+            } catch(NullPointerException e) {
+            }
+
             setOnMouseClicked(new PopupEvent());
         }
     }
+
 
     private class PopupEvent implements EventHandler<MouseEvent> {
 
@@ -66,7 +72,7 @@ public class AssignmentCell extends TableCell<Pair<String, Object>, Object> {
                     ButtonBar.ButtonData data = Optional.of(result.get()).get().getButtonData();
 
                     Object obj = getTableRow().getTableView().getItems().get(getIndex());
-                    System.out.println("OBJECT " + String.valueOf(obj));
+
                     if (data == ButtonBar.ButtonData.NO)
                         updateAction(String.valueOf(obj));
                     else if (data == ButtonBar.ButtonData.HELP_2) {

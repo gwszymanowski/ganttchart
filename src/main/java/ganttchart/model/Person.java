@@ -3,10 +3,12 @@ package ganttchart.model;
 
 import org.bson.types.ObjectId;
 
+import java.io.Serializable;
+
 /**
  * Created by gwszymanowski on 2017-05-13.
  */
-public class Person implements Comparable<Person>{
+public class Person implements Comparable<Person>, Serializable {
 
     private String firstname = "null";
     private String lastname = "null";

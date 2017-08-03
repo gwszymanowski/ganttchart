@@ -3,6 +3,7 @@ package ganttchart.model;
 import ganttchart.util.FileUtil;
 import org.bson.types.ObjectId;
 
+import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.temporal.TemporalUnit;
@@ -15,7 +16,7 @@ import static java.util.concurrent.TimeUnit.DAYS;
 /**
  * Created by gwszymanowski on 2017-05-17.
 */
-public class Assignment implements Comparable<Assignment>{
+public class Assignment implements Comparable<Assignment>, Serializable {
 
     private String title = "null";
     private LocalDate startDate = LocalDate.now();

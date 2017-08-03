@@ -6,11 +6,15 @@ import ganttchart.repository.PersonRepository;
 import ganttchart.gui.elements.alert.ElementType;
 import ganttchart.gui.elements.alert.AlertFactory;
 import ganttchart.gui.elements.alert.OperationType;
+import ganttchart.serialization.JSONSerializator;
+import ganttchart.serialization.SerializeStrategy;
+import ganttchart.serialization.XMLSerializator;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 
+import java.io.File;
 import java.util.Optional;
 
 /**
@@ -41,7 +45,11 @@ public class PersonCell extends TableCell<Person, String> {
         editButton.setOnAction(new EditPersonEvent());
         Button deleteButton = new Button("Delete");
         deleteButton.setOnAction(new DeletePersonEvent());
-        cellBox.getChildren().addAll(editButton, deleteButton);
+        Button xmlButton = new Button("XML");
+        xmlButton.setOnAction(new SerializationEvent(new XMLSerializator()));
+        Button jsonButton = new Button("JSON");
+        jsonButton.setOnAction(new SerializationEvent(new JSONSerializator()));
+        cellBox.getChildren().addAll(editButton, deleteButton, xmlButton, jsonButton);
         setGraphic(cellBox);
     }
 
@@ -77,6 +85,36 @@ public class PersonCell extends TableCell<Person, String> {
                 AlertFactory.getInformationAlert(ElementType.PERSON, OperationType.DELETE).showAndWait();
             }
 
+        }
+    }
+
+    private class SerializationEvent implements EventHandler<ActionEvent> {
+
+        private SerializeStrategy<Person> strategy;
+
+        public SerializationEvent(SerializeStrategy strategy) {
+            this.strategy = strategy;
+        }
+
+        @Override
+        public void handle(ActionEvent event) {
+            Person toBeSerialized = new Person(rowContent[0], rowContent[1]);
+            strategy.to(toBeSerialized);
+        }
+    }
+
+    private class DeserializationEvent implements EventHandler<ActionEvent> {
+
+        private SerializeStrategy<Person> strategy;
+
+        public DeserializationEvent(SerializeStrategy strategy) {
+            this.strategy = strategy;
+        }
+
+        @Override
+        public void handle(ActionEvent event) {
+            File file = null;
+            strategy.from(file);
         }
     }
 

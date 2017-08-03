@@ -4,17 +4,18 @@ package ganttchart.model;
 import ganttchart.util.FileUtil;
 import org.bson.types.ObjectId;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.*;
 
 /**
  * Created by gwszymanowski on 2017-05-13.
  */
-public class Project implements Comparable<Project> {
+public class Project implements Comparable<Project>, Serializable {
 
     private String name = "null";
     private LocalDate startDate = LocalDate.now();
-    private Set<Assignment> tasks = new LinkedHashSet<>();
+    private Set<Assignment> tasks = new TreeSet<>();
     private Set<Person> members = new HashSet<>();
 
     public Project() {
