@@ -3,6 +3,10 @@ package ganttchart.model;
 
 import ganttchart.util.FileUtil;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -13,11 +17,15 @@ import java.util.TreeSet;
 /**
  * Created by gwszymanowski on 2017-05-13.
  */
+@XmlRootElement
+@XmlType(propOrder = { "name", "startDate", "members", "assignments" })
 public class Project implements Comparable<Project>, Serializable {
 
     private String name = "null";
     private LocalDate startDate = LocalDate.now();
-    private Set<Assignment> tasks = new TreeSet<>();
+    @XmlElementWrapper(name = "assignments")
+    private Set<Assignment> assignments = new TreeSet<>();
+    @XmlElementWrapper(name = "members")
     private Set<Person> members = new HashSet<>();
 
     public Project() {
@@ -32,6 +40,7 @@ public class Project implements Comparable<Project>, Serializable {
         this.startDate = startDate;
     }
 
+    @XmlElement(name = "name")
     public String getName() {
         return name;
     }
@@ -60,24 +69,25 @@ public class Project implements Comparable<Project>, Serializable {
         this.startDate = startDate;
     }
 
+    @XmlElement(name = "startDate")
     public String getStartDateString() {
         return startDate != null ? FileUtil.convertDateToString(startDate) : "null";
     }
 
-    public Set<Assignment> getTasks() {
-        return tasks;
+    public Set<Assignment> getAssignments() {
+        return assignments;
     }
 
-    public void setTasks(Set<Assignment> tasks) {
-        this.tasks = tasks;
+    public void setAssignments(Set<Assignment> tasks) {
+        this.assignments = tasks;
     }
 
-    public void addTask(Assignment task) {
-        tasks.add(task);
+    public void addAssignment(Assignment task) {
+        assignments.add(task);
     }
 
-    public void addTasks(Assignment ... assignments) {
-        tasks.addAll(Arrays.asList(assignments));
+    public void addAssignments(Assignment ... tasks) {
+        assignments.addAll(Arrays.asList(tasks));
     }
 
     @Override

@@ -1,6 +1,7 @@
 package ganttchart.gui.elements;
 
 import ganttchart.gui.elements.alert.AlertFactory;
+import ganttchart.gui.elements.alert.AlertReason;
 import ganttchart.gui.elements.alert.ElementType;
 import ganttchart.gui.elements.alert.OperationType;
 import ganttchart.gui.elements.dialog.Dialogable;
@@ -12,6 +13,7 @@ import ganttchart.repository.Repositorable;
 import ganttchart.repository.RepositoryBusinessService;
 import ganttchart.serialization.JSONSerializator;
 import ganttchart.serialization.SerializeStrategy;
+import ganttchart.serialization.XMLSerializator;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -65,6 +67,7 @@ public class GanttMenu extends MenuBar {
         Menu personImport = new Menu("person");
 
         MenuItem personXML = new MenuItem("XML");
+        personXML.setOnAction(new DeserializationEvent(new XMLSerializator(Person.class)));
         MenuItem personJSON = new MenuItem("JSON");
         personJSON.setOnAction(new DeserializationEvent(new JSONSerializator(Person.class)));
         personImport.getItems().addAll(personXML, personJSON);
@@ -128,17 +131,18 @@ public class GanttMenu extends MenuBar {
         @Override
         public void handle(ActionEvent event) {
 
-            Serializable object = strategy.from();
+            Serializable object = strategy.unmarshal();
 
             if(object != null) {
-
                 RepositoryBusinessService service = new RepositoryBusinessService(object.getClass());
                 Repositorable repo = service.getRepository();
                 repo.save(object);
 
                 Alert alert = AlertFactory.getInformationAlert(ElementType.get(object.getClass()), OperationType.IMPORTED);
                 alert.showAndWait();
-
+            } else {
+                Alert error = AlertFactory.getErrorAlert(AlertReason.FILE_WRONG);
+                error.showAndWait();
             }
         }
     }

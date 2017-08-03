@@ -16,7 +16,7 @@ import static com.mongodb.client.model.Filters.eq;
 /**
  * Created by gwszymanowski on 2017-05-17.
  */
-public final class ProjectRepository<Repositable> implements Repositorable<Project> {
+public final class ProjectRepository<T> implements Repositorable<Project> {
 
     private MongoCollection<Document> collection = null;
 

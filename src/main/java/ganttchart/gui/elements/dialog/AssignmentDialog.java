@@ -60,7 +60,7 @@ public class AssignmentDialog extends Dialog<ButtonType> implements Dialogable {
                 ass.setTaskOwner(new Person(taskOwner[0], taskOwner[1]));
             }
 
-            project.addTask(ass);
+            project.addAssignment(ass);
 
             repo.update(project);
         }
@@ -81,7 +81,7 @@ public class AssignmentDialog extends Dialog<ButtonType> implements Dialogable {
         if(title.length() == 0)
             AlertFactory.getErrorAlert(AlertReason.ZERO_LENGTH).showAndWait();
         else {
-            Optional<Assignment> optional = project.getTasks().stream().filter(x -> x.getTitle().equals(previousTitle)).findFirst();
+            Optional<Assignment> optional = project.getAssignments().stream().filter(x -> x.getTitle().equals(previousTitle)).findFirst();
             Assignment ass = optional.get();
             ass.setTitle(title);
             ass.setStartDate(startDate);

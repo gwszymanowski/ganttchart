@@ -89,7 +89,7 @@ public final class AssignmentService {
     }
 
     public static Assignment findAssignmentByTitle(Project p, String title) {
-        Optional<Assignment> optional = p.getTasks().stream().filter(x -> x.getTitle().equals(title)).findFirst();
+        Optional<Assignment> optional = p.getAssignments().stream().filter(x -> x.getTitle().equals(title)).findFirst();
         return optional.get();
     }
 

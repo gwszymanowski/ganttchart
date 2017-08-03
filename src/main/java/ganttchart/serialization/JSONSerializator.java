@@ -24,12 +24,7 @@ public final class JSONSerializator<T> implements SerializeStrategy<T> {
     }
 
     @Override
-    public Class getGenericClass() {
-        return persistentClass;
-    }
-
-    @Override
-    public void to(T object) {
+    public void marshal(T object) {
 
         DirectoryChooser chooser = new DirectoryChooser();
         chooser.setTitle("Open Resource File");
@@ -53,7 +48,7 @@ public final class JSONSerializator<T> implements SerializeStrategy<T> {
     }
 
     @Override
-    public T from() {
+    public T unmarshal() {
 
         FileChooser chooser = new FileChooser();
 
@@ -63,7 +58,6 @@ public final class JSONSerializator<T> implements SerializeStrategy<T> {
 
         if(file != null) {
             ObjectMapper mapper = new ObjectMapper();
-            System.out.println(file.getAbsolutePath());
             try {
                 object =  mapper.readValue(new File(file.getAbsolutePath()),  this.persistentClass);
             } catch (JsonGenerationException e) {

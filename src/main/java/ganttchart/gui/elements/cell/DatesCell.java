@@ -24,7 +24,7 @@ public class DatesCell extends TableCell<String, String> {
 
         if(!empty && getTableRow() != null) {
             Object tableItem = getTableRow().getItem();
-            Optional<Assignment> assignmentOptional = project.getTasks().stream().filter(x -> x.getTitle().equals(tableItem.toString())).findFirst();
+            Optional<Assignment> assignmentOptional = project.getAssignments().stream().filter(x -> x.getTitle().equals(tableItem.toString())).findFirst();
 
             if(assignmentOptional.isPresent()) {
                 Assignment assignment = assignmentOptional.get();

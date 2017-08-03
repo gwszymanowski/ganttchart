@@ -23,7 +23,7 @@ public final class ProjectService {
         document.append("name", project.getName());
         document.append("startDate", project.getStartDateString());
         document.append("members", PersonService.getMembersList(project.getMembers()));
-        document.append("tasks", AssignmentService.getAssignmentList(project.getTasks()));
+        document.append("tasks", AssignmentService.getAssignmentList(project.getAssignments()));
         return document;
     }
 
@@ -37,7 +37,7 @@ public final class ProjectService {
         memberDocuments.stream().forEach(x -> project.addMember(PersonService.fromDocument(x)));
 
         List<Document> taskDocuments = (List<Document>) document.get("tasks");
-        taskDocuments.stream().forEach(x -> project.addTask(AssignmentService.fromDocument(x)));
+        taskDocuments.stream().forEach(x -> project.addAssignment(AssignmentService.fromDocument(x)));
 
         String startdateString = (String) document.get("startDate");
         project.setStartDate(FileUtil.convertStringToLocalDate(startdateString));
@@ -49,7 +49,7 @@ public final class ProjectService {
         List<TableColumn> tb = new LinkedList<>();
         TableColumnFactory tcf = new TableColumnFactory();
         LocalDate first = p.getStartDate();
-        LocalDate last = getLastDay(p.getTasks()).plusDays(1);
+        LocalDate last = getLastDay(p.getAssignments()).plusDays(1);
 
         while(!first.equals(last)) {
             TableColumn col = new TableColumn();

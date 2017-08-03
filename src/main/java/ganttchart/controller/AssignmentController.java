@@ -133,7 +133,7 @@ public class AssignmentController implements Initializable {
 
         int tbsize = tableColumns.size();
 
-        for(Assignment a : project.getTasks()) {
+        for(Assignment a : project.getAssignments()) {
             List<String> dates = AssignmentService.getAllDaysToString(a);
 
             for(int i = 0; i < tbsize; i++) {
@@ -148,8 +148,8 @@ public class AssignmentController implements Initializable {
     }
 
     public void refresh() {
-        tableView.getItems().setAll(project.getTasks());
-        datesTableView.getItems().setAll(project.getTasks());
+        tableView.getItems().setAll(project.getAssignments());
+        datesTableView.getItems().setAll(project.getAssignments());
     }
 
     private class DialogButtonAction implements EventHandler<ActionEvent> {

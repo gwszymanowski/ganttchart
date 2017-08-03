@@ -22,7 +22,7 @@ public final class ProjectDummy {
         project1.setStartDate(beggining);
         Person[] people = {new Person("Adam Smith"), new Person("John Locke")};
         project1.setMembers(new HashSet<>(Arrays.asList(people)));
-        project1.setTasks(AssignmentDummy.assignments1());
+        project1.setAssignments(AssignmentDummy.assignments1());
 
         return project1;
     }
@@ -35,7 +35,7 @@ public final class ProjectDummy {
         project1.setStartDate(beggining);
         Person[] people = {new Person("Hans Zimmerman"), new Person("Krzysztof Marchewka")};
         project1.setMembers(new HashSet<>(Arrays.asList(people)));
-        project1.setTasks(AssignmentDummy.assignments2());
+        project1.setAssignments(AssignmentDummy.assignments2());
 
         return project1;
     }

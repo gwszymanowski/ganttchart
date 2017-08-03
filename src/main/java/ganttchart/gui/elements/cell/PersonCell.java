@@ -46,7 +46,7 @@ public class PersonCell extends TableCell<Person, String> {
         Button deleteButton = new Button("Delete");
         deleteButton.setOnAction(new DeletePersonEvent());
         Button xmlButton = new Button("XML");
-        xmlButton.setOnAction(new SerializationEvent(new XMLSerializator()));
+        xmlButton.setOnAction(new SerializationEvent(new XMLSerializator(Person.class)));
         Button jsonButton = new Button("JSON");
         jsonButton.setOnAction(new SerializationEvent(new JSONSerializator(Person.class)));
         cellBox.getChildren().addAll(editButton, deleteButton, xmlButton, jsonButton);
@@ -99,7 +99,7 @@ public class PersonCell extends TableCell<Person, String> {
         @Override
         public void handle(ActionEvent event) {
             Person toBeSerialized = new Person(rowContent[0], rowContent[1]);
-            strategy.to(toBeSerialized);
+            strategy.marshal(toBeSerialized);
         }
     }
 

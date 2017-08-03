@@ -1,11 +1,16 @@
 package ganttchart.model;
 
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
 
 /**
  * Created by gwszymanowski on 2017-05-13.
  */
+@XmlRootElement
+@XmlType(propOrder = { "firstname", "lastname" })
 public class Person implements Comparable<Person>, Serializable {
 
     private String firstname = "null";
@@ -29,6 +34,7 @@ public class Person implements Comparable<Person>, Serializable {
         return firstname;
     }
 
+    @XmlElement
     public void setFirstname(String firstname) {
         this.firstname = firstname;
     }
@@ -37,6 +43,7 @@ public class Person implements Comparable<Person>, Serializable {
         return lastname;
     }
 
+    @XmlElement
     public void setLastname(String lastname) {
         this.lastname = lastname;
     }

@@ -72,14 +72,14 @@ public class ProjectServiceTest {
     @Test
     public void getLastDayTest1() {
         LocalDate expected = LocalDate.of(2017, 4, 15);
-        LocalDate given = ProjectService.getLastDay(project1.getTasks());
+        LocalDate given = ProjectService.getLastDay(project1.getAssignments());
         assertThat(expected, is(equalTo(given)));
     }
 
     @Test
     public void getLastDayTest2() {
         LocalDate expected = LocalDate.of(2017, 7, 10);
-        LocalDate given = ProjectService.getLastDay(project2.getTasks());
+        LocalDate given = ProjectService.getLastDay(project2.getAssignments());
         assertThat(expected, is(equalTo(given)));
     }
 

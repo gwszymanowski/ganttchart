@@ -45,7 +45,7 @@ public class AssignmentChoiceAlert extends Alert {
     }
 
     public void saveProgress(Project project, String assignmentTitle) {
-        Optional<Assignment> optional = project.getTasks().stream().filter(x -> x.getTitle().equals(assignmentTitle)).findFirst();
+        Optional<Assignment> optional = project.getAssignments().stream().filter(x -> x.getTitle().equals(assignmentTitle)).findFirst();
 
         if(optional.isPresent()) {
             Assignment assignment = optional.get();
@@ -58,7 +58,7 @@ public class AssignmentChoiceAlert extends Alert {
 
     public void delete(Project project, String assignmentTitle) {
         System.out.println(assignmentTitle);
-        project.getTasks().removeIf(x -> x.getTitle().equals(assignmentTitle));
+        project.getAssignments().removeIf(x -> x.getTitle().equals(assignmentTitle));
         projectRepository.update(project);
     }
 

@@ -2,6 +2,9 @@ package ganttchart.model;
 
 import ganttchart.util.FileUtil;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalDate;
@@ -9,6 +12,8 @@ import java.time.LocalDate;
 /**
  * Created by gwszymanowski on 2017-05-17.
 */
+@XmlRootElement
+@XmlType(propOrder = { "title", "startDate", "finishDate", "taskOwner" })
 public class Assignment implements Comparable<Assignment>, Serializable {
 
     private String title = "null";
@@ -33,6 +38,7 @@ public class Assignment implements Comparable<Assignment>, Serializable {
         this.taskOwner = taskOwner;
     }
 
+    @XmlElement(name = "title")
     public String getTitle() {
         return title;
     }
@@ -76,14 +82,17 @@ public class Assignment implements Comparable<Assignment>, Serializable {
         this.completed = completed;
     }
 
+    @XmlElement(name = "startDate")
     public String startDateString() {
         return FileUtil.convertDateToString(startDate);
     }
 
+    @XmlElement(name = "finishDate")
     public String finishDateString() {
         return FileUtil.convertDateToString(finishDate);
     }
 
+    @XmlElement(name = "taskOwner")
     public Person getTaskOwner() {
         return taskOwner;
     }

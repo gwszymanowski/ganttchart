@@ -8,8 +8,7 @@ import java.io.Serializable;
  */
 public interface SerializeStrategy<Serializable> {
 
-    void to(Serializable object);
-    Serializable from();
-    Class getGenericClass();
+    void marshal(Serializable object);
+    Serializable unmarshal();
 
 }
