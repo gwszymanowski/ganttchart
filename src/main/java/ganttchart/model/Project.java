@@ -2,11 +2,13 @@ package ganttchart.model;
 
 
 import ganttchart.util.FileUtil;
-import org.bson.types.ObjectId;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * Created by gwszymanowski on 2017-05-13.

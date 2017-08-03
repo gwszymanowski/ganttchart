@@ -3,6 +3,9 @@ package ganttchart.gui.elements;
 import ganttchart.gui.elements.dialog.Dialogable;
 import ganttchart.gui.elements.dialog.PersonDialog;
 import ganttchart.gui.elements.dialog.ProjectDialog;
+import ganttchart.model.Person;
+import ganttchart.serialization.JSONSerializator;
+import ganttchart.serialization.SerializeStrategy;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -19,18 +22,15 @@ import java.util.Optional;
  */
 public class GanttMenu extends MenuBar {
 
-    private MenuItem projectItem, personItem, projectListItem, personListItem;
-
     public GanttMenu() {
-        super();
-        getMenus().addAll(getCreateMenu(), getViewMenu());
+        getMenus().addAll(getCreateMenu(), getViewMenu(), getImportMenu());
     }
 
     private Menu getCreateMenu() {
         Menu createMenu = new Menu("Create");
-        projectItem = new MenuItem("project");
+        MenuItem projectItem = new MenuItem("project");
         projectItem.setOnAction(new ShowDialogEvent(new ProjectDialog()));
-        personItem = new MenuItem("person");
+        MenuItem personItem = new MenuItem("person");
         personItem.setOnAction(new ShowDialogEvent(new PersonDialog()));
         createMenu.getItems().addAll(projectItem, personItem);
         return createMenu;
@@ -38,12 +38,31 @@ public class GanttMenu extends MenuBar {
 
     private Menu getViewMenu() {
         Menu viewMenu = new Menu("View");
-        projectListItem = new MenuItem("projects");
+        MenuItem projectListItem = new MenuItem("projects");
         projectListItem.setOnAction(new SwitchViewEvent("/project.fxml"));
-        personListItem = new MenuItem("people");
+        MenuItem personListItem = new MenuItem("people");
         personListItem.setOnAction(new SwitchViewEvent("/person.fxml"));
         viewMenu.getItems().addAll(projectListItem, personListItem);
         return viewMenu;
+    }
+
+    private Menu getImportMenu() {
+        Menu importMenu = new Menu("Import");
+        Menu projectImport = new Menu("project");
+
+        MenuItem projectXML = new MenuItem("XML");
+        MenuItem projectJSON = new MenuItem("JSON");
+        projectImport.getItems().addAll(projectXML, projectJSON);
+
+        Menu personImport = new Menu("person");
+
+        MenuItem personXML = new MenuItem("XML");
+        MenuItem personJSON = new MenuItem("JSON");
+        personJSON.setOnAction(new DeserializationEvent(new JSONSerializator<Person>()));
+        personImport.getItems().addAll(personXML, personJSON);
+
+        importMenu.getItems().addAll(projectImport, personImport);
+        return importMenu;
     }
 
     private class ShowDialogEvent implements EventHandler<ActionEvent> {
@@ -89,5 +108,20 @@ public class GanttMenu extends MenuBar {
             stage.show();
         }
     }
+
+    private class DeserializationEvent implements EventHandler<ActionEvent> {
+
+        private SerializeStrategy strategy;
+
+        public DeserializationEvent(SerializeStrategy strategy) {
+            this.strategy = strategy;
+        }
+
+        @Override
+        public void handle(ActionEvent event) {
+            strategy.from();
+        }
+    }
+
 }
 

@@ -1,8 +1,6 @@
 package ganttchart.model;
 
 
-import org.bson.types.ObjectId;
-
 import java.io.Serializable;
 
 /**
@@ -42,7 +40,6 @@ public class Person implements Comparable<Person>, Serializable {
     public void setLastname(String lastname) {
         this.lastname = lastname;
     }
-
 
     @Override
     public boolean equals(Object o) {

@@ -1,17 +1,10 @@
 package ganttchart.model;
 
 import ganttchart.util.FileUtil;
-import org.bson.types.ObjectId;
 
 import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalDate;
-import java.time.temporal.TemporalUnit;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
-import static java.util.concurrent.TimeUnit.DAYS;
 
 /**
  * Created by gwszymanowski on 2017-05-17.

@@ -8,11 +8,12 @@ import java.io.File;
 public final class XMLSerializator<T> implements SerializeStrategy<T> {
 
     @Override
-    public void to(T object) {
-    }
+    public void to(T object) {}
 
     @Override
-    public T from(File file) {
+    public T from() {
         return null;
     }
+
+
 }

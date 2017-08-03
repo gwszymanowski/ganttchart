@@ -103,19 +103,4 @@ public class PersonCell extends TableCell<Person, String> {
         }
     }
 
-    private class DeserializationEvent implements EventHandler<ActionEvent> {
-
-        private SerializeStrategy<Person> strategy;
-
-        public DeserializationEvent(SerializeStrategy strategy) {
-            this.strategy = strategy;
-        }
-
-        @Override
-        public void handle(ActionEvent event) {
-            File file = null;
-            strategy.from(file);
-        }
-    }
-
 }

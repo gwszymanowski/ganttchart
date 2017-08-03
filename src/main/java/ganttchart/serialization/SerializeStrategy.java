@@ -8,6 +8,6 @@ import java.io.File;
 public interface SerializeStrategy<T> {
 
     void to(T object);
-    T from(File file);
+    T from();
 
 }
