@@ -48,7 +48,7 @@ public class PersonCell extends TableCell<Person, String> {
         Button xmlButton = new Button("XML");
         xmlButton.setOnAction(new SerializationEvent(new XMLSerializator()));
         Button jsonButton = new Button("JSON");
-        jsonButton.setOnAction(new SerializationEvent(new JSONSerializator()));
+        jsonButton.setOnAction(new SerializationEvent(new JSONSerializator(Person.class)));
         cellBox.getChildren().addAll(editButton, deleteButton, xmlButton, jsonButton);
         setGraphic(cellBox);
     }

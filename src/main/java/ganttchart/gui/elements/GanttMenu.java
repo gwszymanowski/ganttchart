@@ -1,9 +1,15 @@
 package ganttchart.gui.elements;
 
+import ganttchart.gui.elements.alert.AlertFactory;
+import ganttchart.gui.elements.alert.ElementType;
+import ganttchart.gui.elements.alert.OperationType;
 import ganttchart.gui.elements.dialog.Dialogable;
 import ganttchart.gui.elements.dialog.PersonDialog;
 import ganttchart.gui.elements.dialog.ProjectDialog;
 import ganttchart.model.Person;
+import ganttchart.model.Project;
+import ganttchart.repository.Repositorable;
+import ganttchart.repository.RepositoryBusinessService;
 import ganttchart.serialization.JSONSerializator;
 import ganttchart.serialization.SerializeStrategy;
 import javafx.event.ActionEvent;
@@ -15,6 +21,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Optional;
 
 /**
@@ -52,13 +59,14 @@ public class GanttMenu extends MenuBar {
 
         MenuItem projectXML = new MenuItem("XML");
         MenuItem projectJSON = new MenuItem("JSON");
+        projectJSON.setOnAction(new DeserializationEvent(new JSONSerializator(Project.class)));
         projectImport.getItems().addAll(projectXML, projectJSON);
 
         Menu personImport = new Menu("person");
 
         MenuItem personXML = new MenuItem("XML");
         MenuItem personJSON = new MenuItem("JSON");
-        personJSON.setOnAction(new DeserializationEvent(new JSONSerializator<Person>()));
+        personJSON.setOnAction(new DeserializationEvent(new JSONSerializator(Person.class)));
         personImport.getItems().addAll(personXML, personJSON);
 
         importMenu.getItems().addAll(projectImport, personImport);
@@ -109,9 +117,9 @@ public class GanttMenu extends MenuBar {
         }
     }
 
-    private class DeserializationEvent implements EventHandler<ActionEvent> {
+    private class DeserializationEvent<Serializable> implements EventHandler<ActionEvent> {
 
-        private SerializeStrategy strategy;
+        private SerializeStrategy<Serializable> strategy;
 
         public DeserializationEvent(SerializeStrategy strategy) {
             this.strategy = strategy;
@@ -119,7 +127,19 @@ public class GanttMenu extends MenuBar {
 
         @Override
         public void handle(ActionEvent event) {
-            strategy.from();
+
+            Serializable object = strategy.from();
+
+            if(object != null) {
+
+                RepositoryBusinessService service = new RepositoryBusinessService(object.getClass());
+                Repositorable repo = service.getRepository();
+                repo.save(object);
+
+                Alert alert = AlertFactory.getInformationAlert(ElementType.get(object.getClass()), OperationType.IMPORTED);
+                alert.showAndWait();
+
+            }
         }
     }
 

@@ -15,5 +15,10 @@ public final class XMLSerializator<T> implements SerializeStrategy<T> {
         return null;
     }
 
+    @Override
+    public Class getGenericClass() {
+        return null;
+    }
+
 
 }
