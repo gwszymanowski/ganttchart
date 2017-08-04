@@ -1,5 +1,10 @@
 package ganttchart.serialization;
 
+import ganttchart.gui.elements.alert.AlertFactory;
+import ganttchart.gui.elements.alert.AlertReason;
+import ganttchart.gui.elements.alert.ElementType;
+import ganttchart.gui.elements.alert.OperationType;
+import javafx.scene.control.Alert;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 
@@ -48,8 +53,11 @@ public final class XMLSerializator<T> implements SerializeStrategy<T> {
 
             } catch (JAXBException e) {
                 e.printStackTrace();
+                Alert error = AlertFactory.getErrorAlert(AlertReason.FILE_WRONG);
+                error.showAndWait();
             }
-
+            Alert alert = AlertFactory.getInformationAlert(ElementType.get(object.getClass()), OperationType.EXPORTED);
+            alert.showAndWait();
         }
     }
 
@@ -73,7 +81,12 @@ public final class XMLSerializator<T> implements SerializeStrategy<T> {
 
             } catch (JAXBException e) {
                 e.printStackTrace();
+                Alert error = AlertFactory.getErrorAlert(AlertReason.FILE_WRONG);
+                error.showAndWait();
+                System.exit(1);
             }
+            Alert alert = AlertFactory.getInformationAlert(ElementType.get(object.getClass()), OperationType.EXPORTED);
+            alert.showAndWait();
         }
 
         return object;

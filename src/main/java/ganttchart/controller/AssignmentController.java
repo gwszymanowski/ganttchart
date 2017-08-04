@@ -3,11 +3,14 @@ package ganttchart.controller;
 import ganttchart.gui.elements.cell.AssignmentCell;
 import ganttchart.gui.elements.cell.DatesCell;
 import ganttchart.gui.elements.dialog.Dialogable;
+import ganttchart.gui.elements.dialog.MarshalizeAssignmentDialog;
 import ganttchart.gui.elements.dialog.MembersDialog;
 import ganttchart.gui.elements.dialog.AssignmentDialog;
 import ganttchart.model.Assignment;
 import ganttchart.model.Project;
 import ganttchart.repository.ProjectRepository;
+import ganttchart.serialization.JSONSerializator;
+import ganttchart.serialization.XMLSerializator;
 import ganttchart.service.AssignmentService;
 import ganttchart.service.ProjectService;
 import ganttchart.util.FileUtil;
@@ -76,6 +79,12 @@ public class AssignmentController implements Initializable {
     @FXML
     private Button memberList;
 
+    @FXML
+    private Button exportButton;
+
+    @FXML
+    private Button importButton;
+
     private String titleValue;
     private ProjectRepository projectRepository;
     private Project project;
@@ -88,19 +97,21 @@ public class AssignmentController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         project = projectRepository.findByName(titleValue);
-        initializeLabels();
+        initializeLabel();
         initializeTableView();
         initializeDatesTableView();
         fillTable();
         fillDatesTable();
     }
 
-    private void initializeLabels() {
+    private void initializeLabel() {
         titleLabel.setText(titleValue);
-        memberList.setOnAction(new DialogButtonAction(new MembersDialog(project)));
-        newAssignment.setOnAction(new DialogButtonAction(new AssignmentDialog(project)));
         startDateLabel.setText(FileUtil.concatenateString("Startdate is: " , FileUtil.convertDateToString(project.getStartDate())));
         todayIsLabel.setText(FileUtil.concatenateString("Today is: " , FileUtil.convertDateToString(LocalDate.now())));
+        memberList.setOnAction(new DialogButtonAction(new MembersDialog(project)));
+        newAssignment.setOnAction(new DialogButtonAction(new AssignmentDialog(project)));
+        exportButton.setOnAction(new MarshalAction());
+
     }
 
     private void initializeTableView() {
@@ -184,6 +195,28 @@ public class AssignmentController implements Initializable {
                 fillDatesTable();
                 this.suspended = false;
             }
+        }
+    }
+
+    private class MarshalAction implements EventHandler<ActionEvent> {
+
+        @Override
+        public void handle(ActionEvent event) {
+
+            MarshalizeAssignmentDialog dialog = new MarshalizeAssignmentDialog(project);
+
+            Optional<ButtonType> result = dialog.showAndWait();
+
+            if(result.isPresent()) {
+                ButtonBar.ButtonData data = Optional.of(result.get()).get().getButtonData();
+
+                if(data == ButtonBar.ButtonData.BIG_GAP)
+                    dialog.marshalize(new JSONSerializator(Project.class));
+                else if(data == ButtonBar.ButtonData.SMALL_GAP)
+                    dialog.marshalize(new XMLSerializator(Project.class));
+
+            }
+
         }
     }
 }

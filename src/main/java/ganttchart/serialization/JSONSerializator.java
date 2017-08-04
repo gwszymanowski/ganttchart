@@ -4,6 +4,11 @@ import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.reflect.TypeToken;
+import ganttchart.gui.elements.alert.AlertFactory;
+import ganttchart.gui.elements.alert.AlertReason;
+import ganttchart.gui.elements.alert.ElementType;
+import ganttchart.gui.elements.alert.OperationType;
+import javafx.scene.control.Alert;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 
@@ -41,8 +46,11 @@ public final class JSONSerializator<T> implements SerializeStrategy<T> {
                 mapper.writeValue(new File(sb.toString()), object);
             } catch (IOException e) {
                 e.printStackTrace();
+                Alert error = AlertFactory.getErrorAlert(AlertReason.FILE_WRONG);
+                error.showAndWait();
             }
-
+            Alert alert = AlertFactory.getInformationAlert(ElementType.get(object.getClass()), OperationType.EXPORTED);
+            alert.showAndWait();
         }
 
     }
@@ -60,13 +68,14 @@ public final class JSONSerializator<T> implements SerializeStrategy<T> {
             ObjectMapper mapper = new ObjectMapper();
             try {
                 object =  mapper.readValue(new File(file.getAbsolutePath()),  this.persistentClass);
-            } catch (JsonGenerationException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
-            } catch (JsonMappingException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+                Alert error = AlertFactory.getErrorAlert(AlertReason.FILE_WRONG);
+                error.showAndWait();
             }
+
+            Alert alert = AlertFactory.getInformationAlert(ElementType.get(object.getClass()), OperationType.IMPORTED);
+            alert.showAndWait();
         }
 
         return object;

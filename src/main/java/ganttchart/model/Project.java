@@ -1,12 +1,14 @@
 package ganttchart.model;
 
 
+import ganttchart.serialization.adapter.AssignmentsAdapter;
+import ganttchart.serialization.adapter.LocalDateAdapter;
+import ganttchart.serialization.adapter.MembersAdapter;
 import ganttchart.util.FileUtil;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -18,14 +20,12 @@ import java.util.TreeSet;
  * Created by gwszymanowski on 2017-05-13.
  */
 @XmlRootElement
-@XmlType(propOrder = { "name", "startDate", "members", "assignments" })
+@XmlType (propOrder={"name","startDate","members", "assignments"})
 public class Project implements Comparable<Project>, Serializable {
 
     private String name = "null";
     private LocalDate startDate = LocalDate.now();
-    @XmlElementWrapper(name = "assignments")
     private Set<Assignment> assignments = new TreeSet<>();
-    @XmlElementWrapper(name = "members")
     private Set<Person> members = new HashSet<>();
 
     public Project() {
@@ -40,7 +40,6 @@ public class Project implements Comparable<Project>, Serializable {
         this.startDate = startDate;
     }
 
-    @XmlElement(name = "name")
     public String getName() {
         return name;
     }
@@ -49,6 +48,7 @@ public class Project implements Comparable<Project>, Serializable {
         this.name = name;
     }
 
+    @XmlJavaTypeAdapter(MembersAdapter.class)
     public Set<Person> getMembers() { return members; }
 
     public void setMembers(Set<Person> members) { this.members = members; }
@@ -61,6 +61,7 @@ public class Project implements Comparable<Project>, Serializable {
         members.addAll(Arrays.asList(people));
     }
 
+    @XmlJavaTypeAdapter(LocalDateAdapter.class)
     public LocalDate getStartDate() {
         return startDate;
     }
@@ -69,11 +70,11 @@ public class Project implements Comparable<Project>, Serializable {
         this.startDate = startDate;
     }
 
-    @XmlElement(name = "startDate")
     public String getStartDateString() {
         return startDate != null ? FileUtil.convertDateToString(startDate) : "null";
     }
 
+    @XmlJavaTypeAdapter(AssignmentsAdapter.class)
     public Set<Assignment> getAssignments() {
         return assignments;
     }

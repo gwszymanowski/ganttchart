@@ -22,6 +22,8 @@
                         <buttons>
                             <Button fx:id="newAssignment" text="New task" />
                             <Button fx:id="memberList" text="Members" />
+                            <Button fx:id="exportButton" text="Export" />
+                            <Button fx:id="importButton" text="Import" />
                         </buttons>
                     </ButtonBar>
                 </GridPane>

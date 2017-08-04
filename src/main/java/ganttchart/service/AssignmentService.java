@@ -23,8 +23,8 @@ public final class AssignmentService {
         Document document = new Document();
         document.append("title", assignment.getTitle());
         document.append("taskOwner", assignment.getTaskOwner().toString());
-        document.append("startDate", assignment.startDateString());
-        document.append("finishDate", assignment.finishDateString());
+        document.append("startDate", FileUtil.convertDateToString(assignment.getStartDate()));
+        document.append("finishDate", FileUtil.convertDateToString(assignment.getFinishDate()));
         document.append("completed", assignment.getCompleted());
         return document;
     }

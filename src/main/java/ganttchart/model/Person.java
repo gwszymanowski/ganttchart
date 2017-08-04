@@ -10,7 +10,6 @@ import java.io.Serializable;
  * Created by gwszymanowski on 2017-05-13.
  */
 @XmlRootElement
-@XmlType(propOrder = { "firstname", "lastname" })
 public class Person implements Comparable<Person>, Serializable {
 
     private String firstname = "null";

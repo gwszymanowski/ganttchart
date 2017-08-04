@@ -1,10 +1,11 @@
 package ganttchart.model;
 
-import ganttchart.util.FileUtil;
+import ganttchart.serialization.adapter.LocalDateAdapter;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalDate;
@@ -13,14 +14,14 @@ import java.time.LocalDate;
  * Created by gwszymanowski on 2017-05-17.
 */
 @XmlRootElement
-@XmlType(propOrder = { "title", "startDate", "finishDate", "taskOwner" })
+@XmlType(propOrder={"title","startDate","finishDate", "taskOwner", "completed"})
 public class Assignment implements Comparable<Assignment>, Serializable {
 
     private String title = "null";
     private LocalDate startDate = LocalDate.now();
     private LocalDate finishDate = LocalDate.now();
     private Person taskOwner = new Person();
-    private transient int completed; // in %
+    private int completed; // in %
     private transient long duration;
 
 
@@ -47,6 +48,7 @@ public class Assignment implements Comparable<Assignment>, Serializable {
         this.title = title;
     }
 
+    @XmlJavaTypeAdapter(LocalDateAdapter.class)
     public LocalDate getStartDate() {
         return startDate;
     }
@@ -56,6 +58,7 @@ public class Assignment implements Comparable<Assignment>, Serializable {
         this.startDate = startDate;
     }
 
+    @XmlJavaTypeAdapter(LocalDateAdapter.class)
     public LocalDate getFinishDate() {
         return finishDate;
     }
@@ -80,16 +83,6 @@ public class Assignment implements Comparable<Assignment>, Serializable {
 
     public void setCompleted(int completed) {
         this.completed = completed;
-    }
-
-    @XmlElement(name = "startDate")
-    public String startDateString() {
-        return FileUtil.convertDateToString(startDate);
-    }
-
-    @XmlElement(name = "finishDate")
-    public String finishDateString() {
-        return FileUtil.convertDateToString(finishDate);
     }
 
     @XmlElement(name = "taskOwner")
