@@ -28,16 +28,7 @@ public class Assignment implements Comparable<Assignment>, Serializable {
     public Assignment() {
     }
 
-    public Assignment(String title, LocalDate startDate, LocalDate finishDate) {
-        this.title = title;
-        this.startDate = startDate;
-        this.finishDate = finishDate;
-    }
 
-    public Assignment(String title, LocalDate startDate, LocalDate finishDate, Person taskOwner) {
-        this(title, startDate, finishDate);
-        this.taskOwner = taskOwner;
-    }
 
     @XmlElement(name = "title")
     public String getTitle() {

@@ -1,7 +1,6 @@
 package ganttchart.gui.elements.dialog.chart;
 
 import ganttchart.model.Assignment;
-import ganttchart.service.AssignmentService;
 import ganttchart.util.FileUtil;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -9,8 +8,6 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
-
-import static javafx.scene.input.KeyCode.L;
 
 /**
  * Created by gwszymanowski on 2017-08-05.
@@ -33,9 +30,7 @@ public class ProgressChart extends Dialog<ButtonType> {
         final NumberAxis yAxis = new NumberAxis();
         xAxis.setLabel("Predicted duration in days");
 
-        final LineChart<Number,Number> lineChart =
-                new LineChart<>(xAxis,yAxis);
-
+        final LineChart<Number,Number> lineChart = new LineChart<>(xAxis,yAxis);
 
         lineChart.getData().addAll(estimatedProgressSeries(), currentProgressSeries());
 
@@ -44,7 +39,7 @@ public class ProgressChart extends Dialog<ButtonType> {
 
     private XYChart.Series estimatedProgressSeries() {
         XYChart.Series estimatedProgress = new XYChart.Series();
-
+        estimatedProgress.setName("Estimated level");
         long duration = Math.toIntExact(assignment.getDuration() + 1);
         int start = 0;
         for(long i = duration; i >= 0; i--) {
@@ -56,19 +51,19 @@ public class ProgressChart extends Dialog<ButtonType> {
     }
 
     private XYChart.Series currentProgressSeries() {
-        XYChart.Series estimatedProgress = new XYChart.Series();
-
+        XYChart.Series currentProgress = new XYChart.Series();
+        currentProgress.setName("Current progress");
         long duration = Math.toIntExact(assignment.getDuration() + 1);
         double start = 0;
         double completed = assignment.getCompleted();
         double incrementValue =  completed * 0.01;
 
         for(long i = duration; i >= 0; i--) {
-            estimatedProgress.getData().add(new XYChart.Data(i, start));
+            currentProgress.getData().add(new XYChart.Data(i, start));
             start+=incrementValue;
         }
 
-        return estimatedProgress;
+        return currentProgress;
     }
 
 }

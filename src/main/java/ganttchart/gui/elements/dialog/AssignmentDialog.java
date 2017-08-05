@@ -3,6 +3,7 @@ package ganttchart.gui.elements.dialog;
 import ganttchart.model.Assignment;
 import ganttchart.model.Person;
 import ganttchart.model.Project;
+import ganttchart.model.builders.AssignmentBuilder;
 import ganttchart.repository.ProjectRepository;
 import ganttchart.service.ProjectService;
 import ganttchart.gui.elements.alert.AlertFactory;
@@ -61,7 +62,6 @@ public class AssignmentDialog extends Dialog<ButtonType> implements Dialogable {
             }
 
             project.addAssignment(ass);
-
             repo.update(project);
         }
 

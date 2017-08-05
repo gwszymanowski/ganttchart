@@ -217,9 +217,7 @@ public class AssignmentController implements Initializable {
                     dialog.marshalize(new XMLSerializator(Project.class));
 
             }
-
         }
     }
-
 
 }

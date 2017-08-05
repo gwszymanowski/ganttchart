@@ -4,6 +4,7 @@ import com.mongodb.BasicDBList;
 import ganttchart.model.Assignment;
 import ganttchart.model.Person;
 import ganttchart.model.Project;
+import ganttchart.model.builders.AssignmentBuilder;
 import ganttchart.util.FileUtil;
 import org.bson.Document;
 
@@ -38,13 +39,12 @@ public final class AssignmentService {
         String finishdateString = (String) document.get("finishDate");
         Integer completed = (Integer) document.get("completed");
 
-        a.setTitle(title);
-        a.setStartDate(FileUtil.convertStringToLocalDate(startdateString));
-        a.setFinishDate(FileUtil.convertStringToLocalDate(finishdateString));
-        a.setCompleted(completed);
-        a.setTaskOwner(new Person(fullname));
+        LocalDate startDate = FileUtil.convertStringToLocalDate(startdateString);
+        LocalDate finishDate = FileUtil.convertStringToLocalDate(finishdateString);
 
-        return a;
+        return new AssignmentBuilder().title(title).startDate(startDate)
+                .finishDate(finishDate).completed(completed)
+                .taskOwner(new Person(fullname)).build();
     }
 
     public static BasicDBList getAssignmentList(final Set<Assignment> assignments) {
@@ -96,12 +96,6 @@ public final class AssignmentService {
     public static Assignment findAssignmentByTitle(Project p, String title) {
         Optional<Assignment> optional = p.getAssignments().stream().filter(x -> x.getTitle().equals(title)).findFirst();
         return optional.get();
-    }
-
-    public static long getLatePenalty(Assignment assignment) {
-        int daysCount = getDayNumber(assignment.getStartDate(), assignment.getFinishDate());
-        int currentCount = getDayNumber(assignment.getStartDate(), LocalDate.now());
-        return currentCount/daysCount;
     }
 
 }
