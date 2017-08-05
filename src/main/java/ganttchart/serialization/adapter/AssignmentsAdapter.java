@@ -1,9 +1,7 @@
 package ganttchart.serialization.adapter;
 
 import ganttchart.model.Assignment;
-import ganttchart.model.Assignments;
-import ganttchart.model.Members;
-import ganttchart.model.Person;
+import ganttchart.model.wrappers.Assignments;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 import java.util.Set;

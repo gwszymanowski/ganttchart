@@ -1,13 +1,12 @@
 package ganttchart.serialization.adapter;
 
-import ganttchart.model.Members;
+import ganttchart.model.wrappers.Members;
 import ganttchart.model.Person;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
-import java.time.LocalDate;
 import java.util.Set;
 
 /**

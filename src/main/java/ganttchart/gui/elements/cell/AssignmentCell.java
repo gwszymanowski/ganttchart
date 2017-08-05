@@ -50,8 +50,7 @@ public class AssignmentCell extends TableCell<Pair<String, Object>, Object> {
 
             try {
                 this.item = getTableRow().getItem().toString();
-            } catch(NullPointerException e) {
-            }
+            } catch(NullPointerException e) {}
 
             setOnMouseClicked(new PopupEvent());
         }

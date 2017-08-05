@@ -69,8 +69,13 @@ public final class AssignmentService {
     }
 
     public static int getDayNumber(LocalDate beginDate, final String currDateString) {
-        int count = 0;
         LocalDate curr = FileUtil.convertStringToLocalDate(currDateString);
+        return getDayNumber(beginDate, curr);
+    }
+
+    public static int getDayNumber(LocalDate beginDate, LocalDate finishDate) {
+        int count = 0;
+        LocalDate curr = finishDate;
 
         if(beginDate.compareTo(curr) > 0)
             throw new IllegalArgumentException("Second date cannot occur earlier than first one");
@@ -91,6 +96,12 @@ public final class AssignmentService {
     public static Assignment findAssignmentByTitle(Project p, String title) {
         Optional<Assignment> optional = p.getAssignments().stream().filter(x -> x.getTitle().equals(title)).findFirst();
         return optional.get();
+    }
+
+    public static long getLatePenalty(Assignment assignment) {
+        int daysCount = getDayNumber(assignment.getStartDate(), assignment.getFinishDate());
+        int currentCount = getDayNumber(assignment.getStartDate(), LocalDate.now());
+        return currentCount/daysCount;
     }
 
 }

@@ -6,6 +6,7 @@ import ganttchart.gui.elements.dialog.Dialogable;
 import ganttchart.gui.elements.dialog.MarshalizeAssignmentDialog;
 import ganttchart.gui.elements.dialog.MembersDialog;
 import ganttchart.gui.elements.dialog.AssignmentDialog;
+import ganttchart.gui.elements.dialog.chart.ProgressChart;
 import ganttchart.model.Assignment;
 import ganttchart.model.Project;
 import ganttchart.repository.ProjectRepository;
@@ -85,6 +86,7 @@ public class AssignmentController implements Initializable {
     @FXML
     private Button importButton;
 
+
     private String titleValue;
     private ProjectRepository projectRepository;
     private Project project;
@@ -111,7 +113,6 @@ public class AssignmentController implements Initializable {
         memberList.setOnAction(new DialogButtonAction(new MembersDialog(project)));
         newAssignment.setOnAction(new DialogButtonAction(new AssignmentDialog(project)));
         exportButton.setOnAction(new MarshalAction());
-
     }
 
     private void initializeTableView() {
@@ -219,4 +220,6 @@ public class AssignmentController implements Initializable {
 
         }
     }
+
+
 }

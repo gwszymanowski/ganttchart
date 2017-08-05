@@ -1,4 +1,6 @@
-package ganttchart.model;
+package ganttchart.model.wrappers;
+
+import ganttchart.model.Assignment;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

@@ -1,9 +1,13 @@
 package ganttchart.gui.elements.cell;
 
+import ganttchart.gui.elements.dialog.chart.ProgressChart;
 import ganttchart.model.Assignment;
 import ganttchart.model.Project;
 import ganttchart.service.AssignmentService;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.TableCell;
+import javafx.scene.input.MouseEvent;
 
 import java.util.Optional;
 
@@ -38,9 +42,25 @@ public class DatesCell extends TableCell<String, String> {
                     else
                         setStyle("-fx-background-color:#808080");
                     setText(null);
+                    setOnMouseClicked(new ProgressChartAction(assignment));
                 }
             }
         }
 
+    }
+
+    private class ProgressChartAction implements EventHandler<MouseEvent> {
+
+        private Assignment assignment;
+
+        public ProgressChartAction(Assignment assignment) {
+            this.assignment = assignment;
+        }
+
+        @Override
+        public void handle(MouseEvent event) {
+            ProgressChart chart = new ProgressChart(assignment);
+            chart.showAndWait();
+        }
     }
 }
