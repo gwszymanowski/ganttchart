@@ -83,10 +83,6 @@ public class AssignmentController implements Initializable {
     @FXML
     private Button exportButton;
 
-    @FXML
-    private Button importButton;
-
-
     private String titleValue;
     private ProjectRepository projectRepository;
     private Project project;
